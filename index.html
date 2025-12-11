@@ -218,203 +218,235 @@
           </div>
         </div>
       </div>
-    <section id="status-tracker" class="py-12 sm:py-16 bg-black/40 border-t border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col lg:flex-row gap-10">
-      <!-- Left column: explainer -->
-      <div class="lg:w-1/3 space-y-4">
-        <h2 class="text-xl sm:text-2xl font-semibold text-white">
-          Track your AZ Film Credit package
-        </h2>
-        <p class="text-sm text-gray-300 leading-relaxed">
-          Use the <span class="font-semibold text-desertGold">Status Tracker Portal</span> to follow
-          your production package from intake to final CPA sign-off and submission to the
-          Arizona Commerce Authority.
-        </p>
+      
+      <section id="status-tracker" class="py-12 sm:py-16 bg-black/40 border-t border-b border-white/10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row gap-10">
+          <!-- Left column: explainer -->
+          <div class="lg:w-1/3 space-y-4">
+            <h2 class="text-xl sm:text-2xl font-semibold text-white">
+              Track your AZ Film Credit package
+            </h2>
+            <p class="text-sm text-gray-300 leading-relaxed">
+              Use the <span class="font-semibold text-desertGold">Status Tracker Portal</span> to follow
+              your production package from intake to final CPA sign-off and submission to the
+              Arizona Commerce Authority.
+            </p>
 
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2 text-sm text-gray-200">
-          <p class="font-semibold text-white mb-1">Typical status flow:</p>
-          <ul class="space-y-1 list-disc list-inside">
-            <li><span class="font-medium text-desertGold">Draft:</span> You’re still uploading docs.</li>
-            <li><span class="font-medium text-desertGold">Missing Info:</span> CPA has requested additional documents.</li>
-            <li><span class="font-medium text-desertGold">Under CPA Review:</span> CPA is actively reviewing your file.</li>
-            <li><span class="font-medium text-desertGold">Pending Client Decision:</span> CPA needs your confirmation to proceed.</li>
-            <li><span class="font-medium text-desertGold">Completed / Submitted:</span> Package has been approved and submitted.</li>
-          </ul>
-        </div>
-
-        <p class="text-xs text-gray-400">
-          Note: The data shown below will come from your secure AZ Film Credit account.
-          Demo information is shown here until your API is connected.
-        </p>
-      </div>
-
-      <!-- Right column: table + detail panel -->
-      <div class="lg:w-2/3 space-y-6">
-        <!-- Project list -->
-        <div class="bg-white/5 border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-4">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h3 class="text-lg font-semibold text-white">
-                Your projects
-              </h3>
-              <p class="text-xs text-gray-400">
-                Select a project to view CPA comments, upload missing documents, and update your status.
-              </p>
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2 text-sm text-gray-200">
+              <p class="font-semibold text-white mb-1">Typical status flow:</p>
+              <ul class="space-y-1 list-disc list-inside">
+                <li><span class="font-medium text-desertGold">Draft:</span> You’re still uploading docs.</li>
+                <li><span class="font-medium text-desertGold">Missing Info:</span> CPA has requested additional documents.</li>
+                <li><span class="font-medium text-desertGold">Under CPA Review:</span> CPA is actively reviewing your file.</li>
+                <li><span class="font-medium text-desertGold">Pending Client Decision:</span> CPA needs your confirmation to proceed.</li>
+                <li><span class="font-medium text-desertGold">Completed / Submitted:</span> Package has been approved and submitted.</li>
+              </ul>
             </div>
-            <button
-              type="button"
-              class="text-xs px-3 py-1 rounded-full border border-white/20 text-gray-200 hover:border-desertGold hover:text-desertGold transition"
-              onclick="azfcRefreshStatuses()"
-            >
-              Refresh
-            </button>
-          </div>
 
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm text-gray-200">
-              <thead class="border-b border-white/10 text-xs uppercase tracking-wide text-gray-400">
-                <tr>
-                  <th class="py-2 pr-4">Project</th>
-                  <th class="py-2 pr-4">Status</th>
-                  <th class="py-2 pr-4">Last updated</th>
-                  <th class="py-2 pr-4 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="azfc-status-table-body" class="divide-y divide-white/5">
-                <!-- Filled by JS -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Detail panel -->
-        <div
-          id="azfc-status-detail-panel"
-          class="bg-white/5 border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-5 hidden"
-        >
-          <div class="flex items-start justify-between gap-4 mb-4">
-            <div>
-              <h3 id="azfc-detail-project-name" class="text-lg font-semibold text-white">
-                <!-- Project name -->
-              </h3>
-              <p class="text-xs text-gray-400 mt-1 flex flex-wrap items-center gap-2">
-                <span>Status:</span>
-                <span id="azfc-detail-status"></span>
-                <span class="text-gray-500">•</span>
-                <span>Last updated:
-                  <span id="azfc-detail-updated" class="text-gray-200"></span>
-                </span>
-              </p>
-            </div>
-            <button
-              type="button"
-              class="text-xs px-2 py-1 rounded-full border border-white/20 text-gray-300 hover:border-desertGold hover:text-desertGold transition"
-              onclick="azfcCloseDetail()"
-            >
-              Close
-            </button>
-          </div>
-
-          <!-- Outstanding items -->
-          <div class="mb-4">
-            <h4 class="text-sm font-semibold text-white mb-2">
-              Outstanding items
-            </h4>
-            <div
-              id="azfc-detail-missing-list"
-              class="bg-black/50 border border-white/10 rounded-xl p-3 text-xs text-gray-200 space-y-2"
-            >
-              <!-- Filled by JS -->
-            </div>
-          </div>
-
-          <!-- Comment thread -->
-          <div class="mb-4">
-            <h4 class="text-sm font-semibold text-white mb-2">
-              CPA &amp; client comments
-            </h4>
-            <div
-              id="azfc-detail-comments"
-              class="bg-black/50 border border-white/10 rounded-xl p-3 max-h-56 overflow-y-auto space-y-3 text-xs text-gray-200"
-            >
-              <!-- Filled by JS -->
-            </div>
-          </div>
-
-          <!-- Add client comment -->
-          <div class="space-y-3">
-            <label class="block text-xs font-medium text-gray-300" for="azfc-new-comment">
-              Add a note to your CPA
-            </label>
-            <textarea
-              id="azfc-new-comment"
-              class="w-full rounded-xl bg-black/60 border border-white/15 text-xs text-gray-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-desertGold"
-              rows="3"
-              placeholder="Example: We’ve uploaded the final W-9 file. Please continue the audit even if the catering receipt remains missing."
-            ></textarea>
-
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
-              <label class="inline-flex items-center gap-2 text-xs text-gray-300 cursor-pointer">
-                <input
-                  id="azfc-proceed-without-missing"
-                  type="checkbox"
-                  class="rounded border-white/20 bg-black text-desertGold focus:ring-desertGold"
-                />
-                <span>Let my CPA know they may <span class="font-semibold text-desertGold">continue without all missing documents</span>.</span>
-              </label>
-
-              <button
-                type="button"
-                class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-desertGold text-black text-xs font-semibold hover:bg-yellow-400 transition"
-                onclick="azfcSubmitClientComment()"
-              >
-                Send to CPA
-              </button>
-            </div>
-          </div>
-
-          <!-- Upload missing document -->
-          <div class="mt-5 border-t border-white/10 pt-4 space-y-3">
-            <h4 class="text-sm font-semibold text-white">
-              Upload missing document
-            </h4>
             <p class="text-xs text-gray-400">
-              Choose the missing document requested by your CPA and upload it here. They’ll be notified inside their review dashboard.
+              Note: The data shown below will come from your secure AZ Film Credit account.
+              Demo information is shown here until your API is connected.
             </p>
+          </div>
 
-            <div class="flex flex-col md:flex-row gap-3 md:items-center">
-              <select
-                id="azfc-upload-doc-type"
-                class="w-full md:w-1/3 rounded-xl bg-black/60 border border-white/15 text-xs text-gray-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-desertGold"
-              >
-                <!-- Options filled by JS based on missing items -->
-              </select>
+          <!-- Right column: tracking + table + detail -->
+          <div class="lg:w-2/3 space-y-6">
 
-              <input
-                id="azfc-upload-file"
-                type="file"
-                class="w-full md:flex-1 text-xs text-gray-300 file:mr-3 file:px-3 file:py-1.5 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-desertGold file:text-black hover:file:bg-yellow-400"
-              />
-
-              <button
-                type="button"
-                class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-black/70 text-gray-200 text-xs font-semibold border border-white/15 hover:bg-black/50 transition"
-                onclick="azfcUploadMissingDocument()"
-              >
-                Upload
-              </button>
+            <!-- Tracking ID entry -->
+            <div class="bg-white/5 border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-4">
+              <h3 class="text-lg font-semibold text-white mb-1">
+                Check your document status
+              </h3>
+              <p class="text-xs text-gray-300 mb-3">
+                Enter the <span class="font-semibold text-desertGold">Tracking ID</span> from your AZ Film Credit
+                payment confirmation email. Only users with a valid Tracking ID can view a project’s status.
+              </p>
+              <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                <input
+                  id="azfc-tracking-input"
+                  type="text"
+                  placeholder="Example: J-001 or AZ-2026-000123"
+                  class="flex-1 rounded-full bg-black/60 border border-white/15 text-xs sm:text-sm text-gray-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-desertGold"
+                />
+                <button
+                  type="button"
+                  class="px-4 py-2 rounded-full bg-desertGold text-black text-xs sm:text-sm font-semibold hover:bg-yellow-400 transition"
+                  onclick="azfcLookupTrackingId()"
+                >
+                  View status
+                </button>
+              </div>
+              <p id="azfc-tracking-message" class="mt-2 text-xs text-gray-400">
+                You must have a valid Tracking ID to view your project’s status.
+              </p>
             </div>
 
-            <p id="azfc-upload-status" class="text-xs text-emerald-400 hidden">
-              <!-- success / error message -->
-            </p>
+            <!-- Project list (only shown after a valid Tracking ID) -->
+            <div id="azfc-projects-card" class="bg-white/5 border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-4 hidden">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h3 class="text-lg font-semibold text-white">
+                    Your project
+                  </h3>
+                  <p class="text-xs text-gray-400">
+                    We’re showing the project linked to the Tracking ID you entered above.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  class="text-xs px-3 py-1 rounded-full border border-white/20 text-gray-200 hover:border-desertGold hover:text-desertGold transition"
+                  onclick="azfcRefreshStatuses()"
+                >
+                  Refresh
+                </button>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-200">
+                  <thead class="border-b border-white/10 text-xs uppercase tracking-wide text-gray-400">
+                    <tr>
+                      <th class="py-2 pr-4">Project</th>
+                      <th class="py-2 pr-4">Status</th>
+                      <th class="py-2 pr-4">Last updated</th>
+                      <th class="py-2 pr-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="azfc-status-table-body" class="divide-y divide-white/5">
+                    <!-- Filled by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Detail panel (only shown when a project is selected) -->
+            <div
+              id="azfc-status-detail-panel"
+              class="bg-white/5 border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-5 hidden"
+            >
+              <div class="flex items-start justify-between gap-4 mb-4">
+                <div>
+                  <h3 id="azfc-detail-project-name" class="text-lg font-semibold text-white">
+                    <!-- Project name -->
+                  </h3>
+                  <p class="text-xs text-gray-400 mt-1 flex flex-wrap items-center gap-2">
+                    <span>Status:</span>
+                    <span id="azfc-detail-status"></span>
+                    <span class="text-gray-500">•</span>
+                    <span>Last updated:
+                      <span id="azfc-detail-updated" class="text-gray-200"></span>
+                    </span>
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  class="text-xs px-2 py-1 rounded-full border border-white/20 text-gray-300 hover:border-desertGold hover:text-desertGold transition"
+                  onclick="azfcCloseDetail()"
+                >
+                  Close
+                </button>
+              </div>
+
+              <!-- Outstanding items -->
+              <div class="mb-4">
+                <h4 class="text-sm font-semibold text-white mb-2">
+                  Outstanding items
+                </h4>
+                <div
+                  id="azfc-detail-missing-list"
+                  class="bg-black/50 border border-white/10 rounded-xl p-3 text-xs text-gray-200 space-y-2"
+                >
+                  <!-- Filled by JS -->
+                </div>
+              </div>
+
+              <!-- Comment thread -->
+              <div class="mb-4">
+                <h4 class="text-sm font-semibold text-white mb-2">
+                  CPA &amp; client comments
+                </h4>
+                <div
+                  id="azfc-detail-comments"
+                  class="bg-black/50 border border-white/10 rounded-xl p-3 max-h-56 overflow-y-auto space-y-3 text-xs text-gray-200"
+                >
+                  <!-- Filled by JS -->
+                </div>
+              </div>
+
+              <!-- Add client comment -->
+              <div class="space-y-3">
+                <label class="block text-xs font-medium text-gray-300" for="azfc-new-comment">
+                  Add a note to your CPA
+                </label>
+                <textarea
+                  id="azfc-new-comment"
+                  class="w-full rounded-xl bg-black/60 border border-white/15 text-xs text-gray-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-desertGold"
+                  rows="3"
+                  placeholder="Example: We’ve uploaded the final W-9 file. Please continue the audit even if the catering receipt remains missing."
+                ></textarea>
+
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                  <label class="inline-flex items-center gap-2 text-xs text-gray-300 cursor-pointer">
+                    <input
+                      id="azfc-proceed-without-missing"
+                      type="checkbox"
+                      class="rounded border-white/20 bg-black text-desertGold focus:ring-desertGold"
+                    />
+                    <span>Let my CPA know they may <span class="font-semibold text-desertGold">continue without all missing documents</span>.</span>
+                  </label>
+
+                  <button
+                    type="button"
+                    class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-desertGold text-black text-xs font-semibold hover:bg-yellow-400 transition"
+                    onclick="azfcSubmitClientComment()"
+                  >
+                    Send to CPA
+                  </button>
+                </div>
+              </div>
+
+              <!-- Upload missing document -->
+              <div class="mt-5 border-t border-white/10 pt-4 space-y-3">
+                <h4 class="text-sm font-semibold text-white">
+                  Upload missing document
+                </h4>
+                <p class="text-xs text-gray-400">
+                  Choose the missing document requested by your CPA and upload it here. They’ll be notified inside their review dashboard.
+                </p>
+
+                <div class="flex flex-col md:flex-row gap-3 md:items-center">
+                  <select
+                    id="azfc-upload-doc-type"
+                    class="w-full md:w-1/3 rounded-xl bg-black/60 border border-white/15 text-xs text-gray-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-desertGold"
+                  >
+                    <!-- Options filled by JS based on missing items -->
+                  </select>
+
+                  <input
+                    id="azfc-upload-file"
+                    type="file"
+                    class="w-full md:flex-1 text-xs text-gray-300 file:mr-3 file:px-3 file:py-1.5 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-desertGold file:text-black hover:file:bg-yellow-400"
+                  />
+
+                  <button
+                    type="button"
+                    class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-black/70 text-gray-200 text-xs font-semibold border border-white/15 hover:bg-black/50 transition"
+                    onclick="azfcUploadMissingDocument()"
+                  >
+                    Upload
+                  </button>
+                </div>
+
+                <p id="azfc-upload-status" class="text-xs text-emerald-400 hidden">
+                  <!-- success / error message -->
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
   
     <!-- FEATURES -->
     <section id="features" class="py-12 sm:py-16">
