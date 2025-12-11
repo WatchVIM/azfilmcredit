@@ -37,7 +37,7 @@
 <body class="min-h-screen flex flex-col">
 
     <!-- NAVBAR -->
-  <header class="sticky top-0 z-40 bg-black/70 backdrop-blur border-b border-white/10">
+  <header class="sticky top-0 z-40 bg-black/80 backdrop-blur border-b border-white/10">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-6 py-3">
       <!-- Logo -->
       <a href="#top" class="flex items-center space-x-3">
@@ -51,11 +51,13 @@
             <rect x="26" y="18" width="4" height="4" rx="1" fill="#F3F4F6" />
             <rect x="26" y="26" width="4" height="4" rx="1" fill="#F3F4F6" />
             <rect x="11" y="10" width="16" height="20" rx="2" fill="#1F2937" />
-            <path d="M14 21 L18 25 L24 17"
-                  stroke="#E3A857"
-                  stroke-width="2.4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round" />
+            <path
+              d="M14 21 L18 25 L24 17"
+              stroke="#E3A857"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
           <div class="leading-tight">
             <div class="text-sm font-semibold tracking-wide">
@@ -70,62 +72,42 @@
         </div>
       </a>
 
-      <!-- Nav links as pill buttons (centered) -->
-            <!-- Nav links as pill buttons (centered, tighter text) -->
-            <!-- Nav links as pill buttons (centered, single-line text) -->
-      <nav class="hidden lg:flex flex-1 items-center justify-center gap-4">
+      <!-- Center nav: simple, clean links -->
+      <nav class="hidden lg:flex flex-1 items-center justify-center gap-4 text-xs sm:text-sm font-medium text-gray-200">
         <a href="#how-it-works"
-           class="inline-flex items-center justify-center px-3 py-1 rounded-full
-                  text-xs sm:text-[13px] leading-tight font-medium whitespace-nowrap
-                  bg-white/5 border border-white/10 text-gray-100
-                  hover:bg-desertGold hover:text-black hover:border-desertGold transition">
+           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
           How it works
         </a>
         <a href="#features"
-           class="inline-flex items-center justify-center px-3 py-1 rounded-full
-                  text-xs sm:text-[13px] leading-tight font-medium whitespace-nowrap
-                  bg-white/5 border border-white/10 text-gray-100
-                  hover:bg-desertGold hover:text-black hover:border-desertGold transition">
+           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
           Features
         </a>
         <a href="#az-credit"
-           class="inline-flex items-center justify-center px-3 py-1 rounded-full
-                  text-xs sm:text-[13px] leading-tight font-medium whitespace-nowrap
-                  bg-white/5 border border-white/10 text-gray-100
-                  hover:bg-desertGold hover:text-black hover:border-desertGold transition">
+           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
           AZ Program
         </a>
         <a href="#faq"
-           class="inline-flex items-center justify-center px-3 py-1 rounded-full
-                  text-xs sm:text-[13px] leading-tight font-medium whitespace-nowrap
-                  bg-white/5 border border-white/10 text-gray-100
-                  hover:bg-desertGold hover:text-black hover:border-desertGold transition">
+           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
           FAQ
         </a>
         <a href="cpa-processing.html"
-           class="inline-flex items-center justify-center px-3 py-1 rounded-full
-                  text-xs sm:text-[13px] leading-tight font-medium whitespace-nowrap
-                  bg-white/5 border border-white/10 text-gray-100
-                  hover:bg-desertGold hover:text-black hover:border-desertGold transition">
+           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
           Pricing &amp; Processing
         </a>
         <a href="#status-tracker"
-           class="inline-flex items-center justify-center px-3 py-1 rounded-full
-                  text-xs sm:text-[13px] leading-tight font-medium whitespace-nowrap
-                  bg-white/5 border border-white/10 text-gray-100
-                  hover:bg-desertGold hover:text-black hover:border-desertGold transition">
+           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
           Status tracker
         </a>
       </nav>
 
-      <!-- CTA buttons (right) -->
+      <!-- Right-side CTAs -->
       <div class="flex items-center gap-3">
         <a href="#contact"
-           class="hidden sm:inline-flex px-3 py-1.5 text-xs font-medium border border-white/20 rounded-full text-gray-200 hover:bg-white/5 transition">
+           class="hidden sm:inline-flex px-3 py-1.5 text-xs font-medium rounded-full border border-white/20 text-gray-200 hover:bg-white/5 transition-colors whitespace-nowrap">
           For CPAs
         </a>
         <a href="cpa-processing.html"
-           class="inline-flex justify-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition">
+           class="inline-flex justify-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition-colors whitespace-nowrap">
           Start a sample project
         </a>
       </div>
