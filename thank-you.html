@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thank You | AZ Film Credit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            desertGold: "#E3A857",
+            sunsetRed: "#E4572E",
+            deepSlate: "#111827",
+            sand: "#F3F4F6"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000000 100%);
+      color: #F9FAFB;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="border-b border-white/10 bg-black/70 backdrop-blur">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center space-x-3">
+        <div class="flex items-center">
+          <svg class="w-8 h-8 mr-2" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="4" width="32" height="32" rx="8" fill="#111827"/>
+            <rect x="6" y="10" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="6" y="18" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="6" y="26" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="26" y="10" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="26" y="18" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="26" y="26" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="11" y="10" width="16" height="20" rx="2" fill="#1F2937"/>
+            <path d="M14 21 L18 25 L24 17"
+                  stroke="#E3A857"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+          </svg>
+          <div class="leading-tight">
+            <div class="text-xs font-semibold tracking-wide">
+              <span class="text-desertGold">AZ</span>
+              <span class="text-white ml-1">Film</span>
+              <span class="text-sunsetRed ml-1">Credit</span>
+            </div>
+            <div class="text-[10px] uppercase tracking-[0.16em] text-gray-400">
+              Payment Confirmation
+            </div>
+          </div>
+        </div>
+      </a>
+      <a href="support.html" class="text-xs text-gray-300 hover:text-desertGold">Support</a>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-1 py-10">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-black/50">
+        <div class="flex items-start gap-3 mb-4">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-desertGold/10 border border-desertGold/40">
+            <span class="text-desertGold text-xl">✓</span>
+          </div>
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-semibold text-white" id="thank-title">
+              Thank you for your purchase
+            </h1>
+            <p class="mt-1 text-xs text-gray-300" id="thank-subtitle">
+              Your AZ Film Credit order has been received. We’ve emailed you a receipt and next steps.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dynamic content based on plan -->
+        <div class="mt-4 space-y-6 text-sm text-gray-200">
+          <!-- Shared overview -->
+          <section>
+            <h2 class="text-sm font-semibold text-desertGold mb-1">What happens next</h2>
+            <p class="text-xs text-gray-200">
+              Our prep team will first verify that your files are accessible and complete. If anything is
+              missing or unreadable, we’ll email you using the contact details you provided during checkout.
+            </p>
+          </section>
+
+          <!-- Timeline container -->
+          <section id="timeline-section">
+            <!-- This will be filled in by JS depending on plan -->
+          </section>
+
+          <!-- Email & support -->
+          <section>
+            <h2 class="text-sm font-semibold text-desertGold mb-1">Email updates</h2>
+            <p class="text-xs text-gray-200">
+              You’ll receive email updates at each key step:
+            </p>
+            <ul class="mt-2 text-xs text-gray-200 list-disc list-inside space-y-1">
+              <li>Confirmation that we can open and process your files.</li>
+              <li>Notification when your CPA-ready package is generated.</li>
+              <li>For CPA projects: when your file is assigned to the Certified AZ CPA and when the signed report is ready.</li>
+            </ul>
+          </section>
+
+          <!-- Tips -->
+          <section>
+            <h2 class="text-sm font-semibold text-desertGold mb-1">To keep everything moving smoothly</h2>
+            <ul class="mt-2 text-xs text-gray-200 list-disc list-inside space-y-1">
+              <li>Watch for emails from our team in your inbox and spam folder.</li>
+              <li>Be ready to resend any missing receipts, payroll reports, or residency documentation.</li>
+              <li>Let your CPA know you’re using AZ Film Credit (if you selected prep-only).</li>
+            </ul>
+          </section>
+
+          <!-- Buttons -->
+          <section class="pt-2 flex flex-wrap gap-3">
+            <a
+              href="index.html"
+              class="inline-flex px-4 py-2 rounded-full text-xs font-semibold bg-desertGold text-black hover:bg-yellow-400 transition shadow-lg shadow-yellow-500/20"
+            >
+              Back to homepage
+            </a>
+            <a
+              href="support.html"
+              class="inline-flex px-4 py-2 rounded-full text-xs font-semibold border border-white/20 text-gray-200 hover:bg-white/5 transition"
+            >
+              Contact support
+            </a>
+          </section>
+
+          <p class="text-[10px] text-gray-400 pt-2">
+            AZ Film Credit is a document preparation service and does not provide tax, legal, or accounting advice.
+            All audit opinions and formal certifications are issued solely by licensed CPAs.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-4 text-[11px] text-gray-400">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>© <span id="year"></span> AZ Film Credit. All rights reserved.</div>
+      <div class="flex gap-4">
+        <a href="privacy.html" class="hover:text-desertGold">Privacy</a>
+        <a href="terms.html" class="hover:text-desertGold">Terms</a>
+        <a href="support.html" class="hover:text-desertGold">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Determine plan from URL (e.g., thank-you.html?plan=prep_cpa)
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get("plan") || "prep";
+
+    const titleEl = document.getElementById("thank-title");
+    const subtitleEl = document.getElementById("thank-subtitle");
+    const timelineSection = document.getElementById("timeline-section");
+
+    if (plan === "prep_cpa") {
+      // Prep + Certified AZ CPA sign-off
+      titleEl.textContent = "Thank you — your CPA review is in queue";
+      subtitleEl.textContent =
+        "You’ve purchased document prep plus a Certified AZ CPA sign-off. Below is what to expect next.";
+
+      timelineSection.innerHTML = `
+        <h2 class="text-sm font-semibold text-desertGold mb-1">Timeline for prep + Certified AZ CPA review</h2>
+        <ol class="mt-2 text-xs text-gray-200 list-decimal list-inside space-y-2">
+          <li>
+            <span class="font-semibold text-gray-100">Within 1–2 business days:</span>
+            Our prep team reviews your uploads, organizes ledgers, matches receipts,
+            and builds the AZ-FC-01 to AZ-FC-07 documentation set.
+          </li>
+          <li>
+            <span class="font-semibold text-gray-100">Within 3–5 business days after prep:</span>
+            Your completed package is securely transferred to a partnered Certified AZ CPA.
+            They review the documentation, may request clarifications, and prepare the audit report.
+          </li>
+          <li>
+            <span class="font-semibold text-gray-100">Total typical turnaround: 5–10 business days.</span>
+            This can vary based on project size, completeness of documentation, and CPA workload.
+          </li>
+          <li>
+            <span class="font-semibold text-gray-100">Final delivery:</span>
+            We email you a link to download your CPA-signed report and supporting package,
+            ready to submit to the Arizona Film Office and your other advisors.
+          </li>
+        </ol>
+      `;
+    } else {
+      // Prep only
+      titleEl.textContent = "Thank you — your prep order is confirmed";
+      subtitleEl.textContent =
+        "You’ve purchased document prep only. We’ll organize your documentation into a CPA-ready package.";
+
+      timelineSection.innerHTML = `
+        <h2 class="text-sm font-semibold text-desertGold mb-1">Timeline for document prep only</h2>
+        <ol class="mt-2 text-xs text-gray-200 list-decimal list-inside space-y-2">
+          <li>
+            <span class="font-semibold text-gray-100">Within 1–2 business days:</span>
+            Our prep team verifies that we can open and use all uploaded files and will contact you
+            if anything is missing or unreadable.
+          </li>
+          <li>
+            <span class="font-semibold text-gray-100">Within 3–5 business days:</span>
+            We organize your ledgers, match receipts, separate qualified vs non-qualified costs,
+            and generate the AZ-FC-01 to AZ-FC-07 documentation set.
+          </li>
+          <li>
+            <span class="font-semibold text-gray-100">Final delivery:</span>
+            We email you a link to download your CPA-ready package. You can share it with your own CPA
+            to complete the audit and sign-off.
+          </li>
+        </ol>
+      `;
+    }
+  </script>
+</body>
+</html>
