@@ -756,7 +756,9 @@ function azfcOpenDetail(jobId) {
 
   nameEl.textContent = job.title;
   statusEl.textContent = job.status;
-  statusEl.className = "font-medium " + azfcStatusChipClass(job.status);
+  statusEl.className =
+  "inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium " +
+  azfcStatusChipClass(job.status);
   updatedEl.textContent = job.lastUpdated;
 
   // Missing items
