@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta
     name="description"
-    content="Submit your Arizona production details and documents and AZ Film Credit will prepare a CPA-ready package for the Arizona Motion Picture Production Program for $39.99."
+    content="Submit your Arizona production details and documents and AZ Film Credit will prepare a CPA-ready package for the Arizona Motion Picture Production Program."
   />
 
   <!-- Tailwind -->
@@ -33,6 +33,9 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
   </style>
+
+  <!-- PayPal SDK (in-house gateway uses PayPal client ID) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AZTItKSIoet0uX-vTdaXCE-MlA8ehTm8xRJmLS3phCBsYQtN74-iiNXl1YECmbu4ldznZexblz-893CX&currency=USD"></script>
 </head>
 <body class="min-h-screen flex flex-col">
 
@@ -71,7 +74,7 @@
       </a>
 
       <div class="text-xs text-gray-300">
-        Need help? <a href="mailto:support@example.com" class="text-desertGold hover:underline">Contact support</a>
+        Need help? <a href="support.html" class="text-desertGold hover:underline">Contact support</a>
       </div>
     </div>
   </header>
@@ -87,10 +90,9 @@
             Submit your project for a CPA-ready Arizona film credit package
           </h1>
           <p class="mt-2 text-sm text-gray-300 max-w-xl">
-            For <span class="font-semibold text-desertGold">$39.99 per project</span>,
-            AZ Film Credit will organize your production data into a CPA-ready package that aligns
-            with Arizona Motion Picture Production Program requirements. A licensed CPA will still
-            review and sign final documents.
+            Choose between <span class="font-semibold text-desertGold">$39.99 document prep</span> or
+            <span class="font-semibold text-desertGold">$39.99 + $399</span> for prep plus a
+            Certified AZ CPA to review and sign your audit documents.
           </p>
         </div>
 
@@ -257,6 +259,51 @@
             </div>
           </div>
 
+          <!-- PLAN SELECTION -->
+          <div class="space-y-2">
+            <label class="block text-xs text-gray-300 mb-1">Choose your service</label>
+            <div class="bg-white/5 border border-white/10 rounded-lg divide-y divide-white/10">
+              <!-- Prep only -->
+              <label class="flex items-center justify-between px-3 py-2 text-xs cursor-pointer">
+                <span>
+                  <span class="font-semibold text-gray-100">Document prep only</span>
+                  <span class="block text-[11px] text-gray-400">
+                    We organize your data into a CPA-ready package for your own CPA.
+                  </span>
+                </span>
+                <span class="flex items-center gap-2">
+                  <span class="text-sm font-semibold text-desertGold">$39.99</span>
+                  <input
+                    type="radio"
+                    name="service_plan"
+                    value="prep"
+                    class="w-4 h-4 rounded border-white/40 bg-black/60 text-desertGold focus:ring-desertGold"
+                    checked
+                  />
+                </span>
+              </label>
+
+              <!-- Prep + Certified CPA -->
+              <label class="flex items-center justify-between px-3 py-2 text-xs cursor-pointer">
+                <span>
+                  <span class="font-semibold text-gray-100">Document prep + Certified AZ CPA sign-off</span>
+                  <span class="block text-[11px] text-gray-400">
+                    We prep your docs and route them to a Certified AZ CPA to review and sign your audit report.
+                  </span>
+                </span>
+                <span class="flex items-center gap-2">
+                  <span class="text-sm font-semibold text-desertGold">$438.99</span>
+                  <input
+                    type="radio"
+                    name="service_plan"
+                    value="prep_cpa"
+                    class="w-4 h-4 rounded border-white/40 bg-black/60 text-desertGold focus:ring-desertGold"
+                  />
+                </span>
+              </label>
+            </div>
+          </div>
+
           <!-- Notes -->
           <div>
             <label class="block text-xs text-gray-300 mb-1">Notes for our prep team (optional)</label>
@@ -268,7 +315,7 @@
             ></textarea>
           </div>
 
-          <!-- Consent + Summary -->
+          <!-- Consent + Summary + PayPal -->
           <div class="space-y-3">
             <label class="flex items-start gap-2 text-[11px] text-gray-300">
               <input
@@ -284,26 +331,24 @@
               </span>
             </label>
 
-            <div class="flex items-center justify-between text-xs text-gray-300 bg-white/5 border border-white/10 rounded-lg px-3 py-2">
-              <span>Service fee (one project):</span>
-              <span class="text-base font-semibold text-desertGold">$39.99</span>
-            </div>
-          </div>
-
-          <!-- CTA -->
-          <div class="flex justify-end pt-2">
-            <button
-              type="submit"
-              class="inline-flex items-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition"
-              id="proceed-payment-btn"
-              data-price="39.99"
+            <div
+              class="flex items-center justify-between text-xs text-gray-300 bg-white/5 border border-white/10 rounded-lg px-3 py-2"
+              id="price-summary"
             >
-              Proceed to payment – $39.99
-            </button>
+              <span>Selected service total:</span>
+              <span class="text-base font-semibold text-desertGold" id="price-amount">$39.99</span>
+            </div>
+
+            <p class="text-[11px] text-gray-400">
+              You’ll complete payment through our secure in-house gateway powered by PayPal.
+            </p>
+
+            <!-- PayPal button container -->
+            <div id="paypal-button-container" class="mt-2"></div>
           </div>
 
-          <!-- Placeholder message -->
-          <p id="form-message" class="text-[11px] text-gray-400"></p>
+          <!-- Message -->
+          <p id="form-message" class="text-[11px] text-gray-300"></p>
         </form>
       </section>
 
@@ -325,20 +370,21 @@
             <li>• <span class="font-semibold">AZ-FC-05 – Production Period Statement</span></li>
             <li>• <span class="font-semibold">AZ-FC-06 – Detailed Qualified Cost Ledger Export</span></li>
             <li>• <span class="font-semibold">AZ-FC-07 – Supporting Documentation Index</span></li>
-            <li>• <span class="font-semibold">AZ-FC-08 – CPA Review & Certification Draft</span> (for your CPA to finalize)</li>
+            <li>• <span class="font-semibold">AZ-FC-08 – CPA Review & Certification Draft</span> (for your CPA or our Certified AZ CPA partner to finalize)</li>
           </ul>
           <p class="mt-3 text-[11px] text-gray-400">
-            Your CPA can adjust, annotate, and sign these documents in line with Arizona Commerce Authority
-            guidance and professional standards.
+            When you select the “Prep + Certified AZ CPA sign-off” plan, your project is queued for review by a
+            partnered Certified AZ CPA who will issue the final audit report, subject to their professional standards.
           </p>
         </div>
 
         <div class="bg-black/60 border border-desertGold/40 rounded-xl p-4">
-          <h3 class="text-sm font-semibold text-desertGold mb-1">Who is this for?</h3>
-          <ul class="text-[11px] text-gray-200 space-y-1">
-            <li>• Arizona-based filmmakers and production companies</li>
-            <li>• Out-of-state productions with Arizona shoots</li>
-            <li>• CPAs who want cleaner client data for film credit audits</li>
+          <h3 class="text-sm font-semibold text-desertGold mb-1">Plan overview</h3>
+          <ul class="text-[11px] text-gray-200 space-y-1.5">
+            <li>• <span class="font-semibold">Document prep only – $39.99</span><br />
+              Ideal if you already have a CPA and just need your data cleaned and organized.</li>
+            <li>• <span class="font-semibold">Prep + Certified AZ CPA – $438.99</span><br />
+              Ideal if you want a full pipeline: prep + a Certified AZ CPA to review and sign your audit documentation.</li>
           </ul>
         </div>
 
@@ -359,24 +405,127 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
       <div>© <span id="year"></span> AZ Film Credit. All rights reserved.</div>
       <div class="flex gap-4">
-        <a href="#" class="hover:text-desertGold">Privacy</a>
-        <a href="#" class="hover:text-desertGold">Terms</a>
-        <a href="#" class="hover:text-desertGold">Support</a>
+        <a href="privacy.html" class="hover:text-desertGold">Privacy</a>
+        <a href="terms.html" class="hover:text-desertGold">Terms</a>
+        <a href="support.html" class="hover:text-desertGold">Support</a>
       </div>
     </div>
   </footer>
 
   <script>
-    // Simple year
+    // Year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Simple placeholder submit handler
-    document.getElementById("azfc-processing-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const msg = document.getElementById("form-message");
-      msg.textContent =
-        "Form submitted in demo mode. Connect this form to your backend and payment provider (Stripe, PayPal, etc.) to process the $39.99 service fee.";
+    const PLAN_PRICES = {
+      prep: 39.99,
+      prep_cpa: 438.99 // 39.99 + 399
+    };
+
+    function getSelectedPlan() {
+      const radio = document.querySelector('input[name="service_plan"]:checked');
+      return radio ? radio.value : "prep";
+    }
+
+    function updatePriceDisplay() {
+      const plan = getSelectedPlan();
+      const amount = PLAN_PRICES[plan] || PLAN_PRICES.prep;
+      const priceEl = document.getElementById("price-amount");
+      if (priceEl) {
+        priceEl.textContent = `$${amount.toFixed(2)}`;
+      }
+    }
+
+    // Listen for plan changes
+    document.querySelectorAll('input[name="service_plan"]').forEach(radio => {
+      radio.addEventListener("change", updatePriceDisplay);
     });
+
+    updatePriceDisplay();
+
+    // Basic front-end validation hook for PayPal
+    function validateFormForPayment() {
+      const form = document.getElementById("azfc-processing-form");
+      const requiredFields = form.querySelectorAll("[required]");
+      for (const field of requiredFields) {
+        if (!field.value || (field.type === "checkbox" && !field.checked)) {
+          field.scrollIntoView({ behavior: "smooth", block: "center" });
+          field.focus();
+          document.getElementById("form-message").textContent =
+            "Please complete all required fields and acknowledgements before payment.";
+          return false;
+        }
+      }
+      document.getElementById("form-message").textContent = "";
+      return true;
+    }
+
+    // PayPal Buttons integration (in-house gateway tooling)
+    if (window.paypal) {
+      paypal.Buttons({
+        style: {
+          shape: "pill",
+          color: "gold",
+          layout: "horizontal",
+          label: "pay"
+        },
+
+        onClick: function (data, actions) {
+          // Validate form before allowing payment
+          if (!validateFormForPayment()) {
+            return actions.reject();
+          }
+          return actions.resolve();
+        },
+
+        createOrder: function (data, actions) {
+          const plan = getSelectedPlan();
+          const amount = PLAN_PRICES[plan] || PLAN_PRICES.prep;
+          const description =
+            plan === "prep"
+              ? "AZ Film Credit - Document Prep Only"
+              : "AZ Film Credit - Document Prep + Certified AZ CPA Sign-Off";
+
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: amount.toFixed(2)
+                },
+                description
+              }
+            ]
+          });
+        },
+
+        onApprove: function (data, actions) {
+          return actions.order.capture().then(function (details) {
+            // 🔗 Hook into your in-house backend / gateway here
+            // Example placeholder:
+            fetch("/az-film-credit/payment-complete", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                orderID: data.orderID,
+                payerID: data.payerID,
+                plan: getSelectedPlan()
+              })
+            }).catch(() => {});
+
+            document.getElementById("form-message").textContent =
+              "Payment received. Thank you! We’ll begin preparing your AZ Film Credit package and follow up by email.";
+          });
+        },
+
+        onError: function (err) {
+          console.error(err);
+          document.getElementById("form-message").textContent =
+            "There was an issue processing your payment. Please try again or contact support.";
+        }
+      }).render("#paypal-button-container");
+    } else {
+      document.getElementById("form-message").textContent =
+        "PayPal could not be loaded. Please refresh the page or try another browser.";
+    }
   </script>
 </body>
 </html>
