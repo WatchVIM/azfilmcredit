@@ -1,1 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Terms of Service | AZ Film Credit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            desertGold: "#E3A857",
+            sunsetRed: "#E4572E",
+            deepSlate: "#111827",
+            sand: "#F3F4F6"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000000 100%);
+      color: #F9FAFB;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="border-b border-white/10 bg-black/70 backdrop-blur">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center space-x-3">
+        <div class="flex items-center">
+          <svg class="w-8 h-8 mr-2" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="4" width="32" height="32" rx="8" fill="#111827"/>
+            <rect x="6" y="10" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="6" y="18" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="6" y="26" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="26" y="10" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="26" y="18" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="26" y="26" width="4" height="4" rx="1" fill="#F3F4F6"/>
+            <rect x="11" y="10" width="16" height="20" rx="2" fill="#1F2937"/>
+            <path d="M14 21 L18 25 L24 17"
+                  stroke="#E3A857"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+          </svg>
+          <div class="leading-tight">
+            <div class="text-xs font-semibold tracking-wide">
+              <span class="text-desertGold">AZ</span>
+              <span class="text-white ml-1">Film</span>
+              <span class="text-sunsetRed ml-1">Credit</span>
+            </div>
+            <div class="text-[10px] uppercase tracking-[0.16em] text-gray-400">
+              Terms of Service
+            </div>
+          </div>
+        </div>
+      </a>
+      <a href="support.html" class="text-xs text-gray-300 hover:text-desertGold">Support</a>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-1 py-10">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-2xl sm:text-3xl font-semibold text-white mb-2">Terms of Service</h1>
+      <p class="text-xs text-gray-400 mb-6">
+        Last updated: <span id="last-updated"></span>
+      </p>
+
+      <div class="space-y-6 text-sm text-gray-200 bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6">
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">1. Acceptance of Terms</h2>
+          <p class="text-xs text-gray-200">
+            By accessing or using the AZ Film Credit website and services (“Services”), you agree to
+            be bound by these Terms of Service (“Terms”). If you do not agree, you may not use the Services.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">2. Description of Service</h2>
+          <p class="text-xs text-gray-200">
+            AZ Film Credit provides tools to help filmmakers and production companies organize production
+            data and generate documentation to assist a licensed CPA in preparing an audit for the Arizona film
+            tax credit. We do not provide legal or tax advice, and we are not a CPA firm.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">3. Eligibility</h2>
+          <p class="text-xs text-gray-200">
+            You must be at least 18 years old and have the authority to enter into these Terms on behalf
+            of yourself or the entity you represent. By using the Services, you represent and warrant that
+            you meet these requirements.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">4. Accounts & Security</h2>
+          <p class="text-xs text-gray-200">
+            If you create an account, you are responsible for maintaining the confidentiality of your login
+            information and for all activities that occur under your account. You agree to notify us promptly
+            of any unauthorized use or security breach.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">5. Fees & Payments</h2>
+          <p class="text-xs text-gray-200">
+            Certain Services, including the preparation of a CPA-ready document package, may require payment
+            of fees. For example, a standard document preparation service may be offered at a rate such as
+            <span class="font-semibold text-desertGold">$39.99 per project</span>, unless otherwise stated on our
+            website. All fees are due at the time of purchase and are generally non-refundable unless required
+            by applicable law or expressly stated otherwise in writing.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">6. User Content & Data</h2>
+          <p class="text-xs text-gray-200 mb-2">
+            You retain all rights to the data and documents you upload to the Services (“User Content”).
+            By submitting User Content, you grant us a limited, non-exclusive license to use, store, process,
+            and transmit such content solely for the purpose of providing the Services.
+          </p>
+          <p class="text-xs text-gray-200">
+            You are responsible for ensuring that your User Content is accurate, lawful, and does not infringe
+            the rights of any third party.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">7. No Tax or Legal Advice</h2>
+          <p class="text-xs text-gray-200">
+            The information and documents generated by the Services are for organizational and informational
+            purposes only and are not intended as tax, legal, or accounting advice. You should consult with a
+            qualified CPA, attorney, or other professional advisor regarding your specific situation.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">8. Intellectual Property</h2>
+          <p class="text-xs text-gray-200">
+            The Services, including all software, designs, text, graphics, and logos (excluding User Content),
+            are owned by or licensed to AZ Film Credit and are protected by intellectual property laws. You may
+            not copy, modify, distribute, or create derivative works of the Services without our prior written consent.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">9. Prohibited Uses</h2>
+          <p class="text-xs text-gray-200 mb-2">
+            You agree not to use the Services:
+          </p>
+          <ul class="text-xs text-gray-200 list-disc list-inside space-y-1">
+            <li>For any unlawful purpose or in violation of applicable laws or regulations.</li>
+            <li>To upload or transmit malicious code, viruses, or harmful content.</li>
+            <li>To attempt to gain unauthorized access to our systems or networks.</li>
+            <li>To reverse engineer, decompile, or otherwise attempt to derive the source code of the Services.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">10. Disclaimers</h2>
+          <p class="text-xs text-gray-200">
+            The Services are provided on an “as is” and “as available” basis without warranties of any kind,
+            whether express or implied, including but not limited to warranties of merchantability, fitness
+            for a particular purpose, or non-infringement. We do not warrant that the Services will be error-free
+            or uninterrupted.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">11. Limitation of Liability</h2>
+          <p class="text-xs text-gray-200">
+            To the maximum extent permitted by law, AZ Film Credit and its owners, employees, and affiliates
+            will not be liable for any indirect, incidental, special, consequential, or punitive damages, or
+            for any loss of profits, revenues, data, or goodwill, arising out of or related to your use of the
+            Services, even if we have been advised of the possibility of such damages.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">12. Termination</h2>
+          <p class="text-xs text-gray-200">
+            We may suspend or terminate your access to the Services at any time if we believe you have violated
+            these Terms or if we discontinue the Services. Upon termination, your right to use the Services will
+            cease, subject to any applicable data retention or legal requirements.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">13. Governing Law</h2>
+          <p class="text-xs text-gray-200">
+            These Terms will be governed by and construed in accordance with the laws of the State of Arizona,
+            without regard to its conflict of law provisions, except where otherwise required by applicable law.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">14. Changes to These Terms</h2>
+          <p class="text-xs text-gray-200">
+            We may update these Terms from time to time. When we make material changes, we will update the
+            “Last updated” date and may provide additional notice as appropriate. Your continued use of the
+            Services after such changes constitutes acceptance of the updated Terms.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-sm font-semibold text-desertGold mb-1">15. Contact Us</h2>
+          <p class="text-xs text-gray-200">
+            If you have questions about these Terms, please contact us at:<br />
+            <span class="font-semibold text-desertGold">support@example.com</span>
+          </p>
+        </section>
+
+        <p class="text-[10px] text-gray-400">
+          This template is for informational purposes only and does not constitute legal advice. Please consult
+          with a qualified attorney to review and customize your terms of service.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-4 text-[11px] text-gray-400">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>© <span id="year"></span> AZ Film Credit. All rights reserved.</div>
+      <div class="flex gap-4">
+        <a href="privacy.html" class="hover:text-desertGold">Privacy</a>
+        <a href="terms.html" class="hover:text-desertGold">Terms</a>
+        <a href="support.html" class="hover:text-desertGold">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("last-updated").textContent = new Date().toLocaleDateString();
+  </script>
+</body>
+</html>
 
