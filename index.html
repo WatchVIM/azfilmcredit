@@ -726,13 +726,34 @@ function azfcRenderTable() {
 }
 
 function azfcStatusChipClass(status) {
-  if (!status) return "bg-slate-700 text-slate-100";
+  if (!status) {
+    return "bg-white/10 text-gray-100 border border-white/20";
+  }
+
   const s = status.toLowerCase();
-  if (s.includes("missing")) return "bg-amber-500/20 text-amber-300 border border-amber-400/50";
-  if (s.includes("under cpa")) return "bg-blue-500/20 text-blue-300 border border-blue-400/50";
-  if (s.includes("completed") || s.includes("submitted")) return "bg-emerald-500/20 text-emerald-300 border border-emerald-400/50";
-  if (s.includes("pending client")) return "bg-purple-500/20 text-purple-300 border border-purple-400/50";
-  return "bg-slate-700 text-slate-100";
+
+  // Missing info = warning (sunsetRed)
+  if (s.includes("missing")) {
+    return "bg-sunsetRed/15 text-sunsetRed border border-sunsetRed/60";
+  }
+
+  // Under review = neutral / gold
+  if (s.includes("under cpa")) {
+    return "bg-white/10 text-desertGold border border-desertGold/60";
+  }
+
+  // Completed / submitted = success (soft green)
+  if (s.includes("completed") || s.includes("submitted")) {
+    return "bg-emerald-500/15 text-emerald-300 border border-emerald-400/60";
+  }
+
+  // Waiting on client = neutral gray
+  if (s.includes("pending client")) {
+    return "bg-white/10 text-gray-100 border border-white/40";
+  }
+
+  // Default
+  return "bg-white/10 text-gray-100 border border-white/20";
 }
 
 function azfcOpenDetail(jobId) {
@@ -754,31 +775,22 @@ function azfcOpenDetail(jobId) {
 
   if (!panel) return;
 
-  nameEl.textContent = job.title;
-  statusEl.textContent = job.status;
-  statusEl.className =
-  "inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium " +
-  azfcStatusChipClass(job.status);
-  updatedEl.textContent = job.lastUpdated;
+  // Title
+  if (nameEl) {
+    nameEl.textContent = job.title;
+  }
 
-  // Missing items
-  missingEl.innerHTML = "";
-  if (!job.missingItems || job.missingItems.length === 0) {
-    missingEl.innerHTML = `
-      <p class="text-slate-400">
-        No outstanding items. Your CPA will update the status once the review is complete.
-      </p>
-    `;
-  } else {
-    job.missingItems.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.className = "flex items-start gap-2";
-      div.innerHTML = `
-        <span class="mt-0.5 text-amber-300">•</span>
-        <span class="text-slate-100">${item}</span>
-      `;
-      missingEl.appendChild(div);
-    });
+  // Status pill (detail view) – same look as table chip
+  if (statusEl) {
+    statusEl.textContent = job.status;
+    statusEl.className =
+      "inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium " +
+      azfcStatusChipClass(job.status);
+  }
+
+  // Last updated
+  if (updatedEl) {
+    updatedEl.textContent = job.lastUpdated;
   }
 
   // Doc type select options
