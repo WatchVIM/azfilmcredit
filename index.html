@@ -641,96 +641,137 @@
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
   <script>
+  // --- Demo data (replace with real API data later) ---
+  let azfcJobs = [
+    {
+      id: "J-001",
+      title: "Feature – Desert Lights",
+      status: "Missing Info",
+      lastUpdated: "2025-12-10",
+      missingItems: [
+        "W-9 – Desert Catering, LLC",
+        "Final location agreement for Tempe warehouse"
+      ],
+      comments: [
+        {
+          from: "CPA",
+          at: "2025-12-10 09:21",
+          text: "Please upload the W-9 for Desert Catering and the signed Tempe warehouse location agreement."
+        },
+        {
+          from: "You",
+          at: "2025-12-10 10:02",
+          text: "We’re waiting on the final location agreement signature; W-9 will be uploaded today."
+        }
+      ]
+    },
+    {
+      id: "J-002",
+      title: "Series – Dry Heat (Pilot)",
+      status: "Under CPA Review",
+      lastUpdated: "2025-12-09",
+      missingItems: [],
+      comments: [
+        {
+          from: "CPA",
+          at: "2025-12-09 15:45",
+          text: "All requested documentation received. Currently reviewing your qualified spend summary."
+        }
+      ]
+    },
+    {
+      id: "J-003",
+      title: "Commercial – Scottsdale Tourism Spot",
+      status: "Completed / Submitted",
+      lastUpdated: "2025-11-30",
+      missingItems: [],
+      comments: [
+        {
+          from: "CPA",
+          at: "2025-11-29 12:10",
+          text: "Final package reviewed and approved."
+        },
+        {
+          from: "CPA",
+          at: "2025-11-30 09:18",
+          text: "Package submitted to AZ Commerce Authority."
+        }
+      ]
+    }
+  ];
 
-// --- Demo data (replace with real API data later) ---
-let azfcJobs = [
-  {
-    id: "J-001",
-    title: "Feature – Desert Lights",
-    status: "Missing Info",
-    lastUpdated: "2025-12-10",
-    missingItems: [
-      "W-9 – Desert Catering, LLC",
-      "Final location agreement for Tempe warehouse"
-    ],
-    comments: [
-      {
-        from: "CPA",
-        at: "2025-12-10 09:21",
-        text: "Please upload the W-9 for Desert Catering and the signed Tempe warehouse location agreement."
-      },
-      {
-        from: "You",
-        at: "2025-12-10 10:02",
-        text: "We’re waiting on the final location agreement signature; W-9 will be uploaded today."
-      }
-    ]
-  },
-  {
-    id: "J-002",
-    title: "Series – Dry Heat (Pilot)",
-    status: "Under CPA Review",
-    lastUpdated: "2025-12-09",
-    missingItems: [],
-    comments: [
-      {
-        from: "CPA",
-        at: "2025-12-09 15:45",
-        text: "All requested documentation received. Currently reviewing your qualified spend summary."
-      }
-    ]
-  },
-  {
-    id: "J-003",
-    title: "Commercial – Scottsdale Tourism Spot",
-    status: "Completed / Submitted",
-    lastUpdated: "2025-11-30",
-    missingItems: [],
-    comments: [
-      {
-        from: "CPA",
-        at: "2025-11-29 12:10",
-        text: "Final package reviewed and approved."
-      },
-      {
-        from: "CPA",
-        at: "2025-11-30 09:18",
-        text: "Package submitted to AZ Commerce Authority."
-      }
-    ]
+  let azfcCurrentJobId = null;
+
+  // --- Status chip styling (on-brand colors) ---
+  function azfcStatusChipClass(status) {
+    if (!status) {
+      return "bg-white/10 text-gray-100 border border-white/20";
+    }
+
+    const s = status.toLowerCase();
+
+    // Missing info = warning (sunsetRed)
+    if (s.includes("missing")) {
+      return "bg-sunsetRed/15 text-sunsetRed border border-sunsetRed/60";
+    }
+
+    // Under review = neutral / gold
+    if (s.includes("under cpa")) {
+      return "bg-white/10 text-desertGold border border-desertGold/60";
+    }
+
+    // Completed / submitted = success
+    if (s.includes("completed") || s.includes("submitted")) {
+      return "bg-emerald-500/15 text-emerald-300 border border-emerald-400/60";
+    }
+
+    // Waiting on client
+    if (s.includes("pending client")) {
+      return "bg-white/10 text-gray-100 border border-white/40";
+    }
+
+    // Default
+    return "bg-white/10 text-gray-100 border border-white/20";
   }
-];
 
-let azfcCurrentJobId = null;
+  // --- Render the mini table (only for the current Tracking ID) ---
+  function azfcRenderTable() {
+    const tbody = document.getElementById("azfc-status-table-body");
+    if (!tbody) return;
 
-// --- Rendering helpers ---
-function azfcRenderTable() {
-  const tbody = document.getElementById("azfc-status-table-body");
-  if (!tbody) return;
+    tbody.innerHTML = "";
 
-  tbody.innerHTML = "";
+    if (!azfcCurrentJobId) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="4" class="py-6 text-center text-gray-400 text-xs">
+            Enter your Tracking ID above to view the status of your project.
+          </td>
+        </tr>
+      `;
+      return;
+    }
 
-  if (!azfcJobs.length) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="4" class="py-6 text-center text-slate-400 text-xs">
-          No projects found yet. Once you submit a package through AZ Film Credit,
-          it will appear here.
-        </td>
-      </tr>
-    `;
-    return;
-  }
+    const job = azfcJobs.find((j) => j.id === azfcCurrentJobId);
+    if (!job) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="4" class="py-6 text-center text-gray-400 text-xs">
+            We couldn’t find a project for that Tracking ID.
+          </td>
+        </tr>
+      `;
+      return;
+    }
 
-  azfcJobs.forEach((job) => {
     const tr = document.createElement("tr");
-    tr.className = "hover:bg-slate-800/60 transition";
+    tr.className = "hover:bg-black/50 transition";
 
     tr.innerHTML = `
       <td class="py-2 pr-4 align-top">
         <div class="flex flex-col">
-          <span class="font-medium text-slate-100 text-xs md:text-sm">${job.title}</span>
-          <span class="text-[11px] text-slate-500">ID: ${job.id}</span>
+          <span class="font-medium text-white text-xs md:text-sm">${job.title}</span>
+          <span class="text-[11px] text-gray-400">Tracking ID: ${job.id}</span>
         </div>
       </td>
       <td class="py-2 pr-4 align-top">
@@ -738,7 +779,7 @@ function azfcRenderTable() {
           ${job.status}
         </span>
       </td>
-      <td class="py-2 pr-4 align-top text-xs text-slate-300">
+      <td class="py-2 pr-4 align-top text-xs text-gray-300">
         ${job.lastUpdated}
       </td>
       <td class="py-2 pr-0 align-top text-right">
@@ -753,229 +794,262 @@ function azfcRenderTable() {
     `;
 
     tbody.appendChild(tr);
-  });
-}
-
-function azfcStatusChipClass(status) {
-  if (!status) {
-    return "bg-white/10 text-gray-100 border border-white/20";
   }
 
-  const s = status.toLowerCase();
+  // --- Open detail view for the current job ---
+  function azfcOpenDetail(jobId) {
+    const job = azfcJobs.find((j) => j.id === jobId);
+    if (!job) return;
 
-  // Missing info = warning (sunsetRed)
-  if (s.includes("missing")) {
-    return "bg-sunsetRed/15 text-sunsetRed border border-sunsetRed/60";
-  }
+    azfcCurrentJobId = jobId;
 
-  // Under review = neutral / gold
-  if (s.includes("under cpa")) {
-    return "bg-white/10 text-desertGold border border-desertGold/60";
-  }
+    const panel = document.getElementById("azfc-status-detail-panel");
+    const nameEl = document.getElementById("azfc-detail-project-name");
+    const statusEl = document.getElementById("azfc-detail-status");
+    const updatedEl = document.getElementById("azfc-detail-updated");
+    const missingEl = document.getElementById("azfc-detail-missing-list");
+    const commentsEl = document.getElementById("azfc-detail-comments");
+    const docTypeSelect = document.getElementById("azfc-upload-doc-type");
+    const uploadStatus = document.getElementById("azfc-upload-status");
+    const commentInput = document.getElementById("azfc-new-comment");
+    const proceedCheckbox = document.getElementById("azfc-proceed-without-missing");
 
-  // Completed / submitted = success (soft green)
-  if (s.includes("completed") || s.includes("submitted")) {
-    return "bg-emerald-500/15 text-emerald-300 border border-emerald-400/60";
-  }
+    if (!panel) return;
 
-  // Waiting on client = neutral gray
-  if (s.includes("pending client")) {
-    return "bg-white/10 text-gray-100 border border-white/40";
-  }
-
-  // Default
-  return "bg-white/10 text-gray-100 border border-white/20";
-}
-
-function azfcOpenDetail(jobId) {
-  const job = azfcJobs.find((j) => j.id === jobId);
-  if (!job) return;
-
-  azfcCurrentJobId = jobId;
-
-  const panel = document.getElementById("azfc-status-detail-panel");
-  const nameEl = document.getElementById("azfc-detail-project-name");
-  const statusEl = document.getElementById("azfc-detail-status");
-  const updatedEl = document.getElementById("azfc-detail-updated");
-  const missingEl = document.getElementById("azfc-detail-missing-list");
-  const commentsEl = document.getElementById("azfc-detail-comments");
-  const docTypeSelect = document.getElementById("azfc-upload-doc-type");
-  const uploadStatus = document.getElementById("azfc-upload-status");
-  const commentInput = document.getElementById("azfc-new-comment");
-  const proceedCheckbox = document.getElementById("azfc-proceed-without-missing");
-
-  if (!panel) return;
-
-  // Title
-  if (nameEl) {
-    nameEl.textContent = job.title;
-  }
-
-  // Status pill (detail view) – same look as table chip
-  if (statusEl) {
-    statusEl.textContent = job.status;
-    statusEl.className =
-      "inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium " +
-      azfcStatusChipClass(job.status);
-  }
-
-  // Last updated
-  if (updatedEl) {
-    updatedEl.textContent = job.lastUpdated;
-  }
-
-  // Doc type select options
-  if (docTypeSelect) {
-    docTypeSelect.innerHTML = "";
-    if (job.missingItems && job.missingItems.length > 0) {
-      job.missingItems.forEach((item, index) => {
-        const opt = document.createElement("option");
-        opt.value = item;
-        opt.textContent = item;
-        docTypeSelect.appendChild(opt);
-      });
-    } else {
-      const opt = document.createElement("option");
-      opt.value = "";
-      opt.textContent = "No outstanding items";
-      docTypeSelect.appendChild(opt);
+    // Title
+    if (nameEl) {
+      nameEl.textContent = job.title;
     }
+
+    // Status pill
+    if (statusEl) {
+      statusEl.textContent = job.status;
+      statusEl.className =
+        "inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium " +
+        azfcStatusChipClass(job.status);
+    }
+
+    // Last updated
+    if (updatedEl) {
+      updatedEl.textContent = job.lastUpdated;
+    }
+
+    // Missing items
+    if (missingEl) {
+      missingEl.innerHTML = "";
+      if (!job.missingItems || job.missingItems.length === 0) {
+        missingEl.innerHTML = `
+          <p class="text-gray-400">
+            No outstanding items. Your CPA will update the status once the review is complete.
+          </p>
+        `;
+      } else {
+        job.missingItems.forEach((item) => {
+          const div = document.createElement("div");
+          div.className = "flex items-start gap-2";
+          div.innerHTML = `
+            <span class="mt-0.5 text-desertGold">•</span>
+            <span class="text-gray-100">${item}</span>
+          `;
+          missingEl.appendChild(div);
+        });
+      }
+    }
+
+    // Doc type select options
+    if (docTypeSelect) {
+      docTypeSelect.innerHTML = "";
+      if (job.missingItems && job.missingItems.length > 0) {
+        job.missingItems.forEach((item) => {
+          const opt = document.createElement("option");
+          opt.value = item;
+          opt.textContent = item;
+          docTypeSelect.appendChild(opt);
+        });
+      } else {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "No outstanding items";
+        docTypeSelect.appendChild(opt);
+      }
+    }
+
+    // Comments
+    if (commentsEl) {
+      commentsEl.innerHTML = "";
+      (job.comments || []).forEach((c) => {
+        const div = document.createElement("div");
+        const fromIsCPA = c.from && c.from.toLowerCase() === "cpa";
+        div.className =
+          "rounded-lg px-3 py-2 " +
+          (fromIsCPA
+            ? "bg-black/70 border border-desertGold/60"
+            : "bg-black/60 border border-white/15");
+        div.innerHTML = `
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span class="text-[11px] font-semibold ${
+              fromIsCPA ? "text-desertGold" : "text-emerald-300"
+            }">
+              ${fromIsCPA ? "CPA" : "You"}
+            </span>
+            <span class="text-[10px] text-gray-500">${c.at || ""}</span>
+          </div>
+          <p class="text-[11px] text-gray-100 leading-snug">${c.text}</p>
+        `;
+        commentsEl.appendChild(div);
+      });
+    }
+
+    // Reset UI bits
+    if (uploadStatus) {
+      uploadStatus.classList.add("hidden");
+      uploadStatus.textContent = "";
+    }
+    if (commentInput) commentInput.value = "";
+    if (proceedCheckbox) proceedCheckbox.checked = false;
+
+    panel.classList.remove("hidden");
   }
 
-  // Comments
-  commentsEl.innerHTML = "";
-  (job.comments || []).forEach((c) => {
-    const div = document.createElement("div");
-    const fromIsCPA = c.from && c.from.toLowerCase() === "cpa";
-    div.className = "rounded-lg px-3 py-2 " + (fromIsCPA ? "bg-slate-900/90 border border-blue-500/40" : "bg-slate-900/70 border border-slate-700/70");
-    div.innerHTML = `
-      <div class="flex items-center justify-between gap-2 mb-1">
-        <span class="text-[11px] font-semibold ${fromIsCPA ? "text-blue-300" : "text-emerald-300"}">
-          ${fromIsCPA ? "CPA" : "You"}
-        </span>
-        <span class="text-[10px] text-slate-500">${c.at || ""}</span>
-      </div>
-      <p class="text-[11px] text-slate-100 leading-snug">${c.text}</p>
-    `;
-    commentsEl.appendChild(div);
+  function azfcCloseDetail() {
+    const panel = document.getElementById("azfc-status-detail-panel");
+    if (panel) panel.classList.add("hidden");
+  }
+
+  // --- Tracking ID lookup ---
+  function azfcLookupTrackingId() {
+    const input = document.getElementById("azfc-tracking-input");
+    const messageEl = document.getElementById("azfc-tracking-message");
+    const projectsCard = document.getElementById("azfc-projects-card");
+    const panel = document.getElementById("azfc-status-detail-panel");
+
+    if (!input) return;
+
+    const raw = input.value.trim();
+    if (!raw) {
+      azfcCurrentJobId = null;
+      if (projectsCard) projectsCard.classList.add("hidden");
+      if (panel) panel.classList.add("hidden");
+      if (messageEl) {
+        messageEl.textContent = "Please enter the Tracking ID from your payment confirmation email.";
+        messageEl.className = "mt-2 text-xs text-sunsetRed";
+      }
+      azfcRenderTable();
+      return;
+    }
+
+    const id = raw.toUpperCase();
+    const job = azfcJobs.find((j) => j.id.toUpperCase() === id);
+
+    if (!job) {
+      azfcCurrentJobId = null;
+      if (projectsCard) projectsCard.classList.add("hidden");
+      if (panel) panel.classList.add("hidden");
+      if (messageEl) {
+        messageEl.textContent = "We couldn’t find a project with that Tracking ID. Please confirm the ID and try again.";
+        messageEl.className = "mt-2 text-xs text-sunsetRed";
+      }
+      azfcRenderTable();
+      return;
+    }
+
+    // Found a valid job
+    azfcCurrentJobId = job.id;
+
+    if (projectsCard) projectsCard.classList.remove("hidden");
+    if (messageEl) {
+      messageEl.textContent = `Showing status for Tracking ID: ${job.id}`;
+      messageEl.className = "mt-2 text-xs text-emerald-400";
+    }
+
+    azfcRenderTable();
+    azfcOpenDetail(job.id);
+  }
+
+  // --- Upload + comment actions (demo only, still local) ---
+  function azfcSubmitClientComment() {
+    const job = azfcJobs.find((j) => j.id === azfcCurrentJobId);
+    if (!job) return;
+
+    const textarea = document.getElementById("azfc-new-comment");
+    const proceedCheckbox = document.getElementById("azfc-proceed-without-missing");
+    if (!textarea) return;
+
+    const text = textarea.value.trim();
+    const proceed = proceedCheckbox && proceedCheckbox.checked;
+
+    if (!text && !proceed) {
+      alert("Please write a note to your CPA or check the box to allow them to continue without missing documents.");
+      return;
+    }
+
+    const now = new Date();
+    const timestamp = now.toLocaleString();
+
+    if (!job.comments) job.comments = [];
+    if (text) {
+      job.comments.push({
+        from: "You",
+        at: timestamp,
+        text
+      });
+    }
+
+    if (proceed) {
+      job.comments.push({
+        from: "You",
+        at: timestamp,
+        text: "You may proceed with the audit even if all missing documents are not available."
+      });
+    }
+
+    job.lastUpdated = now.toISOString().slice(0, 10);
+
+    // TODO: POST to your backend here
+
+    azfcOpenDetail(job.id);
+    azfcRenderTable();
+  }
+
+  function azfcUploadMissingDocument() {
+    const job = azfcJobs.find((j) => j.id === azfcCurrentJobId);
+    if (!job) return;
+
+    const docTypeSelect = document.getElementById("azfc-upload-doc-type");
+    const fileInput = document.getElementById("azfc-upload-file");
+    const statusEl = document.getElementById("azfc-upload-status");
+
+    if (!docTypeSelect || !fileInput) return;
+
+    const docType = docTypeSelect.value;
+    const file = fileInput.files[0];
+
+    if (!file || !docType) {
+      alert("Please select a missing document type and choose a file to upload.");
+      return;
+    }
+
+    // TODO: send FormData to backend in production
+
+    if (statusEl) {
+      statusEl.textContent = `Uploaded "${file.name}" as "${docType}" (demo only – connect to backend).`;
+      statusEl.classList.remove("hidden");
+      statusEl.classList.remove("text-rose-400");
+      statusEl.classList.add("text-emerald-400");
+    }
+
+    fileInput.value = "";
+  }
+
+  function azfcRefreshStatuses() {
+    azfcRenderTable();
+  }
+
+  // --- Init ---
+  document.addEventListener("DOMContentLoaded", () => {
+    azfcRenderTable();
   });
-
-  // Reset UI bits
-  if (uploadStatus) {
-    uploadStatus.classList.add("hidden");
-    uploadStatus.textContent = "";
-  }
-  if (commentInput) commentInput.value = "";
-  if (proceedCheckbox) proceedCheckbox.checked = false;
-
-  panel.classList.remove("hidden");
-}
-
-function azfcCloseDetail() {
-  const panel = document.getElementById("azfc-status-detail-panel");
-  if (panel) panel.classList.add("hidden");
-  azfcCurrentJobId = null;
-}
-
-// --- Actions (to be hooked to real API later) ---
-function azfcSubmitClientComment() {
-  const job = azfcJobs.find((j) => j.id === azfcCurrentJobId);
-  if (!job) return;
-
-  const textarea = document.getElementById("azfc-new-comment");
-  const proceedCheckbox = document.getElementById("azfc-proceed-without-missing");
-  if (!textarea) return;
-
-  const text = textarea.value.trim();
-  const proceed = proceedCheckbox && proceedCheckbox.checked;
-
-  if (!text && !proceed) {
-    alert("Please write a note to your CPA or check the box to allow them to continue without missing documents.");
-    return;
-  }
-
-  const now = new Date();
-  const timestamp = now.toLocaleString();
-
-  if (!job.comments) job.comments = [];
-  if (text) {
-    job.comments.push({
-      from: "You",
-      at: timestamp,
-      text
-    });
-  }
-
-  if (proceed) {
-    job.comments.push({
-      from: "You",
-      at: timestamp,
-      text: "You may proceed with the audit even if all missing documents are not available."
-    });
-  }
-
-  job.lastUpdated = now.toISOString().slice(0, 10);
-
-  // TODO: POST to your backend, e.g.:
-  // fetch(`/api/jobs/${job.id}/client-comment`, {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify({ text, proceed })
-  // });
-
-  azfcOpenDetail(job.id);  // re-render
-  azfcRenderTable();
-}
-
-function azfcUploadMissingDocument() {
-  const job = azfcJobs.find((j) => j.id === azfcCurrentJobId);
-  if (!job) return;
-
-  const docTypeSelect = document.getElementById("azfc-upload-doc-type");
-  const fileInput = document.getElementById("azfc-upload-file");
-  const statusEl = document.getElementById("azfc-upload-status");
-
-  if (!docTypeSelect || !fileInput) return;
-
-  const docType = docTypeSelect.value;
-  const file = fileInput.files[0];
-
-  if (!file || !docType) {
-    alert("Please select a missing document type and choose a file to upload.");
-    return;
-  }
-
-  // In production: send this to your backend via FormData
-  // const formData = new FormData();
-  // formData.append("file", file);
-  // formData.append("docType", docType);
-  // fetch(`/api/jobs/${job.id}/upload`, { method: "POST", body: formData });
-
-  if (statusEl) {
-    statusEl.textContent = `Uploaded "${file.name}" as "${docType}" (demo only – connect to backend).`;
-    statusEl.classList.remove("hidden");
-    statusEl.classList.remove("text-rose-400");
-    statusEl.classList.add("text-emerald-400");
-  }
-
-  fileInput.value = "";
-}
-
-function azfcRefreshStatuses() {
-  // For now just re-render demo data.
-  // Later you can GET from your API:
-  // fetch("/api/jobs")
-  //   .then(res => res.json())
-  //   .then(data => { azfcJobs = data; azfcRenderTable(); });
-
-  azfcRenderTable();
-}
-
-// --- Init ---
-document.addEventListener("DOMContentLoaded", () => {
-  azfcRenderTable();
-});
-</script>
+  </script>
 
 </body>
 </html>
