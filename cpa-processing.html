@@ -34,7 +34,7 @@
     }
   </style>
 
-  <!-- PayPal SDK (in-house gateway uses PayPal client ID) -->
+  <!-- (Optional now) PayPal SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=AZTItKSIoet0uX-vTdaXCE-MlA8ehTm8xRJmLS3phCBsYQtN74-iiNXl1YECmbu4ldznZexblz-893CX&currency=USD"></script>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -81,101 +81,7 @@
 
   <!-- MAIN -->
   <main class="flex-1 py-10">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[2fr,1.4fr] gap-8">
-    <!-- your existing form + aside live here -->
-  </div>
-
-   <!-- SAMPLE CPA AUDIT FLIPBOOK VIEWER -->
-  <section class="mt-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-lg sm:text-xl font-semibold text-white mb-1">
-      Preview a sample CPA-ready audit package
-    </h2>
-    <p class="text-[11px] sm:text-xs text-gray-300 mb-4 max-w-2xl">
-      This is a fictional sample showing the kind of CPA-ready Arizona film credit package
-      AZ Film Credit generates from your uploads. Your real package will be customized to your
-      project, but the structure and schedules will look very similar.
-    </p>
-
-    <!-- Tabs -->
-    <div class="flex flex-wrap gap-2 mb-4 text-[11px] sm:text-xs">
-      <button class="px-3 py-1 rounded-full bg-white/10 text-desertGold" data-sample="feature">
-        Feature Film
-      </button>
-      <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="series">
-        Series
-      </button>
-      <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="commercial">
-        Commercial
-      </button>
-      <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="music">
-        Music Video
-      </button>
-    </div>
-
-    <!-- "Flipbook" style PDF viewer -->
-    <div class="w-full aspect-[4/3] bg-black/60 border border-white/10 rounded-xl overflow-hidden shadow-xl shadow-black/40">
-      <iframe
-        id="sample-viewer"
-        src="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature.pdf#view=FitH&page=1"
-        class="w-full h-full"
-        style="border:0;"
-      ></iframe>
-    </div>
-
-    <p class="mt-2 text-[11px] text-gray-400">
-      Use the viewer controls to change pages or zoom in. This sample is for demonstration only and
-      is not a real CPA opinion or filing.
-    </p>
-
-    <div class="mt-2 text-[11px]">
-      <a
-        id="sample-download-link"
-        href="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature.pdf"
-        class="text-desertGold underline underline-offset-2"
-        target="_blank"
-      >
-        Download this sample as PDF
-      </a>
-    </div>
-  </section>
-
-  <script>
-    // Map of sample type -> PDF URL
-    const azfcSampleMap = {
-      feature: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature.pdf",
-      series: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Series.pdf",
-      commercial: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Commercial.pdf",
-      music: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_MusicVideo.pdf"
-    };
-
-    const azfcViewer = document.getElementById("sample-viewer");
-    const azfcDownloadLink = document.getElementById("sample-download-link");
-    const azfcButtons = document.querySelectorAll("[data-sample]");
-
-    azfcButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const key = btn.getAttribute("data-sample");
-        const pdfUrl = azfcSampleMap[key];
-
-        // Update iframe (start at page 1)
-        azfcViewer.src = pdfUrl + "#view=FitH&page=1";
-
-        // Update download link
-        azfcDownloadLink.href = pdfUrl;
-
-        // Update button styles (active tab look)
-        azfcButtons.forEach(b => {
-          b.classList.remove("bg-white/10", "text-desertGold");
-          b.classList.add("bg-white/5", "text-gray-200");
-        });
-        btn.classList.add("bg-white/10", "text-desertGold");
-        btn.classList.remove("text-gray-200");
-      });
-    });
-  </script>
-
-</main>
-
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[2fr,1.4fr] gap-8">
       <!-- LEFT: FORM -->
       <section aria-labelledby="processing-heading" class="space-y-6">
         <div>
@@ -408,7 +314,7 @@
             ></textarea>
           </div>
 
-          <!-- Consent + Summary + PayPal -->
+          <!-- Consent + Summary + Payment -->
           <div class="space-y-3">
             <label class="flex items-start gap-2 text-[11px] text-gray-300">
               <input
@@ -439,13 +345,14 @@
             <!-- AZ-branded payment button -->
             <div class="flex justify-end pt-2">
               <button
-                 type="button"
-                 id="azfc-pay-btn"
-                 class="inline-flex items-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition disabled:opacity-50 disabled:cursor-not-allowed"
-  >
-    Complete secure payment
-  </button>
-</div>
+                type="button"
+                id="azfc-pay-btn"
+                class="inline-flex items-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Complete secure payment
+              </button>
+            </div>
+          </div>
 
           <!-- Message -->
           <p id="form-message" class="text-[11px] text-gray-300"></p>
@@ -498,6 +405,60 @@
         </div>
       </aside>
     </div>
+
+    <!-- SAMPLE CPA AUDIT FLIPBOOK VIEWER -->
+    <section class="mt-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-lg sm:text-xl font-semibold text-white mb-1">
+        Preview a sample CPA-ready audit package
+      </h2>
+      <p class="text-[11px] sm:text-xs text-gray-300 mb-4 max-w-2xl">
+        This is a fictional sample showing the kind of CPA-ready Arizona film credit package
+        AZ Film Credit generates from your uploads. Your real package will be customized to your
+        project, but the structure and schedules will look very similar.
+      </p>
+
+      <!-- Tabs -->
+      <div class="flex flex-wrap gap-2 mb-4 text-[11px] sm:text-xs">
+        <button class="px-3 py-1 rounded-full bg-white/10 text-desertGold" data-sample="feature">
+          Feature Film
+        </button>
+        <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="series">
+          Series
+        </button>
+        <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="commercial">
+          Commercial
+        </button>
+        <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="music">
+          Music Video
+        </button>
+      </div>
+
+      <!-- "Flipbook" style PDF viewer -->
+      <div class="w-full aspect-[4/3] bg-black/60 border border-white/10 rounded-xl overflow-hidden shadow-xl shadow-black/40">
+        <iframe
+          id="sample-viewer"
+          src="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature.pdf#view=FitH&page=1"
+          class="w-full h-full"
+          style="border:0;"
+        ></iframe>
+      </div>
+
+      <p class="mt-2 text-[11px] text-gray-400">
+        Use the viewer controls to change pages or zoom in. This sample is for demonstration only and
+        is not a real CPA opinion or filing.
+      </p>
+
+      <div class="mt-2 text-[11px]">
+        <a
+          id="sample-download-link"
+          href="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature.pdf"
+          class="text-desertGold underline underline-offset-2"
+          target="_blank"
+        >
+          Download this sample as PDF
+        </a>
+      </div>
+    </section>
   </main>
 
   <!-- FOOTER -->
@@ -513,116 +474,149 @@
   </footer>
 
   <script>
-  // Year
-  document.getElementById("year").textContent = new Date().getFullYear();
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-  const PLAN_PRICES = {
-    prep: 39.99,
-    prep_cpa: 438.99 // 39.99 + 399
-  };
-
-  function getSelectedPlan() {
-    const radio = document.querySelector('input[name="service_plan"]:checked');
-    return radio ? radio.value : "prep";
-  }
-
-  function updatePriceDisplay() {
-    const plan = getSelectedPlan();
-    const amount = PLAN_PRICES[plan] || PLAN_PRICES.prep;
-    const priceEl = document.getElementById("price-amount");
-    if (priceEl) {
-      priceEl.textContent = `$${amount.toFixed(2)}`;
-    }
-  }
-
-  // Listen for plan changes
-  document.querySelectorAll('input[name="service_plan"]').forEach(radio => {
-    radio.addEventListener("change", updatePriceDisplay);
-  });
-  updatePriceDisplay();
-
-  function validateForm() {
-    const form = document.getElementById("azfc-processing-form");
-    const requiredFields = form.querySelectorAll("[required]");
-    for (const field of requiredFields) {
-      if (!field.value || (field.type === "checkbox" && !field.checked)) {
-        field.scrollIntoView({ behavior: "smooth", block: "center" });
-        field.focus();
-        document.getElementById("form-message").textContent =
-          "Please complete all required fields and acknowledgements before payment.";
-        return false;
-      }
-    }
-    document.getElementById("form-message").textContent = "";
-    return true;
-  }
-
-  async function handlePayment() {
-    if (!validateForm()) return;
-
-    const payBtn = document.getElementById("azfc-pay-btn");
-    const msg = document.getElementById("form-message");
-    const form = document.getElementById("azfc-processing-form");
-    const formData = new FormData(form);
-
-    const plan = getSelectedPlan();
-    const amount = PLAN_PRICES[plan] || PLAN_PRICES.prep;
-
-    // Build a plain object from formData
-    const payload = {
-      service_plan: plan,
-      amount,
-      company_name: formData.get("company_name"),
-      contact_name: formData.get("contact_name"),
-      contact_email: formData.get("contact_email"),
-      contact_phone: formData.get("contact_phone"),
-      project_title: formData.get("project_title"),
-      project_type: formData.get("project_type"),
-      aca_id: formData.get("aca_id"),
-      est_qualified_costs: formData.get("est_qualified_costs"),
-      prod_start: formData.get("prod_start"),
-      prod_end: formData.get("prod_end"),
-      notes: formData.get("notes")
+    const PLAN_PRICES = {
+      prep: 39.99,
+      prep_cpa: 438.99 // 39.99 + 399
     };
 
-    try {
-      payBtn.disabled = true;
-      msg.textContent = "Processing payment… please wait.";
-
-      // 🔗 Call your in-house backend checkout endpoint
-      const response = await fetch("/az-film-credit/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!response.ok) {
-        throw new Error("Payment request failed");
-      }
-
-      const data = await response.json();
-
-      if (data.success) {
-        const plan = getSelectedPlan(); // "prep" or "prep_cpa"
-        window.location.href = `thank-you.html?plan=${encodeURIComponent(plan)}`;
-      } else {
-        msg.textContent =
-          data.message ||
-          "There was an issue processing your payment. Please try again or contact support.";
-      }
-    } catch (err) {
-      console.error(err);
-      msg.textContent =
-        "There was an issue connecting to our payment system. Please try again or contact support.";
-    } finally {
-      payBtn.disabled = false;
+    function getSelectedPlan() {
+      const radio = document.querySelector('input[name="service_plan"]:checked');
+      return radio ? radio.value : "prep";
     }
-  }
 
-  document.getElementById("azfc-pay-btn").addEventListener("click", handlePayment);
-</script>
+    function updatePriceDisplay() {
+      const plan = getSelectedPlan();
+      const amount = PLAN_PRICES[plan] || PLAN_PRICES.prep;
+      const priceEl = document.getElementById("price-amount");
+      if (priceEl) {
+        priceEl.textContent = `$${amount.toFixed(2)}`;
+      }
+    }
+
+    // Listen for plan changes
+    document.querySelectorAll('input[name="service_plan"]').forEach(radio => {
+      radio.addEventListener("change", updatePriceDisplay);
+    });
+    updatePriceDisplay();
+
+    function validateForm() {
+      const form = document.getElementById("azfc-processing-form");
+      const requiredFields = form.querySelectorAll("[required]");
+      for (const field of requiredFields) {
+        if (!field.value || (field.type === "checkbox" && !field.checked)) {
+          field.scrollIntoView({ behavior: "smooth", block: "center" });
+          field.focus();
+          document.getElementById("form-message").textContent =
+            "Please complete all required fields and acknowledgements before payment.";
+          return false;
+        }
+      }
+      document.getElementById("form-message").textContent = "";
+      return true;
+    }
+
+    async function handlePayment() {
+      if (!validateForm()) return;
+
+      const payBtn = document.getElementById("azfc-pay-btn");
+      const msg = document.getElementById("form-message");
+      const form = document.getElementById("azfc-processing-form");
+      const formData = new FormData(form);
+
+      const plan = getSelectedPlan();
+      const amount = PLAN_PRICES[plan] || PLAN_PRICES.prep;
+
+      // Build a plain object from formData
+      const payload = {
+        service_plan: plan,
+        amount,
+        company_name: formData.get("company_name"),
+        contact_name: formData.get("contact_name"),
+        contact_email: formData.get("contact_email"),
+        contact_phone: formData.get("contact_phone"),
+        project_title: formData.get("project_title"),
+        project_type: formData.get("project_type"),
+        aca_id: formData.get("aca_id"),
+        est_qualified_costs: formData.get("est_qualified_costs"),
+        prod_start: formData.get("prod_start"),
+        prod_end: formData.get("prod_end"),
+        notes: formData.get("notes")
+      };
+
+      try {
+        payBtn.disabled = true;
+        msg.textContent = "Processing payment… please wait.";
+
+        // 🔗 Call your in-house backend checkout endpoint
+        const response = await fetch("/az-film-credit/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error("Payment request failed");
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          const plan = getSelectedPlan(); // "prep" or "prep_cpa"
+          window.location.href = `thank-you.html?plan=${encodeURIComponent(plan)}`;
+        } else {
+          msg.textContent =
+            data.message ||
+            "There was an issue processing your payment. Please try again or contact support.";
+        }
+      } catch (err) {
+        console.error(err);
+        msg.textContent =
+          "There was an issue connecting to our payment system. Please try again or contact support.";
+      } finally {
+        payBtn.disabled = false;
+      }
+    }
+
+    document.getElementById("azfc-pay-btn").addEventListener("click", handlePayment);
+
+    // FLIPBOOK SAMPLE SCRIPT
+    const azfcSampleMap = {
+      feature: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature.pdf",
+      series: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Series.pdf",
+      commercial: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Commercial.pdf",
+      music: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_MusicVideo.pdf"
+    };
+
+    const azfcViewer = document.getElementById("sample-viewer");
+    const azfcDownloadLink = document.getElementById("sample-download-link");
+    const azfcButtons = document.querySelectorAll("[data-sample]");
+
+    azfcButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-sample");
+        const pdfUrl = azfcSampleMap[key];
+
+        // Update iframe (start at page 1)
+        azfcViewer.src = pdfUrl + "#view=FitH&page=1";
+
+        // Update download link
+        azfcDownloadLink.href = pdfUrl;
+
+        // Update button styles (active tab look)
+        azfcButtons.forEach(b => {
+          b.classList.remove("bg-white/10", "text-desertGold");
+          b.classList.add("bg-white/5", "text-gray-200");
+        });
+        btn.classList.add("bg-white/10", "text-desertGold");
+        btn.classList.remove("text-gray-200");
+      });
+    });
+  </script>
 
 </body>
 </html>
