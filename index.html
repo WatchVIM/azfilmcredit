@@ -78,6 +78,8 @@
   <a href="#az-credit" class="hover:text-desertGold transition">AZ Program</a>
   <a href="#faq" class="hover:text-desertGold transition">FAQ</a>
   <a href="cpa-processing.html" class="hover:text-desertGold transition">Pricing &amp; Processing</a>
+  <a href="#status-tracker" class="text-slate-200 hover:text-amber-400 text-sm font-medium">
+  Status Tracker </a>
       </nav>
       
       <!-- CTA -->
@@ -217,7 +219,204 @@
           </div>
         </div>
       </div>
+      
     </section>
+    <section id="status-tracker" class="bg-slate-950/80 border-t border-slate-800 py-16">
+  <div class="max-w-6xl mx-auto px-4 lg:px-0">
+    <div class="flex flex-col lg:flex-row gap-10">
+      <!-- Left column: explainer -->
+      <div class="lg:w-1/3 space-y-4">
+        <h2 class="text-2xl md:text-3xl font-semibold text-white">
+          Track Your AZ Film Credit Package
+        </h2>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Use the <span class="font-semibold text-amber-400">Status Tracker Portal</span> to follow
+          your production package from intake to final CPA sign-off and submission to the
+          Arizona Commerce Authority.
+        </p>
+
+        <div class="bg-slate-900/70 border border-slate-700 rounded-2xl p-4 space-y-2 text-sm text-slate-200">
+          <p class="font-semibold text-slate-100 mb-1">Typical status flow:</p>
+          <ul class="space-y-1 list-disc list-inside">
+            <li><span class="font-medium text-amber-300">Draft:</span> You’re still uploading docs.</li>
+            <li><span class="font-medium text-amber-300">Missing Info:</span> CPA has requested additional documents.</li>
+            <li><span class="font-medium text-amber-300">Under CPA Review:</span> CPA is actively reviewing your file.</li>
+            <li><span class="font-medium text-amber-300">Pending Client Decision:</span> CPA needs your confirmation to proceed.</li>
+            <li><span class="font-medium text-amber-300">Completed / Submitted:</span> Package has been approved and submitted.</li>
+          </ul>
+        </div>
+
+        <p class="text-xs text-slate-500">
+          Note: The data shown below will come from your secure AZ Film Credit account.
+          Demo information is shown here until your API is connected.
+        </p>
+      </div>
+
+      <!-- Right column: table + detail panel -->
+      <div class="lg:w-2/3 space-y-6">
+        <!-- Project list -->
+        <div class="bg-slate-900/80 border border-slate-700 rounded-2xl shadow-xl shadow-black/40 p-4">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-lg font-semibold text-white">
+                Your Projects
+              </h3>
+              <p class="text-xs text-slate-400">
+                Select a project to view CPA comments, upload missing documents, and update your status.
+              </p>
+            </div>
+            <button
+              type="button"
+              class="text-xs px-3 py-1 rounded-full border border-slate-600 text-slate-200 hover:border-amber-400 hover:text-amber-300 transition"
+              onclick="azfcRefreshStatuses()"
+            >
+              Refresh
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-slate-200">
+              <thead class="border-b border-slate-700 text-xs uppercase tracking-wide text-slate-400">
+                <tr>
+                  <th class="py-2 pr-4">Project</th>
+                  <th class="py-2 pr-4">Status</th>
+                  <th class="py-2 pr-4">Last Updated</th>
+                  <th class="py-2 pr-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="azfc-status-table-body" class="divide-y divide-slate-800">
+                <!-- Filled by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Detail panel -->
+        <div
+          id="azfc-status-detail-panel"
+          class="bg-slate-900/80 border border-slate-700 rounded-2xl shadow-xl shadow-black/40 p-5 hidden"
+        >
+          <div class="flex items-start justify-between gap-4 mb-4">
+            <div>
+              <h3 id="azfc-detail-project-name" class="text-lg font-semibold text-white">
+                <!-- Project name -->
+              </h3>
+              <p class="text-xs text-slate-400 mt-1">
+                Status:
+                <span id="azfc-detail-status" class="font-medium text-amber-300"></span>
+                &nbsp;•&nbsp;
+                Last updated:
+                <span id="azfc-detail-updated" class="text-slate-300"></span>
+              </p>
+            </div>
+            <button
+              type="button"
+              class="text-xs px-2 py-1 rounded-full border border-slate-600 text-slate-300 hover:border-amber-400 hover:text-amber-300 transition"
+              onclick="azfcCloseDetail()"
+            >
+              Close
+            </button>
+          </div>
+
+          <!-- Outstanding items -->
+          <div class="mb-4">
+            <h4 class="text-sm font-semibold text-slate-100 mb-2">
+              Outstanding Items
+            </h4>
+            <div
+              id="azfc-detail-missing-list"
+              class="bg-slate-950/70 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 space-y-2"
+            >
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+          <!-- Comment thread -->
+          <div class="mb-4">
+            <h4 class="text-sm font-semibold text-slate-100 mb-2">
+              CPA & Client Comments
+            </h4>
+            <div
+              id="azfc-detail-comments"
+              class="bg-slate-950/70 border border-slate-800 rounded-xl p-3 max-h-56 overflow-y-auto space-y-3 text-xs text-slate-200"
+            >
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+          <!-- Add client comment -->
+          <div class="space-y-3">
+            <label class="block text-xs font-medium text-slate-300" for="azfc-new-comment">
+              Add a note to your CPA
+            </label>
+            <textarea
+              id="azfc-new-comment"
+              class="w-full rounded-xl bg-slate-950/70 border border-slate-700 text-xs text-slate-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-amber-400"
+              rows="3"
+              placeholder="Example: We’ve uploaded the final W-9 file. Please continue the audit even if the catering receipt remains missing."
+            ></textarea>
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <label class="inline-flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                <input
+                  id="azfc-proceed-without-missing"
+                  type="checkbox"
+                  class="rounded border-slate-600 bg-slate-900 text-amber-400 focus:ring-amber-400"
+                />
+                <span>Let my CPA know they may <span class="font-semibold text-amber-300">continue without all missing documents</span>.</span>
+              </label>
+
+              <button
+                type="button"
+                class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-amber-400 text-slate-900 text-xs font-semibold hover:bg-amber-300 transition"
+                onclick="azfcSubmitClientComment()"
+              >
+                Send to CPA
+              </button>
+            </div>
+          </div>
+
+          <!-- Upload missing document -->
+          <div class="mt-5 border-t border-slate-800 pt-4 space-y-3">
+            <h4 class="text-sm font-semibold text-slate-100">
+              Upload Missing Document
+            </h4>
+            <p class="text-xs text-slate-400">
+              Choose the missing document requested by your CPA and upload it here. They’ll be notified inside their review dashboard.
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-3 md:items-center">
+              <select
+                id="azfc-upload-doc-type"
+                class="w-full md:w-1/3 rounded-xl bg-slate-950/70 border border-slate-700 text-xs text-slate-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-amber-400"
+              >
+                <!-- Options filled by JS based on missing items -->
+              </select>
+
+              <input
+                id="azfc-upload-file"
+                type="file"
+                class="w-full md:flex-1 text-xs text-slate-300 file:mr-3 file:px-3 file:py-1.5 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-amber-400 file:text-slate-900 hover:file:bg-amber-300"
+              />
+
+              <button
+                type="button"
+                class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition"
+                onclick="azfcUploadMissingDocument()"
+              >
+                Upload
+              </button>
+            </div>
+
+            <p id="azfc-upload-status" class="text-xs text-emerald-400 hidden">
+              <!-- success / error message -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- FEATURES -->
     <section id="features" class="py-12 sm:py-16">
@@ -411,6 +610,328 @@
     // Set current year
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+  <script>
+
+// --- Demo data (replace with real API data later) ---
+let azfcJobs = [
+  {
+    id: "J-001",
+    title: "Feature – Desert Lights",
+    status: "Missing Info",
+    lastUpdated: "2025-12-10",
+    missingItems: [
+      "W-9 – Desert Catering, LLC",
+      "Final location agreement for Tempe warehouse"
+    ],
+    comments: [
+      {
+        from: "CPA",
+        at: "2025-12-10 09:21",
+        text: "Please upload the W-9 for Desert Catering and the signed Tempe warehouse location agreement."
+      },
+      {
+        from: "You",
+        at: "2025-12-10 10:02",
+        text: "We’re waiting on the final location agreement signature; W-9 will be uploaded today."
+      }
+    ]
+  },
+  {
+    id: "J-002",
+    title: "Series – Dry Heat (Pilot)",
+    status: "Under CPA Review",
+    lastUpdated: "2025-12-09",
+    missingItems: [],
+    comments: [
+      {
+        from: "CPA",
+        at: "2025-12-09 15:45",
+        text: "All requested documentation received. Currently reviewing your qualified spend summary."
+      }
+    ]
+  },
+  {
+    id: "J-003",
+    title: "Commercial – Scottsdale Tourism Spot",
+    status: "Completed / Submitted",
+    lastUpdated: "2025-11-30",
+    missingItems: [],
+    comments: [
+      {
+        from: "CPA",
+        at: "2025-11-29 12:10",
+        text: "Final package reviewed and approved."
+      },
+      {
+        from: "CPA",
+        at: "2025-11-30 09:18",
+        text: "Package submitted to AZ Commerce Authority."
+      }
+    ]
+  }
+];
+
+let azfcCurrentJobId = null;
+
+// --- Rendering helpers ---
+function azfcRenderTable() {
+  const tbody = document.getElementById("azfc-status-table-body");
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+
+  if (!azfcJobs.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4" class="py-6 text-center text-slate-400 text-xs">
+          No projects found yet. Once you submit a package through AZ Film Credit,
+          it will appear here.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  azfcJobs.forEach((job) => {
+    const tr = document.createElement("tr");
+    tr.className = "hover:bg-slate-800/60 transition";
+
+    tr.innerHTML = `
+      <td class="py-2 pr-4 align-top">
+        <div class="flex flex-col">
+          <span class="font-medium text-slate-100 text-xs md:text-sm">${job.title}</span>
+          <span class="text-[11px] text-slate-500">ID: ${job.id}</span>
+        </div>
+      </td>
+      <td class="py-2 pr-4 align-top">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${azfcStatusChipClass(job.status)}">
+          ${job.status}
+        </span>
+      </td>
+      <td class="py-2 pr-4 align-top text-xs text-slate-300">
+        ${job.lastUpdated}
+      </td>
+      <td class="py-2 pr-0 align-top text-right">
+        <button
+          type="button"
+          class="text-[11px] md:text-xs px-3 py-1 rounded-full bg-slate-800 text-slate-100 hover:bg-amber-400 hover:text-slate-900 font-semibold transition"
+          onclick="azfcOpenDetail('${job.id}')"
+        >
+          View details
+        </button>
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+function azfcStatusChipClass(status) {
+  if (!status) return "bg-slate-700 text-slate-100";
+  const s = status.toLowerCase();
+  if (s.includes("missing")) return "bg-amber-500/20 text-amber-300 border border-amber-400/50";
+  if (s.includes("under cpa")) return "bg-blue-500/20 text-blue-300 border border-blue-400/50";
+  if (s.includes("completed") || s.includes("submitted")) return "bg-emerald-500/20 text-emerald-300 border border-emerald-400/50";
+  if (s.includes("pending client")) return "bg-purple-500/20 text-purple-300 border border-purple-400/50";
+  return "bg-slate-700 text-slate-100";
+}
+
+function azfcOpenDetail(jobId) {
+  const job = azfcJobs.find((j) => j.id === jobId);
+  if (!job) return;
+
+  azfcCurrentJobId = jobId;
+
+  const panel = document.getElementById("azfc-status-detail-panel");
+  const nameEl = document.getElementById("azfc-detail-project-name");
+  const statusEl = document.getElementById("azfc-detail-status");
+  const updatedEl = document.getElementById("azfc-detail-updated");
+  const missingEl = document.getElementById("azfc-detail-missing-list");
+  const commentsEl = document.getElementById("azfc-detail-comments");
+  const docTypeSelect = document.getElementById("azfc-upload-doc-type");
+  const uploadStatus = document.getElementById("azfc-upload-status");
+  const commentInput = document.getElementById("azfc-new-comment");
+  const proceedCheckbox = document.getElementById("azfc-proceed-without-missing");
+
+  if (!panel) return;
+
+  nameEl.textContent = job.title;
+  statusEl.textContent = job.status;
+  statusEl.className = "font-medium " + azfcStatusChipClass(job.status);
+  updatedEl.textContent = job.lastUpdated;
+
+  // Missing items
+  missingEl.innerHTML = "";
+  if (!job.missingItems || job.missingItems.length === 0) {
+    missingEl.innerHTML = `
+      <p class="text-slate-400">
+        No outstanding items. Your CPA will update the status once the review is complete.
+      </p>
+    `;
+  } else {
+    job.missingItems.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "flex items-start gap-2";
+      div.innerHTML = `
+        <span class="mt-0.5 text-amber-300">•</span>
+        <span class="text-slate-100">${item}</span>
+      `;
+      missingEl.appendChild(div);
+    });
+  }
+
+  // Doc type select options
+  if (docTypeSelect) {
+    docTypeSelect.innerHTML = "";
+    if (job.missingItems && job.missingItems.length > 0) {
+      job.missingItems.forEach((item, index) => {
+        const opt = document.createElement("option");
+        opt.value = item;
+        opt.textContent = item;
+        docTypeSelect.appendChild(opt);
+      });
+    } else {
+      const opt = document.createElement("option");
+      opt.value = "";
+      opt.textContent = "No outstanding items";
+      docTypeSelect.appendChild(opt);
+    }
+  }
+
+  // Comments
+  commentsEl.innerHTML = "";
+  (job.comments || []).forEach((c) => {
+    const div = document.createElement("div");
+    const fromIsCPA = c.from && c.from.toLowerCase() === "cpa";
+    div.className = "rounded-lg px-3 py-2 " + (fromIsCPA ? "bg-slate-900/90 border border-blue-500/40" : "bg-slate-900/70 border border-slate-700/70");
+    div.innerHTML = `
+      <div class="flex items-center justify-between gap-2 mb-1">
+        <span class="text-[11px] font-semibold ${fromIsCPA ? "text-blue-300" : "text-emerald-300"}">
+          ${fromIsCPA ? "CPA" : "You"}
+        </span>
+        <span class="text-[10px] text-slate-500">${c.at || ""}</span>
+      </div>
+      <p class="text-[11px] text-slate-100 leading-snug">${c.text}</p>
+    `;
+    commentsEl.appendChild(div);
+  });
+
+  // Reset UI bits
+  if (uploadStatus) {
+    uploadStatus.classList.add("hidden");
+    uploadStatus.textContent = "";
+  }
+  if (commentInput) commentInput.value = "";
+  if (proceedCheckbox) proceedCheckbox.checked = false;
+
+  panel.classList.remove("hidden");
+}
+
+function azfcCloseDetail() {
+  const panel = document.getElementById("azfc-status-detail-panel");
+  if (panel) panel.classList.add("hidden");
+  azfcCurrentJobId = null;
+}
+
+// --- Actions (to be hooked to real API later) ---
+function azfcSubmitClientComment() {
+  const job = azfcJobs.find((j) => j.id === azfcCurrentJobId);
+  if (!job) return;
+
+  const textarea = document.getElementById("azfc-new-comment");
+  const proceedCheckbox = document.getElementById("azfc-proceed-without-missing");
+  if (!textarea) return;
+
+  const text = textarea.value.trim();
+  const proceed = proceedCheckbox && proceedCheckbox.checked;
+
+  if (!text && !proceed) {
+    alert("Please write a note to your CPA or check the box to allow them to continue without missing documents.");
+    return;
+  }
+
+  const now = new Date();
+  const timestamp = now.toLocaleString();
+
+  if (!job.comments) job.comments = [];
+  if (text) {
+    job.comments.push({
+      from: "You",
+      at: timestamp,
+      text
+    });
+  }
+
+  if (proceed) {
+    job.comments.push({
+      from: "You",
+      at: timestamp,
+      text: "You may proceed with the audit even if all missing documents are not available."
+    });
+  }
+
+  job.lastUpdated = now.toISOString().slice(0, 10);
+
+  // TODO: POST to your backend, e.g.:
+  // fetch(`/api/jobs/${job.id}/client-comment`, {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({ text, proceed })
+  // });
+
+  azfcOpenDetail(job.id);  // re-render
+  azfcRenderTable();
+}
+
+function azfcUploadMissingDocument() {
+  const job = azfcJobs.find((j) => j.id === azfcCurrentJobId);
+  if (!job) return;
+
+  const docTypeSelect = document.getElementById("azfc-upload-doc-type");
+  const fileInput = document.getElementById("azfc-upload-file");
+  const statusEl = document.getElementById("azfc-upload-status");
+
+  if (!docTypeSelect || !fileInput) return;
+
+  const docType = docTypeSelect.value;
+  const file = fileInput.files[0];
+
+  if (!file || !docType) {
+    alert("Please select a missing document type and choose a file to upload.");
+    return;
+  }
+
+  // In production: send this to your backend via FormData
+  // const formData = new FormData();
+  // formData.append("file", file);
+  // formData.append("docType", docType);
+  // fetch(`/api/jobs/${job.id}/upload`, { method: "POST", body: formData });
+
+  if (statusEl) {
+    statusEl.textContent = `Uploaded "${file.name}" as "${docType}" (demo only – connect to backend).`;
+    statusEl.classList.remove("hidden");
+    statusEl.classList.remove("text-rose-400");
+    statusEl.classList.add("text-emerald-400");
+  }
+
+  fileInput.value = "";
+}
+
+function azfcRefreshStatuses() {
+  // For now just re-render demo data.
+  // Later you can GET from your API:
+  // fetch("/api/jobs")
+  //   .then(res => res.json())
+  //   .then(data => { azfcJobs = data; azfcRenderTable(); });
+
+  azfcRenderTable();
+}
+
+// --- Init ---
+document.addEventListener("DOMContentLoaded", () => {
+  azfcRenderTable();
+});
+</script>
 
 </body>
 </html>
