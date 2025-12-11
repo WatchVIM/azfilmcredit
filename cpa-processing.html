@@ -512,10 +512,8 @@
       const data = await response.json();
 
       if (data.success) {
-        msg.textContent =
-          "Payment received. Thank you! We’ll begin preparing your AZ Film Credit package and follow up by email.";
-        // Optional: redirect to a thank-you page
-        // window.location.href = "/az-film-credit/thank-you";
+        const plan = getSelectedPlan(); // "prep" or "prep_cpa"
+        window.location.href = `thank-you.html?plan=${encodeURIComponent(plan)}`;
       } else {
         msg.textContent =
           data.message ||
