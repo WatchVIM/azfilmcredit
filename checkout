@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 const PAYPAL_CLIENT_ID = "AZTItKSIoet0uX-vTdaXCE-MlA8ehTm8xRJmLS3phCBsYQtN74-iiNXl1YECmbu4ldznZexblz-893CX";
-const PAYPAL_SECRET = "YOUR_PAYPAL_SECRET_HERE"; // from PayPal dashboard
+const PAYPAL_SECRET = "EKJx4-GehZi24m0IBX8vWbt8Bijh9ZIIcrSHz4Oy4s7DaH-WPp8sRe7izlevDL4fbh5mu_nUf1h7xY3W"; // from PayPal dashboard
 const PAYPAL_API_BASE = "https://api-m.paypal.com"; // or sandbox url
 
 async function getPayPalAccessToken() {
