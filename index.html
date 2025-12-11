@@ -36,22 +36,21 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- NAVBAR -->
+      <!-- NAVBAR -->
   <header class="sticky top-0 z-40 bg-black/70 backdrop-blur border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-6 h-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4 py-3">
       <!-- Logo -->
       <a href="#top" class="flex items-center space-x-3">
-        <!-- Inline SVG logo -->
         <div class="flex items-center">
           <svg class="w-9 h-9 mr-2" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="4" width="32" height="32" rx="8" fill="#111827"/>
-            <rect x="6" y="10" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="6" y="18" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="6" y="26" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="26" y="10" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="26" y="18" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="26" y="26" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="11" y="10" width="16" height="20" rx="2" fill="#1F2937"/>
+            <rect x="2" y="4" width="32" height="32" rx="8" fill="#111827" />
+            <rect x="6" y="10" width="4" height="4" rx="1" fill="#F3F4F6" />
+            <rect x="6" y="18" width="4" height="4" rx="1" fill="#F3F4F6" />
+            <rect x="6" y="26" width="4" height="4" rx="1" fill="#F3F4F6" />
+            <rect x="26" y="10" width="4" height="4" rx="1" fill="#F3F4F6" />
+            <rect x="26" y="18" width="4" height="4" rx="1" fill="#F3F4F6" />
+            <rect x="26" y="26" width="4" height="4" rx="1" fill="#F3F4F6" />
+            <rect x="11" y="10" width="16" height="20" rx="2" fill="#1F2937" />
             <path d="M14 21 L18 25 L24 17"
                   stroke="#E3A857"
                   stroke-width="2.4"
@@ -72,13 +71,31 @@
       </a>
 
       <!-- Nav links -->
-      <nav class="hidden md:flex items-center gap-6 text-xs sm:text-sm text-gray-200">
-        <a href="#how-it-works" class="font-medium hover:text-desertGold transition">How it works</a>
-        <a href="#features" class="font-medium hover:text-desertGold transition">Features</a>
-        <a href="#az-credit" class="font-medium hover:text-desertGold transition">AZ Program</a>
-        <a href="#faq" class="font-medium hover:text-desertGold transition">FAQ</a>
-        <a href="cpa-processing.html" class="font-medium hover:text-desertGold transition">Pricing &amp; Processing</a>
-        <a href="#status-tracker" class="font-medium hover:text-desertGold transition">Status tracker</a>
+      <nav class="hidden md:flex flex-1 items-center justify-center gap-3 text-xs sm:text-sm text-gray-200">
+        <a href="#how-it-works"
+           class="px-3 py-1 rounded-full font-medium border border-transparent hover:border-desertGold/50 hover:bg-white/5 transition">
+          How it works
+        </a>
+        <a href="#features"
+           class="px-3 py-1 rounded-full font-medium border border-transparent hover:border-desertGold/50 hover:bg-white/5 transition">
+          Features
+        </a>
+        <a href="#az-credit"
+           class="px-3 py-1 rounded-full font-medium border border-transparent hover:border-desertGold/50 hover:bg-white/5 transition">
+          AZ Program
+        </a>
+        <a href="#faq"
+           class="px-3 py-1 rounded-full font-medium border border-transparent hover:border-desertGold/50 hover:bg-white/5 transition">
+          FAQ
+        </a>
+        <a href="cpa-processing.html"
+           class="px-3 py-1 rounded-full font-medium border border-transparent hover:border-desertGold/50 hover:bg-white/5 transition">
+          Pricing &amp; Processing
+        </a>
+        <a href="#status-tracker"
+           class="px-3 py-1 rounded-full font-medium border border-transparent hover:border-desertGold/50 hover:bg-white/5 transition">
+          Status tracker
+        </a>
       </nav>
 
       <!-- CTA buttons -->
@@ -88,7 +105,7 @@
           For CPAs
         </a>
         <a href="cpa-processing.html"
-           class="inline-flex justify-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition">
+           class="inline-flex justify-center px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition">
           Start a sample project
         </a>
       </div>
