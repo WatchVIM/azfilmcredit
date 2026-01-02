@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta
     name="description"
-    content="Submit your Arizona production details and documents and AZ Film Credit will prepare a CPA-ready package for the Arizona Motion Picture Production Program."
+    content="Upload your Arizona production details and documents. AZ Film Credit prepares a CPA-ready audit package and filing forms for the Arizona film credit program."
   />
 
   <!-- Tailwind -->
@@ -32,43 +32,36 @@
       color: #F9FAFB;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
+    .glass { background: rgba(0,0,0,.55); backdrop-filter: blur(10px); }
   </style>
-
-  <!-- (Optional now) PayPal SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AZTItKSIoet0uX-vTdaXCE-MlA8ehTm8xRJmLS3phCBsYQtN74-iiNXl1YECmbu4ldznZexblz-893CX&currency=USD"></script>
 </head>
+
 <body class="min-h-screen flex flex-col">
 
   <!-- HEADER -->
-  <header class="border-b border-white/10 bg-black/70 backdrop-blur">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <!-- Logo mini -->
-      <a href="index.html" class="flex items-center space-x-3">
-        <div class="flex items-center">
-          <svg class="w-8 h-8 mr-2" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="4" width="32" height="32" rx="8" fill="#111827"/>
-            <rect x="6" y="10" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="6" y="18" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="6" y="26" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="26" y="10" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="26" y="18" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="26" y="26" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="11" y="10" width="16" height="20" rx="2" fill="#1F2937"/>
-            <path d="M14 21 L18 25 L24 17"
-                  stroke="#E3A857"
-                  stroke-width="2.4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round" />
-          </svg>
-          <div class="leading-tight">
-            <div class="text-xs font-semibold tracking-wide">
-              <span class="text-desertGold">AZ</span>
-              <span class="text-white ml-1">Film</span>
-              <span class="text-sunsetRed ml-1">Credit</span>
-            </div>
-            <div class="text-[10px] uppercase tracking-[0.16em] text-gray-400">
-              CPA-Ready Prep Service
-            </div>
+  <header class="border-b border-white/10 glass">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <svg class="w-9 h-9" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="4" width="36" height="32" rx="10" fill="#111827"/>
+          <rect x="7" y="11" width="4" height="4" rx="1" fill="#F3F4F6"/>
+          <rect x="7" y="19" width="4" height="4" rx="1" fill="#F3F4F6"/>
+          <rect x="7" y="27" width="4" height="4" rx="1" fill="#F3F4F6"/>
+          <rect x="29" y="11" width="4" height="4" rx="1" fill="#F3F4F6"/>
+          <rect x="29" y="19" width="4" height="4" rx="1" fill="#F3F4F6"/>
+          <rect x="29" y="27" width="4" height="4" rx="1" fill="#F3F4F6"/>
+          <rect x="12" y="11" width="16" height="20" rx="2.5" fill="#1F2937"/>
+          <path d="M15 22 L18.5 25.5 L25 17.5" stroke="#E3A857" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        <div class="leading-tight">
+          <div class="text-sm font-semibold tracking-wide">
+            <span class="text-desertGold">AZ</span>
+            <span class="text-white ml-1">Film</span>
+            <span class="text-sunsetRed ml-1">Credit</span>
+          </div>
+          <div class="text-[10px] uppercase tracking-[0.18em] text-gray-400">
+            CPA-Ready Prep Service
           </div>
         </div>
       </a>
@@ -81,139 +74,104 @@
 
   <!-- MAIN -->
   <main class="flex-1 py-10">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[2fr,1.4fr] gap-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[2fr,1.2fr] gap-8">
+
       <!-- LEFT: FORM -->
-      <section aria-labelledby="processing-heading" class="space-y-6">
+      <section class="space-y-6">
         <div>
-          <h1 id="processing-heading" class="text-2xl sm:text-3xl font-semibold text-white">
+          <h1 class="text-2xl sm:text-3xl font-semibold text-white">
             Submit your project for a CPA-ready Arizona film credit package
           </h1>
-          <p class="mt-2 text-sm text-gray-300 max-w-xl">
-            Choose between <span class="font-semibold text-desertGold">$39.99 document prep</span> or
+          <p class="mt-2 text-sm text-gray-300 max-w-2xl">
+            Choose <span class="font-semibold text-desertGold">$39.99 document prep</span> or
             <span class="font-semibold text-desertGold">$39.99 + $399</span> for prep plus a
-            Certified AZ CPA to review and sign your audit documents.
+            Certified AZ CPA review & sign-off.
           </p>
         </div>
 
-        <form class="space-y-5" id="azfc-processing-form">
-          <!-- Production Company -->
+        <form id="azfc-processing-form" class="space-y-5">
+          <!-- Company + Contact -->
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs text-gray-300 mb-1">Production company name</label>
-              <input
-                type="text"
-                name="company_name"
-                required
+              <input type="text" name="company_name" required
                 class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                placeholder="e.g., VIM Media LLC"
-              />
+                placeholder="e.g., VIM Media LLC" />
             </div>
             <div>
               <label class="block text-xs text-gray-300 mb-1">Primary contact name</label>
-              <input
-                type="text"
-                name="contact_name"
-                required
+              <input type="text" name="contact_name" required
                 class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                placeholder="Your name"
-              />
+                placeholder="Your name" />
             </div>
           </div>
 
-          <!-- Contact info -->
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs text-gray-300 mb-1">Contact email</label>
-              <input
-                type="email"
-                name="contact_email"
-                required
+              <input type="email" name="contact_email" required
                 class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                placeholder="you@example.com"
-              />
+                placeholder="you@example.com" />
             </div>
             <div>
               <label class="block text-xs text-gray-300 mb-1">Contact phone (optional)</label>
-              <input
-                type="tel"
-                name="contact_phone"
+              <input type="tel" name="contact_phone"
                 class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                placeholder="(xxx) xxx-xxxx"
-              />
+                placeholder="(xxx) xxx-xxxx" />
             </div>
           </div>
 
-          <!-- Project details -->
+          <!-- Project -->
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs text-gray-300 mb-1">Project title</label>
-              <input
-                type="text"
-                name="project_title"
-                required
+              <input type="text" name="project_title" required
                 class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                placeholder="e.g., Almost Us"
-              />
+                placeholder="e.g., Almost Us" />
             </div>
             <div>
               <label class="block text-xs text-gray-300 mb-1">Project type</label>
-              <select
-                name="project_type"
-                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-              >
+              <select name="project_type"
+                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold">
                 <option>Feature film</option>
                 <option>TV series / episodic</option>
                 <option>Documentary</option>
                 <option>Commercial / branded</option>
+                <option>Music video</option>
                 <option>Other</option>
               </select>
             </div>
           </div>
 
-          <!-- ACA & Budget -->
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs text-gray-300 mb-1">ACA pre-approval / project ID (if available)</label>
-              <input
-                type="text"
-                name="aca_id"
+              <label class="block text-xs text-gray-300 mb-1">ACA pre-approval / project ID (optional)</label>
+              <input type="text" name="aca_id"
                 class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                placeholder="Enter ACA ID"
-              />
+                placeholder="Enter ACA ID" />
             </div>
             <div>
-              <label class="block text-xs text-gray-300 mb-1">Estimated qualified production costs</label>
-              <input
-                type="number"
-                name="est_qualified_costs"
-                min="0"
+              <label class="block text-xs text-gray-300 mb-1">Estimated qualified production costs (optional)</label>
+              <input type="number" name="est_qualified_costs" min="0"
                 class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                placeholder="e.g., 500000"
-              />
+                placeholder="e.g., 500000" />
             </div>
           </div>
 
-          <!-- Dates -->
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs text-gray-300 mb-1">Production start date</label>
-              <input
-                type="date"
-                name="prod_start"
-                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-              />
+              <label class="block text-xs text-gray-300 mb-1">Production start date (optional)</label>
+              <input type="date" name="prod_start"
+                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold" />
             </div>
             <div>
-              <label class="block text-xs text-gray-300 mb-1">Production completion date</label>
-              <input
-                type="date"
-                name="prod_end"
-                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-              />
+              <label class="block text-xs text-gray-300 mb-1">Production completion date (optional)</label>
+              <input type="date" name="prod_end"
+                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold" />
             </div>
           </div>
 
-          <!-- Uploads -->
+          <!-- Uploads (MVP UI only; backend file handling comes next) -->
           <div class="space-y-3">
             <p class="text-xs font-semibold text-desertGold uppercase tracking-[0.16em]">
               Upload your production data
@@ -221,83 +179,53 @@
 
             <div>
               <label class="block text-xs text-gray-300 mb-1">Master ledger / cost report (CSV / Excel / PDF)</label>
-              <input
-                type="file"
-                name="ledger_file"
-                accept=".csv,.xlsx,.xls,.pdf"
-                required
-                class="block w-full text-xs text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-desertGold file:text-black hover:file:bg-yellow-400"
-              />
+              <input type="file" name="ledger_file" accept=".csv,.xlsx,.xls,.pdf" required
+                class="block w-full text-xs text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-desertGold file:text-black hover:file:bg-yellow-400" />
             </div>
 
             <div>
-              <label class="block text-xs text-gray-300 mb-1">Payroll reports</label>
-              <input
-                type="file"
-                name="payroll_files"
-                multiple
-                accept=".csv,.xlsx,.xls,.pdf"
-                class="block w-full text-xs text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-desertGold file:text-black hover:file:bg-yellow-400"
-              />
+              <label class="block text-xs text-gray-300 mb-1">Payroll reports (optional)</label>
+              <input type="file" name="payroll_files" multiple accept=".csv,.xlsx,.xls,.pdf"
+                class="block w-full text-xs text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-desertGold file:text-black hover:file:bg-yellow-400" />
             </div>
 
             <div>
-              <label class="block text-xs text-gray-300 mb-1">
-                Receipts, invoices & contracts (ZIP or multiple files)
-              </label>
-              <input
-                type="file"
-                name="supporting_docs"
-                multiple
-                accept=".zip,.pdf,.jpg,.jpeg,.png"
-                class="block w-full text-xs text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-desertGold file:text-black hover:file:bg-yellow-400"
-              />
-              <p class="mt-1 text-[11px] text-gray-400">
-                Tip: If you have many receipts, compress them into a single .zip file.
-              </p>
+              <label class="block text-xs text-gray-300 mb-1">Receipts, invoices & contracts (optional)</label>
+              <input type="file" name="supporting_docs" multiple accept=".zip,.pdf,.jpg,.jpeg,.png"
+                class="block w-full text-xs text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-desertGold file:text-black hover:file:bg-yellow-400" />
+              <p class="mt-1 text-[11px] text-gray-400">Tip: If you have many receipts, compress into a single .zip.</p>
             </div>
           </div>
 
-          <!-- PLAN SELECTION -->
+          <!-- Plan -->
           <div class="space-y-2">
             <label class="block text-xs text-gray-300 mb-1">Choose your service</label>
             <div class="bg-white/5 border border-white/10 rounded-lg divide-y divide-white/10">
-              <!-- Prep only -->
               <label class="flex items-center justify-between px-3 py-2 text-xs cursor-pointer">
                 <span>
                   <span class="font-semibold text-gray-100">Document prep only</span>
                   <span class="block text-[11px] text-gray-400">
-                    We organize your data into a CPA-ready package for your own CPA.
+                    We organize your package for your own CPA to review and sign.
                   </span>
                 </span>
                 <span class="flex items-center gap-2">
                   <span class="text-sm font-semibold text-desertGold">$39.99</span>
-                  <input
-                    type="radio"
-                    name="service_plan"
-                    value="prep"
-                    class="w-4 h-4 rounded border-white/40 bg-black/60 text-desertGold focus:ring-desertGold"
-                    checked
-                  />
+                  <input type="radio" name="service_plan" value="prep" checked
+                    class="w-4 h-4 rounded border-white/40 bg-black/60 text-desertGold focus:ring-desertGold" />
                 </span>
               </label>
 
-              <!-- Prep + Certified CPA -->
               <label class="flex items-center justify-between px-3 py-2 text-xs cursor-pointer">
                 <span>
                   <span class="font-semibold text-gray-100">Document prep + Certified AZ CPA sign-off</span>
                   <span class="block text-[11px] text-gray-400">
-                    We prep your docs and route them to a Certified AZ CPA to review and sign your audit report.
+                    We prep your docs and route to a Certified AZ CPA to review and sign.
                   </span>
                 </span>
                 <span class="flex items-center gap-2">
                   <span class="text-sm font-semibold text-desertGold">$438.99</span>
-                  <input
-                    type="radio"
-                    name="service_plan"
-                    value="prep_cpa"
-                    class="w-4 h-4 rounded border-white/40 bg-black/60 text-desertGold focus:ring-desertGold"
-                  />
+                  <input type="radio" name="service_plan" value="prep_cpa"
+                    class="w-4 h-4 rounded border-white/40 bg-black/60 text-desertGold focus:ring-desertGold" />
                 </span>
               </label>
             </div>
@@ -305,101 +233,75 @@
 
           <!-- Notes -->
           <div>
-            <label class="block text-xs text-gray-300 mb-1">Notes for our prep team (optional)</label>
-            <textarea
-              name="notes"
-              rows="3"
+            <label class="block text-xs text-gray-300 mb-1">Notes (optional)</label>
+            <textarea name="notes" rows="3"
               class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-              placeholder="Tell us about any unusual items, major vendor relationships, or special instructions for your CPA."
-            ></textarea>
+              placeholder="Any unusual items or instructions for the prep team / CPA."></textarea>
           </div>
 
-          <!-- Consent + Summary + Payment -->
+          <!-- Consent + Price + CTA -->
           <div class="space-y-3">
             <label class="flex items-start gap-2 text-[11px] text-gray-300">
-              <input
-                type="checkbox"
-                name="acknowledge"
-                required
-                class="mt-[2px] rounded border-white/30 bg-black/60 text-desertGold focus:ring-desertGold"
-              />
+              <input type="checkbox" name="acknowledge" required
+                class="mt-[2px] rounded border-white/30 bg-black/60 text-desertGold focus:ring-desertGold" />
               <span>
-                I understand that AZ Film Credit provides a document prep and organization service only.
-                A licensed CPA will review and sign the final audit statement for the Arizona film tax credit.
-                This service does not constitute legal or tax advice.
+                I understand AZ Film Credit provides document organization and prep only. A licensed CPA reviews and signs the final audit documentation.
+                This is not legal or tax advice.
               </span>
             </label>
 
-            <div
-              class="flex items-center justify-between text-xs text-gray-300 bg-white/5 border border-white/10 rounded-lg px-3 py-2"
-              id="price-summary"
-            >
+            <div class="flex items-center justify-between text-xs text-gray-300 bg-white/5 border border-white/10 rounded-lg px-3 py-2">
               <span>Selected service total:</span>
               <span class="text-base font-semibold text-desertGold" id="price-amount">$39.99</span>
             </div>
 
             <p class="text-[11px] text-gray-400">
-              You’ll complete payment through our secure in-house gateway powered by PayPal.
+              Payment is processed through our secure in-house gateway. (MVP backend is now wired.)
             </p>
 
-            <!-- AZ-branded payment button -->
-            <div class="flex justify-end pt-2">
-              <button
-                type="button"
-                id="azfc-pay-btn"
-                class="inline-flex items-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <p id="form-message" class="text-[11px] text-gray-300"></p>
+
+              <button type="button" id="azfc-pay-btn"
+                class="inline-flex items-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition disabled:opacity-50 disabled:cursor-not-allowed">
                 Complete secure payment
               </button>
             </div>
           </div>
-
-          <!-- Message -->
-          <p id="form-message" class="text-[11px] text-gray-300"></p>
         </form>
       </section>
 
-      <!-- RIGHT: SUMMARY / DOCUMENTS GENERATED -->
+      <!-- RIGHT: SUMMARY -->
       <aside class="space-y-4">
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <h2 class="text-sm font-semibold text-white mb-2">
-            What we generate for your CPA
-          </h2>
+          <h2 class="text-sm font-semibold text-white mb-2">What we generate for your CPA</h2>
           <p class="text-[11px] text-gray-300 mb-3">
-            Based on your uploads, we assemble a structured package your Arizona-licensed CPA can review
-            and certify for the Motion Picture Production Program.
+            A structured package your Arizona-licensed CPA can review and certify for the Arizona film credit program.
           </p>
           <ul class="text-[11px] text-gray-200 space-y-1.5">
-            <li>• <span class="font-semibold">AZ-FC-01 – Production Company & Project Profile</span></li>
-            <li>• <span class="font-semibold">AZ-FC-02 – Production Cost Summary (Qualified vs Non-Qualified)</span></li>
-            <li>• <span class="font-semibold">AZ-FC-03 – Arizona Resident Labor Schedule</span></li>
-            <li>• <span class="font-semibold">AZ-FC-04 – Qualified Production Facility / Location Statement</span></li>
-            <li>• <span class="font-semibold">AZ-FC-05 – Production Period Statement</span></li>
-            <li>• <span class="font-semibold">AZ-FC-06 – Detailed Qualified Cost Ledger Export</span></li>
-            <li>• <span class="font-semibold">AZ-FC-07 – Supporting Documentation Index</span></li>
-            <li>• <span class="font-semibold">AZ-FC-08 – CPA Review & Certification Draft</span> (for your CPA or our Certified AZ CPA partner to finalize)</li>
+            <li>• <span class="font-semibold">AZ-FC-01</span> – Project Profile</li>
+            <li>• <span class="font-semibold">AZ-FC-02</span> – Cost Summary (Qualified vs Non-Qualified)</li>
+            <li>• <span class="font-semibold">AZ-FC-03</span> – Arizona Resident Labor Schedule</li>
+            <li>• <span class="font-semibold">AZ-FC-04</span> – Vendor & Location Summary</li>
+            <li>• <span class="font-semibold">AZ-FC-05</span> – Production Period Statement</li>
+            <li>• <span class="font-semibold">AZ-FC-06</span> – Detailed Ledger (Itemized)</li>
+            <li>• <span class="font-semibold">AZ-FC-07</span> – Supporting Documentation Index</li>
+            <li>• <span class="font-semibold">AZ-FC-08</span> – CPA Certification Draft</li>
           </ul>
-          <p class="mt-3 text-[11px] text-gray-400">
-            When you select the “Prep + Certified AZ CPA sign-off” plan, your project is queued for review by a
-            partnered Certified AZ CPA who will issue the final audit report, subject to their professional standards.
-          </p>
         </div>
 
         <div class="bg-black/60 border border-desertGold/40 rounded-xl p-4">
           <h3 class="text-sm font-semibold text-desertGold mb-1">Plan overview</h3>
           <ul class="text-[11px] text-gray-200 space-y-1.5">
-            <li>• <span class="font-semibold">Document prep only – $39.99</span><br />
-              Ideal if you already have a CPA and just need your data cleaned and organized.</li>
-            <li>• <span class="font-semibold">Prep + Certified AZ CPA – $438.99</span><br />
-              Ideal if you want a full pipeline: prep + a Certified AZ CPA to review and sign your audit documentation.</li>
+            <li>• <span class="font-semibold">Document prep – $39.99</span><br/>You deliver the CPA-ready package to your CPA.</li>
+            <li>• <span class="font-semibold">Prep + Certified AZ CPA – $438.99</span><br/>We prep + route to a Certified AZ CPA for review/sign.</li>
           </ul>
         </div>
 
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
           <h3 class="text-sm font-semibold text-white mb-1">Important</h3>
           <p class="text-[11px] text-gray-300">
-            AZ Film Credit is an independent prep tool and is not an official product of
-            the Arizona Commerce Authority, the Arizona Department of Revenue, or any government agency.
+            AZ Film Credit is an independent prep tool and is not an official product of any government agency.
             Always confirm current program rules and forms with your CPA.
           </p>
         </div>
@@ -407,48 +309,35 @@
     </div>
 
     <!-- SAMPLE CPA AUDIT FLIPBOOK VIEWER -->
-    <section class="mt-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="mt-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-lg sm:text-xl font-semibold text-white mb-1">
         Preview a sample CPA-ready audit package
       </h2>
-      <p class="text-[11px] sm:text-xs text-gray-300 mb-4 max-w-2xl">
-        This is a fictional sample showing the kind of CPA-ready Arizona film credit package
-        AZ Film Credit generates from your uploads. Your real package will be customized to your
-        project, but the structure and schedules will look very similar.
+      <p class="text-[11px] sm:text-xs text-gray-300 mb-4 max-w-3xl">
+        Fictional samples showing the structure and detail your CPA receives. Use the tabs to switch sample type.
       </p>
 
-      <!-- Tabs -->
       <div class="flex flex-wrap gap-2 mb-4 text-[11px] sm:text-xs">
-        <button class="px-3 py-1 rounded-full bg-white/10 text-desertGold" data-sample="feature">
-          Feature Film
-        </button>
-        <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="series">
-          Series
-        </button>
-        <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="commercial">
-          Commercial
-        </button>
-        <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="music">
-          Music Video
-        </button>
+        <button class="px-3 py-1 rounded-full bg-white/10 text-desertGold" data-sample="feature">Feature Film</button>
+        <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="series">Series</button>
+        <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="commercial">Commercial</button>
+        <button class="px-3 py-1 rounded-full bg-white/5 text-gray-200" data-sample="music">Music Video</button>
       </div>
 
-      <!-- "Flipbook" style PDF viewer -->
       <div class="w-full aspect-[4/3] bg-black/60 border border-white/10 rounded-xl overflow-hidden shadow-xl shadow-black/40">
         <iframe
           id="sample-viewer"
           src="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature.pdf#view=FitH&page=1"
           class="w-full h-full"
           style="border:0;"
+          title="AZ Film Credit Sample Viewer"
         ></iframe>
       </div>
 
-      <p class="mt-2 text-[11px] text-gray-400">
-        Use the viewer controls to change pages or zoom in. This sample is for demonstration only and
-        is not a real CPA opinion or filing.
-      </p>
-
-      <div class="mt-2 text-[11px]">
+      <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+        <p class="text-gray-400">
+          This sample is for demonstration only and is not a real CPA opinion or official filing.
+        </p>
         <a
           id="sample-download-link"
           href="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature.pdf"
@@ -463,7 +352,7 @@
 
   <!-- FOOTER -->
   <footer class="border-t border-white/10 py-4 text-[11px] text-gray-400">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
       <div>© <span id="year"></span> AZ Film Credit. All rights reserved.</div>
       <div class="flex gap-4">
         <a href="privacy.html" class="hover:text-desertGold">Privacy</a>
@@ -474,13 +363,11 @@
   </footer>
 
   <script>
-    // Year
+    // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    const PLAN_PRICES = {
-      prep: 39.99,
-      prep_cpa: 438.99 // 39.99 + 399
-    };
+    // Pricing
+    const PLAN_PRICES = { prep: 39.99, prep_cpa: 438.99 };
 
     function getSelectedPlan() {
       const radio = document.querySelector('input[name="service_plan"]:checked');
@@ -489,32 +376,67 @@
 
     function updatePriceDisplay() {
       const plan = getSelectedPlan();
-      const amount = PLAN_PRICES[plan] || PLAN_PRICES.prep;
-      const priceEl = document.getElementById("price-amount");
-      if (priceEl) {
-        priceEl.textContent = `$${amount.toFixed(2)}`;
-      }
+      const amount = PLAN_PRICES[plan] ?? PLAN_PRICES.prep;
+      document.getElementById("price-amount").textContent = `$${amount.toFixed(2)}`;
     }
-
-    // Listen for plan changes
-    document.querySelectorAll('input[name="service_plan"]').forEach(radio => {
-      radio.addEventListener("change", updatePriceDisplay);
-    });
+    document.querySelectorAll('input[name="service_plan"]').forEach(r => r.addEventListener("change", updatePriceDisplay));
     updatePriceDisplay();
 
+    // Flipbook samples
+    const azfcSampleMap = {
+      feature: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature.pdf",
+      series: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Series.pdf",
+      commercial: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Commercial.pdf",
+      music: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_MusicVideo.pdf"
+    };
+    const azfcViewer = document.getElementById("sample-viewer");
+    const azfcDownloadLink = document.getElementById("sample-download-link");
+    const azfcButtons = document.querySelectorAll("[data-sample]");
+
+    azfcButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-sample");
+        const pdfUrl = azfcSampleMap[key];
+        azfcViewer.src = pdfUrl + "#view=FitH&page=1";
+        azfcDownloadLink.href = pdfUrl;
+
+        azfcButtons.forEach(b => {
+          b.classList.remove("bg-white/10", "text-desertGold");
+          b.classList.add("bg-white/5", "text-gray-200");
+        });
+        btn.classList.add("bg-white/10", "text-desertGold");
+        btn.classList.remove("text-gray-200");
+      });
+    });
+
+    // Form validation (basic MVP)
     function validateForm() {
       const form = document.getElementById("azfc-processing-form");
+      const msg = document.getElementById("form-message");
       const requiredFields = form.querySelectorAll("[required]");
+
       for (const field of requiredFields) {
-        if (!field.value || (field.type === "checkbox" && !field.checked)) {
+        if (field.type === "checkbox" && !field.checked) {
           field.scrollIntoView({ behavior: "smooth", block: "center" });
           field.focus();
-          document.getElementById("form-message").textContent =
-            "Please complete all required fields and acknowledgements before payment.";
+          msg.textContent = "Please accept the acknowledgement before payment.";
+          return false;
+        }
+        if (field.type === "file") {
+          if (!field.files || field.files.length === 0) {
+            field.scrollIntoView({ behavior: "smooth", block: "center" });
+            field.focus();
+            msg.textContent = "Please upload your master ledger / cost report before payment.";
+            return false;
+          }
+        } else if (!field.value) {
+          field.scrollIntoView({ behavior: "smooth", block: "center" });
+          field.focus();
+          msg.textContent = "Please complete all required fields before payment.";
           return false;
         }
       }
-      document.getElementById("form-message").textContent = "";
+      msg.textContent = "";
       return true;
     }
 
@@ -527,9 +449,9 @@
       const formData = new FormData(form);
 
       const plan = getSelectedPlan();
-      const amount = PLAN_PRICES[plan] || PLAN_PRICES.prep;
+      const amount = PLAN_PRICES[plan] ?? PLAN_PRICES.prep;
 
-      // Build a plain object from formData
+      // Note: This MVP sends ONLY metadata; file upload + processing comes next.
       const payload = {
         service_plan: plan,
         amount,
@@ -548,75 +470,32 @@
 
       try {
         payBtn.disabled = true;
-        msg.textContent = "Processing payment… please wait.";
+        msg.textContent = "Processing… creating your tracking number.";
 
-        // 🔗 Call your in-house backend checkout endpoint
-        const response = await fetch("/az-film-credit/checkout", {
+        const response = await fetch("/api/checkout", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
 
-        if (!response.ok) {
-          throw new Error("Payment request failed");
-        }
-
         const data = await response.json();
-
-        if (data.success) {
-          const plan = getSelectedPlan(); // "prep" or "prep_cpa"
-          window.location.href = `thank-you.html?plan=${encodeURIComponent(plan)}`;
-        } else {
-          msg.textContent =
-            data.message ||
-            "There was an issue processing your payment. Please try again or contact support.";
+        if (!response.ok || !data.success) {
+          throw new Error(data?.message || "Checkout failed");
         }
+
+        // Redirect to thank-you using backend-provided URL if present
+        const redirectUrl = data.redirect || `/thank-you.html?tracking=${encodeURIComponent(data.trackingNumber)}&plan=${encodeURIComponent(plan)}`;
+        window.location.href = redirectUrl;
+
       } catch (err) {
         console.error(err);
-        msg.textContent =
-          "There was an issue connecting to our payment system. Please try again or contact support.";
+        msg.textContent = "Payment/checkout failed. Please try again or contact support.";
       } finally {
         payBtn.disabled = false;
       }
     }
 
     document.getElementById("azfc-pay-btn").addEventListener("click", handlePayment);
-
-    // FLIPBOOK SAMPLE SCRIPT
-    const azfcSampleMap = {
-      feature: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature.pdf",
-      series: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Series.pdf",
-      commercial: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Commercial.pdf",
-      music: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_MusicVideo.pdf"
-    };
-
-    const azfcViewer = document.getElementById("sample-viewer");
-    const azfcDownloadLink = document.getElementById("sample-download-link");
-    const azfcButtons = document.querySelectorAll("[data-sample]");
-
-    azfcButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const key = btn.getAttribute("data-sample");
-        const pdfUrl = azfcSampleMap[key];
-
-        // Update iframe (start at page 1)
-        azfcViewer.src = pdfUrl + "#view=FitH&page=1";
-
-        // Update download link
-        azfcDownloadLink.href = pdfUrl;
-
-        // Update button styles (active tab look)
-        azfcButtons.forEach(b => {
-          b.classList.remove("bg-white/10", "text-desertGold");
-          b.classList.add("bg-white/5", "text-gray-200");
-        });
-        btn.classList.add("bg-white/10", "text-desertGold");
-        btn.classList.remove("text-gray-200");
-      });
-    });
   </script>
-
 </body>
 </html>
