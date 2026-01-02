@@ -1,6 +1,16 @@
-import crypto from "crypto";
+// /api/checkout.js
 
-function trackingNumber() {
+import crypto from "crypto";
+import { putJSON } from "./_lib/store.js";
+import { paypalAccessToken, paypalCreateOrder, getBaseUrl } from "./_lib/paypal.js";
+
+function send(res, code, obj) {
+  res.statusCode = code;
+  res.setHeader("Content-Type", "application/json");
+  res.end(JSON.stringify(obj));
+}
+
+function makeTrackingNumber() {
   const d = new Date();
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -9,95 +19,83 @@ function trackingNumber() {
   return `AZFC-${y}${m}${day}-${rand}`;
 }
 
-async function kvGet(key) {
-  const url = process.env.KV_REST_API_URL;
-  const token = process.env.KV_REST_API_TOKEN;
-  if (!url || !token) return null;
-
-  const res = await fetch(`${url}/get/${encodeURIComponent(key)}`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-  const data = await res.json();
-  return data?.result ?? null;
-}
-
-async function kvSet(key, value) {
-  const url = process.env.KV_REST_API_URL;
-  const token = process.env.KV_REST_API_TOKEN;
-  if (!url || !token) return false;
-
-  const res = await fetch(`${url}/set/${encodeURIComponent(key)}`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(value)
-  });
-  return res.ok;
-}
-
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ success: false, message: "Method not allowed" });
+  if (req.method !== "POST") return send(res, 405, { success: false, message: "Method not allowed" });
 
   try {
     const payload = req.body || {};
 
-    // Minimal validation
-    const required = ["company_name", "contact_name", "contact_email", "project_title", "service_plan", "amount"];
+    // Required fields
+    const required = ["service_plan", "amount", "company_name", "contact_name", "contact_email", "project_title"];
     for (const k of required) {
-      if (!payload[k]) {
-        return res.status(400).json({ success: false, message: `Missing required field: ${k}` });
-      }
+      if (!payload[k]) return send(res, 400, { success: false, message: `Missing required field: ${k}` });
     }
 
-    const t = trackingNumber();
+    const trackingNumber = makeTrackingNumber();
+    const baseUrl = getBaseUrl(req);
 
+    // PayPal redirect returns token=PAYPAL_ORDER_ID
+    const returnUrl = `${baseUrl}/thank-you.html?tracking=${encodeURIComponent(trackingNumber)}`;
+    const cancelUrl = `${baseUrl}/cpa-processing.html?cancel=1&tracking=${encodeURIComponent(trackingNumber)}`;
+
+    const plan = payload.service_plan;
+    const amount = Number(payload.amount);
+
+    const description =
+      plan === "prep"
+        ? "AZ Film Credit - Document Prep Only"
+        : "AZ Film Credit - Document Prep + Certified AZ CPA Sign-Off";
+
+    const token = await paypalAccessToken();
+    const { paypalOrderId, approveUrl } = await paypalCreateOrder({
+      token,
+      amount,
+      trackingNumber,
+      returnUrl,
+      cancelUrl,
+      description,
+    });
+
+    // Store order record (MVP)
     const order = {
-      tracking_number: t,
-      status: "PAID",
-      plan: payload.service_plan,           // prep | prep_cpa
-      amount: Number(payload.amount),
+      id: crypto.randomUUID(),
+      trackingNumber,
+      paypalOrderId,
+      status: "AWAITING_PAYMENT_APPROVAL",
+      plan,
+      amount,
       currency: "USD",
       customer: {
         company_name: payload.company_name,
         contact_name: payload.contact_name,
         contact_email: payload.contact_email,
-        contact_phone: payload.contact_phone || ""
+        contact_phone: payload.contact_phone || "",
       },
       project: {
-        title: payload.project_title,
-        type: payload.project_type || "",
+        project_title: payload.project_title,
+        project_type: payload.project_type || "",
         aca_id: payload.aca_id || "",
         est_qualified_costs: payload.est_qualified_costs || "",
         prod_start: payload.prod_start || "",
         prod_end: payload.prod_end || "",
-        notes: payload.notes || ""
+        notes: payload.notes || "",
       },
       exports: null,
+      timeline: [{ at: new Date().toISOString(), status: "AWAITING_PAYMENT_APPROVAL", note: "PayPal order created" }],
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     };
 
-    // Store in KV (recommended). If KV isn’t configured yet, still return success for frontend testing.
-    await kvSet(`order:${t}`, order);
+    await putJSON(`order:${trackingNumber}`, order);
 
-    // Simulate processing in background-ish way:
-    // (Serverless can’t truly run a background job reliably, but MVP: update status on next poll if not updated yet.)
-    // We'll mark it "PROCESSING" immediately so tracking changes.
-    order.status = "PROCESSING";
-    order.updated_at = new Date().toISOString();
-    await kvSet(`order:${t}`, order);
-
-    return res.json({
+    return send(res, 200, {
       success: true,
-      trackingNumber: t,
-      status: order.status,
-      redirect: `/thank-you.html?tracking=${encodeURIComponent(t)}&plan=${encodeURIComponent(order.plan)}`
+      trackingNumber,
+      paypalOrderId,
+      approveUrl,
     });
-
   } catch (e) {
     console.error(e);
-    return res.status(500).json({ success: false, message: "Checkout failed" });
+    return send(res, 500, { success: false, message: e.message || "Server error" });
   }
 }
