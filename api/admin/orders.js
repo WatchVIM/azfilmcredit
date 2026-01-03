@@ -1,9 +1,9 @@
-import { listOrders } from "../_lib/kv.js";
-import { requireAdmin } from "../_lib/auth.js";
+import { requireAdmin } from "./_auth";
 
 export default async function handler(req, res) {
-  if (!requireAdmin(req)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  const admin = requireAdmin(req);
+  if (!admin) return res.status(401).json({ error: "Unauthorized" });
 
-  const orders = await listOrders(200);
-  return res.status(200).json({ success: true, orders });
+  // TODO: load orders from your DB/storage
+  return res.status(200).json({ success: true, orders: [] });
 }
