@@ -4,30 +4,77 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>AZ Film Credit — Admin</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = { theme: { extend: { colors: {
-      desertGold:"#E3A857", sunsetRed:"#E4572E"
-    }}}}
+    tailwind.config = {
+      theme: { extend: { colors: { desertGold:"#E3A857", sunsetRed:"#E4572E" } } }
+    };
   </script>
+
+  <style>
+    :focus-visible { outline: 2px solid #E3A857; outline-offset: 2px; }
+  </style>
 </head>
+
 <body class="min-h-screen bg-black text-white">
   <div class="max-w-6xl mx-auto p-6">
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-semibold">Admin Portal</h1>
-      <a href="index.html" class="text-sm text-desertGold underline">Back to site</a>
+      <div>
+        <h1 class="text-2xl font-semibold">Admin Portal</h1>
+        <p class="text-xs text-gray-400 mt-1">Secure order review for AZ Film Credit</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="text-sm text-desertGold underline">Back to site</a>
+        <button id="logoutBtn" class="hidden text-sm px-3 py-1.5 rounded bg-white/10 hover:bg-white/15">
+          Logout
+        </button>
+      </div>
     </div>
 
     <!-- Login -->
     <div id="loginCard" class="bg-white/5 border border-white/10 rounded-xl p-4 max-w-md">
       <h2 class="text-lg font-semibold mb-2">Admin Login</h2>
-      <p class="text-xs text-gray-300 mb-3">Enter the admin password to view orders.</p>
-      <input id="adminPass" type="password" class="w-full px-3 py-2 rounded bg-black/60 border border-white/15 text-sm"
-             placeholder="Admin password" />
-      <button id="loginBtn" class="mt-3 px-4 py-2 rounded bg-sunsetRed hover:bg-orange-500 font-semibold">
+      <p class="text-xs text-gray-300 mb-3">
+        Enter the admin password to view orders. (Password is stored locally in your browser until logout.)
+      </p>
+
+      <label class="block text-xs text-gray-300 mb-1" for="adminPass">Admin password</label>
+      <div class="flex gap-2">
+        <input
+          id="adminPass"
+          type="password"
+          class="w-full px-3 py-2 rounded bg-black/60 border border-white/15 text-sm"
+          placeholder="Admin password"
+          autocomplete="current-password"
+        />
+        <button
+          id="togglePassBtn"
+          type="button"
+          class="px-3 py-2 rounded bg-white/10 hover:bg-white/15 text-xs"
+          aria-label="Show password"
+        >
+          Show
+        </button>
+      </div>
+
+      <button
+        id="loginBtn"
+        type="button"
+        class="mt-3 w-full px-4 py-2 rounded bg-sunsetRed hover:bg-orange-500 font-semibold disabled:opacity-50"
+      >
         Sign in
       </button>
+
       <p id="loginMsg" class="mt-2 text-xs text-gray-300"></p>
+
+      <div class="mt-3 text-[11px] text-gray-400">
+        Troubleshooting:
+        <ul class="list-disc ml-4 mt-1 space-y-1">
+          <li>If using a Vercel Preview URL, make sure <code>ADMIN_PASSWORD</code> is set for <b>Preview</b> env too.</li>
+          <li>If password changed, click Logout or clear stored password.</li>
+        </ul>
+      </div>
     </div>
 
     <!-- Orders -->
@@ -42,9 +89,16 @@
           <option value="completed">completed</option>
           <option value="needs_info">needs_info</option>
         </select>
+
         <button id="refreshBtn" class="px-4 py-2 rounded bg-white/10 hover:bg-white/15 text-sm">
           Refresh
         </button>
+
+        <div class="ml-auto flex items-center gap-2 text-xs text-gray-300">
+          <span class="px-2 py-1 rounded bg-white/10 border border-white/10">
+            API: <span id="apiStatus" class="text-gray-200">—</span>
+          </span>
+        </div>
       </div>
 
       <div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
@@ -65,7 +119,7 @@
       </div>
 
       <p class="mt-3 text-xs text-gray-400">
-        “Generate CPA Packet” button is wired for next step (we’ll connect it to /api/generate-packet).
+        “Generate CPA Packet” is the next endpoint we’ll wire (e.g., <code>/api/generate-packet</code>).
       </p>
     </div>
   </div>
@@ -79,6 +133,11 @@
     const ordersBody = document.getElementById("ordersBody");
     const statusFilter = document.getElementById("statusFilter");
     const refreshBtn = document.getElementById("refreshBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const togglePassBtn = document.getElementById("togglePassBtn");
+    const apiStatus = document.getElementById("apiStatus");
+
+    const STORAGE_KEY = "azfc_admin_pass";
 
     function fmtDate(iso) {
       try { return new Date(iso).toLocaleString(); } catch { return iso || ""; }
@@ -92,26 +151,63 @@
       return `<span class="${base} border-white/20 text-gray-200">${status || ""}</span>`;
     }
 
+    function getPass() {
+      return (localStorage.getItem(STORAGE_KEY) || "").trim();
+    }
+
+    function setPass(p) {
+      localStorage.setItem(STORAGE_KEY, String(p || "").trim());
+    }
+
+    function clearPass() {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    function setApiStatus(text, ok = true) {
+      apiStatus.textContent = text;
+      apiStatus.className = ok ? "text-green-300" : "text-red-300";
+    }
+
     async function fetchOrders() {
-      const pass = localStorage.getItem("azfc_admin_pass");
+      const pass = getPass();
       const st = statusFilter.value || "";
       const url = "/api/admin/orders" + (st ? `?status=${encodeURIComponent(st)}` : "");
+
       const res = await fetch(url, {
-        headers: { "x-admin-password": pass }
+        method: "GET",
+        headers: {
+          "x-admin-password": pass
+        }
       });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.message || "Failed to load orders");
+
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error("Admin API returned a non-JSON response (check route path and deployment).");
+      }
+
+      if (!res.ok || !data.success) {
+        // Surface the server error message if any
+        throw new Error(data.message || `Admin API error (HTTP ${res.status})`);
+      }
+
       return data.orders || [];
     }
 
     async function renderOrders() {
       ordersBody.innerHTML = `<tr><td class="p-3 text-gray-400" colspan="7">Loading…</td></tr>`;
+      setApiStatus("Loading…", true);
+
       try {
         const orders = await fetchOrders();
+        setApiStatus("Connected", true);
+
         if (!orders.length) {
           ordersBody.innerHTML = `<tr><td class="p-3 text-gray-400" colspan="7">No orders found.</td></tr>`;
           return;
         }
+
         ordersBody.innerHTML = orders.map(o => `
           <tr class="border-t border-white/10">
             <td class="p-3 font-mono text-xs">${o.tracking_number}</td>
@@ -121,44 +217,97 @@
             <td class="p-3">${badge(o.status)}</td>
             <td class="p-3 text-xs text-gray-300">${fmtDate(o.created_at)}</td>
             <td class="p-3">
-              <button class="px-3 py-1.5 rounded bg-white/10 hover:bg-white/15 text-xs"
-                onclick="alert('Next step: call /api/generate-packet for ${o.tracking_number}')">
+              <button
+                class="px-3 py-1.5 rounded bg-white/10 hover:bg-white/15 text-xs"
+                type="button"
+                onclick="alert('Next step: call /api/generate-packet for ${o.tracking_number}')"
+              >
                 Generate CPA Packet
               </button>
             </td>
           </tr>
         `).join("");
       } catch (e) {
+        setApiStatus("Error", false);
         ordersBody.innerHTML = `<tr><td class="p-3 text-red-300" colspan="7">${e.message}</td></tr>`;
+
+        // If unauthorized, force relogin
+        if ((e.message || "").toLowerCase().includes("unauthorized")) {
+          lock("Session expired. Please sign in again.");
+        }
       }
     }
 
     function unlock() {
       loginCard.classList.add("hidden");
       ordersWrap.classList.remove("hidden");
+      logoutBtn.classList.remove("hidden");
       renderOrders();
     }
 
-    loginBtn.addEventListener("click", async () => {
-      const pass = adminPassEl.value.trim();
-      if (!pass) { loginMsg.textContent = "Enter password."; return; }
-      localStorage.setItem("azfc_admin_pass", pass);
-      loginMsg.textContent = "Checking…";
+    function lock(message = "") {
+      ordersWrap.classList.add("hidden");
+      logoutBtn.classList.add("hidden");
+      loginCard.classList.remove("hidden");
+      if (message) loginMsg.textContent = message;
+    }
+
+    async function validateAndUnlock() {
+      // Try one call to validate password before unlocking UI
       try {
         await fetchOrders();
         loginMsg.textContent = "";
         unlock();
       } catch (e) {
-        loginMsg.textContent = "Invalid password or API not configured.";
-        localStorage.removeItem("azfc_admin_pass");
+        lock("");
+      }
+    }
+
+    // Login
+    loginBtn.addEventListener("click", async () => {
+      const pass = adminPassEl.value.trim();
+      if (!pass) { loginMsg.textContent = "Enter password."; return; }
+
+      loginBtn.disabled = true;
+      loginMsg.textContent = "Checking…";
+
+      setPass(pass);
+      try {
+        await fetchOrders();
+        loginMsg.textContent = "";
+        unlock();
+      } catch (e) {
+        // Better error messaging
+        const msg = e.message || "Invalid password or API not configured.";
+        loginMsg.textContent = msg;
+        clearPass();
+        lock("");
+      } finally {
+        loginBtn.disabled = false;
       }
     });
 
+    // Logout
+    logoutBtn.addEventListener("click", () => {
+      clearPass();
+      adminPassEl.value = "";
+      lock("Logged out.");
+    });
+
+    // Show/Hide password
+    togglePassBtn.addEventListener("click", () => {
+      const isPw = adminPassEl.type === "password";
+      adminPassEl.type = isPw ? "text" : "password";
+      togglePassBtn.textContent = isPw ? "Hide" : "Show";
+      togglePassBtn.setAttribute("aria-label", isPw ? "Hide password" : "Show password");
+    });
+
+    // Refresh + filter
     refreshBtn.addEventListener("click", renderOrders);
     statusFilter.addEventListener("change", renderOrders);
 
-    // Auto-login if stored
-    if (localStorage.getItem("azfc_admin_pass")) unlock();
+    // Auto-validate stored password (don’t unlock blindly)
+    if (getPass()) validateAndUnlock();
   </script>
 </body>
 </html>
