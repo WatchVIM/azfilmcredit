@@ -32,7 +32,6 @@
       color: #F9FAFB;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
-    /* nicer focus outlines */
     :focus-visible { outline: 2px solid #E3A857; outline-offset: 2px; }
   </style>
 </head>
@@ -74,8 +73,10 @@
         </div>
       </a>
 
-      <div class="text-xs text-gray-300">
-        Need help? <a href="support.html" class="text-desertGold hover:underline">Contact support</a>
+      <div class="flex items-center gap-4 text-xs text-gray-300">
+        <a href="support.html" class="text-desertGold hover:underline">Contact support</a>
+        <span class="text-white/20">|</span>
+        <a href="admin.html" class="hover:text-desertGold">Admin Portal</a>
       </div>
     </div>
   </header>
@@ -83,6 +84,7 @@
   <!-- MAIN -->
   <main class="flex-1 py-10">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
       <!-- top header -->
       <div class="mb-8">
         <h1 class="text-2xl sm:text-3xl font-semibold text-white">
@@ -383,12 +385,21 @@
               <li>• <span class="font-semibold">AZ-FC-06 – Detailed Qualified Cost Ledger Export</span></li>
               <li>• <span class="font-semibold">AZ-FC-07 – Supporting Documentation Index</span></li>
               <li>• <span class="font-semibold">AZ-FC-08 – CPA Review & Certification Draft</span> (template for CPA finalize)</li>
-              <li>• <span class="font-semibold">Tax Forms Section – Filing templates + schedules</span> (packet-ready organization)</li>
+              <li>• <span class="font-semibold">Tax Forms Section – Filing templates + schedules</span></li>
             </ul>
             <p class="mt-3 text-[11px] text-gray-400">
               When you select “Prep + Certified AZ CPA sign-off”, your project is queued for review by a partnered
               Certified AZ CPA who will issue the final audit report, subject to professional standards.
             </p>
+          </div>
+
+          <!-- NEW: quick links -->
+          <div class="bg-black/60 border border-white/10 rounded-xl p-4">
+            <h3 class="text-sm font-semibold text-white mb-2">Quick links</h3>
+            <div class="flex flex-col gap-2 text-[11px]">
+              <a href="admin.html" class="text-desertGold hover:underline">Open Admin Portal</a>
+              <a href="thank-you.html" class="text-desertGold hover:underline">Track an order</a>
+            </div>
           </div>
 
           <div class="bg-black/60 border border-desertGold/40 rounded-xl p-4">
@@ -414,7 +425,7 @@
       <!-- SAMPLE CPA AUDIT FLIPBOOK VIEWER -->
       <section class="mt-10">
         <h2 class="text-lg sm:text-xl font-semibold text-white mb-1">
-          Preview a sample CPA-ready audit package
+          Preview sample CPA-ready audit packages
         </h2>
         <p class="text-[11px] sm:text-xs text-gray-300 mb-4 max-w-3xl">
           Fictional samples showing the structure AZ Film Credit generates from uploads:
@@ -440,7 +451,7 @@
         <div class="w-full aspect-[4/3] bg-black/60 border border-white/10 rounded-xl overflow-hidden shadow-xl shadow-black/40">
           <iframe
             id="sample-viewer"
-            src="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature_v3.pdf#view=FitH&page=1"
+            src="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature_v4.pdf#view=FitH&page=1"
             class="w-full h-full"
             style="border:0;"
             title="Sample CPA Audit Packet PDF Viewer"
@@ -454,7 +465,7 @@
 
           <a
             id="sample-download-link"
-            href="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature_v3.pdf"
+            href="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature_v4.pdf"
             class="text-[11px] text-desertGold underline underline-offset-2"
             target="_blank"
             rel="noopener"
@@ -463,6 +474,53 @@
           </a>
         </div>
       </section>
+
+      <!-- NEW: TAX FORM TEMPLATE VIEWER -->
+      <section class="mt-10">
+        <h2 class="text-lg sm:text-xl font-semibold text-white mb-1">
+          Preview “official-looking” tax form templates (CPA packet section)
+        </h2>
+        <p class="text-[11px] sm:text-xs text-gray-300 mb-4 max-w-3xl">
+          These are organizer templates (not official ADOR PDFs) used to map your data to filing forms so your CPA can review faster.
+        </p>
+
+        <div class="w-full aspect-[4/3] bg-black/60 border border-white/10 rounded-xl overflow-hidden shadow-xl shadow-black/40">
+          <iframe
+            id="tax-template-viewer"
+            src="/samples/AZ_Film_Credit_Tax_Form_Templates_Official_Look_v1.pdf#view=FitH&page=1"
+            class="w-full h-full"
+            style="border:0;"
+            title="Tax Form Templates PDF Viewer"
+          ></iframe>
+        </div>
+
+        <div class="mt-3 flex items-center justify-end">
+          <a
+            href="/samples/AZ_Film_Credit_Tax_Form_Templates_Official_Look_v1.pdf"
+            class="text-[11px] text-desertGold underline underline-offset-2"
+            target="_blank"
+            rel="noopener"
+          >
+            View / Download tax form template section (PDF)
+          </a>
+        </div>
+      </section>
+
+      <!-- OPTIONAL: ADMIN PORTAL PROMO CARD (can remove later) -->
+      <section class="mt-10">
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div>
+            <h3 class="text-sm font-semibold text-white">Admin Portal</h3>
+            <p class="text-[11px] text-gray-300">
+              Review orders, update statuses, and trigger notifications to customers and CPA partners.
+            </p>
+          </div>
+          <a href="admin.html" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 text-[11px] font-semibold">
+            Open Admin Portal
+          </a>
+        </div>
+      </section>
+
     </div>
   </main>
 
@@ -474,6 +532,7 @@
         <a href="privacy.html" class="hover:text-desertGold">Privacy</a>
         <a href="terms.html" class="hover:text-desertGold">Terms</a>
         <a href="support.html" class="hover:text-desertGold">Support</a>
+        <a href="admin.html" class="hover:text-desertGold">Admin</a>
       </div>
     </div>
   </footer>
@@ -510,13 +569,13 @@
     updatePriceDisplay();
 
     // =========================
-    // Sample Viewer
+    // Sample Viewer (v4 PDFs)
     // =========================
     const azfcSampleMap = {
-      feature: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature_v3.pdf",
-      series: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Series_v3.pdf",
-      commercial: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Commercial_v3.pdf",
-      music: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_MusicVideo_v3.pdf"
+      feature: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature_v4.pdf",
+      series: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Series_v4.pdf",
+      commercial: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Commercial_v4.pdf",
+      music: "/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_MusicVideo_v4.pdf"
     };
 
     const azfcViewer = document.getElementById("sample-viewer");
@@ -564,13 +623,12 @@
           return false;
         }
       }
-
       msg.textContent = "";
       return true;
     }
 
     // =========================
-    // Payment: In-house gateway
+    // Payment: In-house gateway (server creates PayPal order)
     // =========================
     async function handlePayment() {
       const payBtn = document.getElementById("azfc-pay-btn");
@@ -582,8 +640,8 @@
       const plan = getSelectedPlan();
       const amount = PLAN_PRICES[plan] ?? PLAN_PRICES.prep;
 
-      // NOTE: files can't be sent as JSON; MVP sends metadata only.
-      // For a real upload flow, you’ll use object storage + signed URLs.
+      // NOTE: files are not uploaded in this MVP call; send metadata only.
+      // Real upload flow: signed URLs + object storage (Vercel Blob/S3/Supabase).
       const payload = {
         service_plan: plan,
         amount,
@@ -599,7 +657,6 @@
         prod_end: formData.get("prod_end"),
         notes: formData.get("notes"),
 
-        // lightweight file presence flags (so backend can enforce “uploaded” later)
         has_ledger_file: !!formData.get("ledger_file")?.name,
         payroll_files_count: formData.getAll("payroll_files")?.filter(f => f && f.name).length || 0,
         supporting_docs_count: formData.getAll("supporting_docs")?.filter(f => f && f.name).length || 0
@@ -609,8 +666,6 @@
         payBtn.disabled = true;
         msg.textContent = "Starting secure checkout…";
 
-        // ✅ Vercel serverless convention: /api/checkout
-        // If your backend uses a different path, update it here.
         const response = await fetch("/api/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -624,14 +679,13 @@
 
         const data = await response.json();
 
-        // Flexible handling:
-        // - If backend returns an approval URL (PayPal in background), redirect there.
-        // - If backend returns success + tracking, go to thank-you.
+        // If backend returns approval URL (PayPal behind-the-scenes), redirect there.
         if (data.approveUrl) {
           window.location.href = data.approveUrl;
           return;
         }
 
+        // If backend returns success + tracking, go to thank-you.
         if (data.success) {
           const tracking = data.trackingNumber || data.tracking || data.tracking_id || "";
           const planQ = encodeURIComponent(plan);
