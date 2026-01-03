@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AZ Film Credit | Contact Support</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact AZ Film Credit support." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            desertGold: "#E3A857",
+            sunsetRed: "#E4572E",
+            deepSlate: "#111827",
+            sand: "#F3F4F6"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000000 100%);
+      color: #F9FAFB;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    :focus-visible { outline: 2px solid #E3A857; outline-offset: 2px; }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+  <header class="border-b border-white/10 bg-black/70 backdrop-blur">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="text-sm text-desertGold underline">← Back to site</a>
+      <div class="text-xs text-gray-300">Support: <span class="text-gray-100">support@azfilmcredit.org</span></div>
+    </div>
+  </header>
+
+  <main class="flex-1 py-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1.2fr,0.8fr] gap-8">
+      <section class="bg-white/5 border border-white/10 rounded-2xl p-6">
+        <h1 class="text-2xl font-semibold">Contact Support</h1>
+        <p class="mt-2 text-sm text-gray-300">
+          Send a message and we’ll reply by email. This form sends to <span class="text-desertGold font-semibold">support@azfilmcredit.org</span>.
+        </p>
+
+        <form id="contactForm" class="mt-6 space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-300 mb-1">Name</label>
+              <input name="name" required
+                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:ring-1 focus:ring-desertGold"
+                placeholder="Your name" />
+            </div>
+            <div>
+              <label class="block text-xs text-gray-300 mb-1">Email</label>
+              <input name="email" type="email" required
+                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:ring-1 focus:ring-desertGold"
+                placeholder="you@example.com" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs text-gray-300 mb-1">Who are you?</label>
+            <select name="role"
+              class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:ring-1 focus:ring-desertGold">
+              <option value="">Select…</option>
+              <option>Filmmaker / Producer</option>
+              <option>Line Producer / Production Accountant</option>
+              <option>CPA / Audit Firm</option>
+              <option>Arizona Film Office / Government</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs text-gray-300 mb-1">Message</label>
+            <textarea name="message" rows="5" required
+              class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:ring-1 focus:ring-desertGold"
+              placeholder="Tell us what you need help with…"></textarea>
+          </div>
+
+          <!-- honeypot (simple spam trap) -->
+          <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" />
+
+          <div class="flex items-center justify-between gap-3">
+            <p id="formMsg" class="text-xs text-gray-300"></p>
+            <button id="sendBtn" type="submit"
+              class="inline-flex items-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition disabled:opacity-50">
+              Send message
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="space-y-4">
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+          <h2 class="text-sm font-semibold text-white">Helpful details to include</h2>
+          <ul class="mt-2 text-xs text-gray-300 space-y-2">
+            <li>• Your Tracking ID (if you have one)</li>
+            <li>• Which page you were on (Processing, Admin, Status Tracker)</li>
+            <li>• Any screenshot or error message</li>
+          </ul>
+        </div>
+
+        <div class="bg-black/60 border border-desertGold/40 rounded-2xl p-5">
+          <h2 class="text-sm font-semibold text-desertGold">Fastest route</h2>
+          <p class="mt-2 text-xs text-gray-200">
+            If it’s an order issue, include the Tracking ID so we can find your record immediately.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="border-t border-white/10 py-4 text-[11px] text-gray-400">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div>© <span id="year"></span> AZ Film Credit</div>
+      <div class="flex gap-4">
+        <a href="privacy.html" class="hover:text-desertGold">Privacy</a>
+        <a href="terms.html" class="hover:text-desertGold">Terms</a>
+        <a href="support.html" class="hover:text-desertGold">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const form = document.getElementById("contactForm");
+    const msg = document.getElementById("formMsg");
+    const sendBtn = document.getElementById("sendBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      msg.textContent = "";
+      msg.className = "text-xs text-gray-300";
+
+      const fd = new FormData(form);
+
+      // Simple honeypot spam trap
+      if (String(fd.get("website") || "").trim()) {
+        msg.textContent = "Thanks!";
+        return;
+      }
+
+      const payload = {
+        name: fd.get("name"),
+        email: fd.get("email"),
+        role: fd.get("role"),
+        message: fd.get("message")
+      };
+
+      try {
+        sendBtn.disabled = true;
+        msg.textContent = "Sending…";
+
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || !data.success) {
+          throw new Error(data.message || `Failed to send (HTTP ${res.status})`);
+        }
+
+        msg.className = "text-xs text-emerald-400";
+        msg.textContent = "Sent! Check your inbox for confirmation.";
+        form.reset();
+      } catch (err) {
+        console.error(err);
+        msg.className = "text-xs text-rose-300";
+        msg.textContent = "Could not send message. Please try again or email support@azfilmcredit.org.";
+      } finally {
+        sendBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
