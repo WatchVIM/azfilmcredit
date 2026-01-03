@@ -3,156 +3,288 @@
 <head>
   <meta charset="UTF-8" />
   <title>AZ Film Credit | Admin Portal</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = { theme: { extend: { colors: { desertGold:"#E3A857", sunsetRed:"#E4572E" }}}};
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            desertGold: "#E3A857",
+            sunsetRed: "#E4572E",
+            deepSlate: "#111827",
+            sand: "#F3F4F6"
+          }
+        }
+      }
+    }
   </script>
   <style>
-    body { background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%); color:#F9FAFB; }
+    body {
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000000 100%);
+      color: #F9FAFB;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    :focus-visible { outline: 2px solid #E3A857; outline-offset: 2px; }
   </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen flex flex-col">
 
   <header class="border-b border-white/10 bg-black/70 backdrop-blur">
-    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-      <div class="font-semibold">
-        <span class="text-desertGold">AZ</span> Film Credit — Admin
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="text-xs font-semibold tracking-wide">
+          <span class="text-desertGold">AZ</span>
+          <span class="text-white ml-1">Film</span>
+          <span class="text-sunsetRed ml-1">Credit</span>
+          <span class="ml-2 text-gray-400 font-normal">Admin</span>
+        </div>
+      </a>
+      <div class="text-xs text-gray-300 flex items-center gap-3">
+        <a class="hover:text-desertGold" href="cpa-processing.html">Processing</a>
+        <button id="logoutBtn" class="px-3 py-1 rounded-full bg-white/10 hover:bg-white/15">Logout</button>
       </div>
-      <a href="index.html" class="text-xs text-gray-300 hover:text-desertGold">Back to site</a>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 py-8 space-y-6">
-    <section class="bg-white/5 border border-white/10 rounded-xl p-4">
-      <h1 class="text-lg font-semibold mb-2">Admin Login</h1>
-      <p class="text-xs text-gray-300 mb-3">Enter your admin token to view orders. (Stored locally in your browser.)</p>
-      <div class="flex flex-col sm:flex-row gap-2">
-        <input id="token" class="flex-1 px-3 py-2 rounded bg-black/60 border border-white/15 text-sm"
-               placeholder="ADMIN_TOKEN" />
-        <button id="save" class="px-4 py-2 rounded bg-sunsetRed hover:bg-orange-500 text-sm font-semibold">Save Token</button>
-        <button id="load" class="px-4 py-2 rounded bg-white/10 hover:bg-white/15 text-sm font-semibold">Load Orders</button>
-      </div>
-      <p id="msg" class="text-xs text-gray-300 mt-2"></p>
-    </section>
+  <main class="flex-1">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-    <section class="bg-white/5 border border-white/10 rounded-xl p-4">
-      <div class="flex items-center justify-between mb-3">
-        <h2 class="text-lg font-semibold">Orders</h2>
-        <button id="refresh" class="text-xs px-3 py-1 rounded bg-white/10 hover:bg-white/15">Refresh</button>
-      </div>
+      <!-- LOGIN -->
+      <section id="loginView" class="max-w-md mx-auto bg-white/5 border border-white/10 rounded-xl p-6">
+        <h1 class="text-xl font-semibold text-white">Admin Login</h1>
+        <p class="mt-1 text-xs text-gray-300">Enter the admin password to access orders and workflow tools.</p>
 
-      <div class="overflow-auto border border-white/10 rounded-lg">
-        <table class="min-w-full text-xs">
-          <thead class="bg-black/60">
-            <tr class="text-left">
-              <th class="p-2">Tracking</th>
-              <th class="p-2">Company</th>
-              <th class="p-2">Project</th>
-              <th class="p-2">Plan</th>
-              <th class="p-2">Amount</th>
-              <th class="p-2">Status</th>
-              <th class="p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="rows" class="divide-y divide-white/10"></tbody>
-        </table>
-      </div>
-    </section>
+        <div class="mt-4 space-y-3">
+          <label class="block text-xs text-gray-300">Password</label>
+          <input id="adminPassword" type="password"
+            class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100"
+            placeholder="••••••••" />
+          <button id="loginBtn"
+            class="w-full mt-2 inline-flex justify-center items-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition">
+            Sign in
+          </button>
+          <p id="loginMsg" class="text-[11px] text-gray-300"></p>
+        </div>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section id="dashView" class="hidden">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-2xl font-semibold">Orders Dashboard</h2>
+            <p class="text-xs text-gray-300 mt-1">Review orders, update status, and trigger notifications.</p>
+          </div>
+          <div class="flex gap-2">
+            <button id="refreshBtn" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 text-xs font-semibold">
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+          <div class="p-4 border-b border-white/10 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+            <div class="flex gap-2 items-center">
+              <label class="text-xs text-gray-300">Filter:</label>
+              <select id="statusFilter" class="px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-xs">
+                <option value="">All</option>
+                <option value="paid">Paid</option>
+                <option value="in_review">In Review</option>
+                <option value="packet_generated">Packet Generated</option>
+                <option value="sent_to_cpa">Sent to CPA</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+            <p id="dashMsg" class="text-[11px] text-gray-300"></p>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-left text-xs">
+              <thead class="bg-black/40">
+                <tr class="text-gray-200">
+                  <th class="px-4 py-3">Tracking</th>
+                  <th class="px-4 py-3">Company / Project</th>
+                  <th class="px-4 py-3">Plan</th>
+                  <th class="px-4 py-3">Amount</th>
+                  <th class="px-4 py-3">Status</th>
+                  <th class="px-4 py-3">Updated</th>
+                  <th class="px-4 py-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="ordersBody" class="divide-y divide-white/10"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </main>
 
+  <footer class="border-t border-white/10 py-4 text-[11px] text-gray-400">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div>© <span id="year"></span> AZ Film Credit</div>
+      <a href="index.html" class="hover:text-desertGold">Back to site</a>
+    </div>
+  </footer>
+
 <script>
-  const STATUS_OPTIONS = [
-    "PAID_PENDING_BUILD",
-    "PACKET_GENERATED",
-    "SENT_TO_CUSTOMER",
-    "SENT_TO_CPA",
-    "CPA_APPROVED"
-  ];
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-  function getToken() {
-    return localStorage.getItem("azfc_admin_token") || "";
+  const loginView = document.getElementById("loginView");
+  const dashView = document.getElementById("dashView");
+  const loginMsg = document.getElementById("loginMsg");
+  const dashMsg = document.getElementById("dashMsg");
+
+  async function api(path, opts) {
+    const res = await fetch(path, opts);
+    const isJson = (res.headers.get("content-type") || "").includes("application/json");
+    const data = isJson ? await res.json().catch(()=>null) : await res.text().catch(()=>null);
+    if (!res.ok) throw { status: res.status, data };
+    return data;
   }
 
-  function setMsg(t) { document.getElementById("msg").textContent = t; }
-
-  document.getElementById("save").onclick = () => {
-    const t = document.getElementById("token").value.trim();
-    localStorage.setItem("azfc_admin_token", t);
-    setMsg("Token saved.");
-  };
-
-  async function api(path, opts={}) {
-    const token = getToken();
-    const headers = Object.assign({}, opts.headers || {}, {
-      "Authorization": "Bearer " + token
-    });
-    const res = await fetch(path, { ...opts, headers });
-    return { res, data: await res.json().catch(()=> ({})) };
+  async function checkSession() {
+    try {
+      const r = await api("/api/admin/me");
+      if (r?.ok) {
+        loginView.classList.add("hidden");
+        dashView.classList.remove("hidden");
+        await loadOrders();
+      } else {
+        throw new Error("no session");
+      }
+    } catch {
+      loginView.classList.remove("hidden");
+      dashView.classList.add("hidden");
+    }
   }
 
-  function rowHtml(o) {
-    const planLabel = o.plan === "prep_cpa" ? "Prep + CPA" : "Prep";
-    const statusOptions = STATUS_OPTIONS.map(s =>
-      `<option value="${s}" ${o.status===s?"selected":""}>${s}</option>`
-    ).join("");
+  document.getElementById("loginBtn").addEventListener("click", async () => {
+    loginMsg.textContent = "";
+    const password = document.getElementById("adminPassword").value;
+    if (!password) { loginMsg.textContent = "Enter the admin password."; return; }
 
-    return `
-      <tr>
-        <td class="p-2 font-semibold text-desertGold">${o.tracking}</td>
-        <td class="p-2">${o.customer?.company_name || ""}</td>
-        <td class="p-2">${o.project?.project_title || ""}</td>
-        <td class="p-2">${planLabel}</td>
-        <td class="p-2">$${Number(o.amount||0).toFixed(2)}</td>
-        <td class="p-2">
-          <select data-track="${o.tracking}" class="bg-black/60 border border-white/15 rounded px-2 py-1">
-            ${statusOptions}
-          </select>
-        </td>
-        <td class="p-2">
-          <button data-update="${o.tracking}" class="px-3 py-1 rounded bg-sunsetRed hover:bg-orange-500 font-semibold">
-            Update + Notify
-          </button>
-        </td>
-      </tr>
-    `;
+    try {
+      await api("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password })
+      });
+      await checkSession();
+    } catch (e) {
+      loginMsg.textContent = (e?.data?.error) ? e.data.error : "Login failed.";
+    }
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    try { await api("/api/admin/logout"); } catch {}
+    await checkSession();
+  });
+
+  document.getElementById("refreshBtn").addEventListener("click", loadOrders);
+  document.getElementById("statusFilter").addEventListener("change", loadOrders);
+
+  function fmtDate(s) {
+    try { return new Date(s).toLocaleString(); } catch { return s || ""; }
+  }
+
+  function planLabel(p) {
+    if (p === "prep_cpa") return "Prep + CPA";
+    return "Prep";
   }
 
   async function loadOrders() {
-    setMsg("Loading…");
-    const { res, data } = await api("/api/admin/orders");
-    if (!res.ok) { setMsg(data.message || "Failed"); return; }
+    dashMsg.textContent = "Loading…";
+    try {
+      const r = await api("/api/admin/orders");
+      const orders = (r?.orders || []);
+      const filter = document.getElementById("statusFilter").value;
 
-    const rows = document.getElementById("rows");
-    rows.innerHTML = (data.orders || []).map(rowHtml).join("");
-
-    // wire update buttons
-    rows.querySelectorAll("[data-update]").forEach(btn => {
-      btn.onclick = async () => {
-        const tracking = btn.getAttribute("data-update");
-        const sel = rows.querySelector(`select[data-track="${tracking}"]`);
-        const status = sel.value;
-
-        const { res, data } = await api("/api/admin/update-status", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ tracking, status })
-        });
-
-        if (!res.ok) { setMsg(data.message || "Update failed"); return; }
-        setMsg(`Updated ${tracking} → ${status} (customer notified).`);
-      };
-    });
-
-    setMsg(`Loaded ${(data.orders || []).length} orders.`);
+      const filtered = filter ? orders.filter(o => (o.status || "") === filter) : orders;
+      renderOrders(filtered);
+      dashMsg.textContent = `${filtered.length} order(s)`;
+    } catch (e) {
+      dashMsg.textContent = "Failed to load orders (not authorized?).";
+      console.error(e);
+    }
   }
 
-  document.getElementById("load").onclick = loadOrders;
-  document.getElementById("refresh").onclick = loadOrders;
+  function renderOrders(orders) {
+    const body = document.getElementById("ordersBody");
+    body.innerHTML = "";
 
-  // preload token
-  document.getElementById("token").value = getToken();
+    for (const o of orders) {
+      const tr = document.createElement("tr");
+      tr.className = "text-gray-200";
+
+      tr.innerHTML = `
+        <td class="px-4 py-3 font-semibold text-desertGold">${o.trackingNumber || ""}</td>
+        <td class="px-4 py-3">
+          <div class="font-semibold text-white">${o.company_name || ""}</div>
+          <div class="text-[11px] text-gray-300">${o.project_title || ""}</div>
+        </td>
+        <td class="px-4 py-3">${planLabel(o.service_plan)}</td>
+        <td class="px-4 py-3">$${Number(o.amount || 0).toFixed(2)}</td>
+        <td class="px-4 py-3">
+          <select class="bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-[11px]" data-status>
+            ${["paid","in_review","packet_generated","sent_to_cpa","completed"].map(s =>
+              `<option value="${s}" ${String(o.status||"")===s?"selected":""}>${s}</option>`
+            ).join("")}
+          </select>
+        </td>
+        <td class="px-4 py-3 text-[11px] text-gray-300">${fmtDate(o.updatedAt || o.createdAt)}</td>
+        <td class="px-4 py-3">
+          <div class="flex flex-wrap gap-2">
+            <button class="px-3 py-1 rounded-full bg-white/10 hover:bg-white/15 text-[11px]" data-save>Save</button>
+            <button class="px-3 py-1 rounded-full bg-white/10 hover:bg-white/15 text-[11px]" data-email>Notify Customer</button>
+          </div>
+        </td>
+      `;
+
+      const statusSel = tr.querySelector("[data-status]");
+      const saveBtn = tr.querySelector("[data-save]");
+      const emailBtn = tr.querySelector("[data-email]");
+
+      saveBtn.addEventListener("click", async () => {
+        dashMsg.textContent = "Saving…";
+        try {
+          await api("/api/admin/order-update", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              trackingNumber: o.trackingNumber,
+              status: statusSel.value
+            })
+          });
+          dashMsg.textContent = "Saved.";
+          await loadOrders();
+        } catch (e) {
+          dashMsg.textContent = "Save failed.";
+          console.error(e);
+        }
+      });
+
+      emailBtn.addEventListener("click", async () => {
+        dashMsg.textContent = "Sending email…";
+        try {
+          await api("/api/admin/notify-customer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ trackingNumber: o.trackingNumber })
+          });
+          dashMsg.textContent = "Customer notified (if email configured).";
+        } catch (e) {
+          dashMsg.textContent = "Email failed (check Resend env vars).";
+          console.error(e);
+        }
+      });
+
+      body.appendChild(tr);
+    }
+  }
+
+  // boot
+  checkSession();
 </script>
-
 </body>
 </html>
