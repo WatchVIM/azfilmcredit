@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AZ Film Credit | Admin Portal</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { desertGold:"#E3A857", sunsetRed:"#E4572E" }}}};
+  </script>
+  <style>
+    body { background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%); color:#F9FAFB; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <header class="border-b border-white/10 bg-black/70 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="font-semibold">
+        <span class="text-desertGold">AZ</span> Film Credit — Admin
+      </div>
+      <a href="index.html" class="text-xs text-gray-300 hover:text-desertGold">Back to site</a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-6">
+    <section class="bg-white/5 border border-white/10 rounded-xl p-4">
+      <h1 class="text-lg font-semibold mb-2">Admin Login</h1>
+      <p class="text-xs text-gray-300 mb-3">Enter your admin token to view orders. (Stored locally in your browser.)</p>
+      <div class="flex flex-col sm:flex-row gap-2">
+        <input id="token" class="flex-1 px-3 py-2 rounded bg-black/60 border border-white/15 text-sm"
+               placeholder="ADMIN_TOKEN" />
+        <button id="save" class="px-4 py-2 rounded bg-sunsetRed hover:bg-orange-500 text-sm font-semibold">Save Token</button>
+        <button id="load" class="px-4 py-2 rounded bg-white/10 hover:bg-white/15 text-sm font-semibold">Load Orders</button>
+      </div>
+      <p id="msg" class="text-xs text-gray-300 mt-2"></p>
+    </section>
+
+    <section class="bg-white/5 border border-white/10 rounded-xl p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold">Orders</h2>
+        <button id="refresh" class="text-xs px-3 py-1 rounded bg-white/10 hover:bg-white/15">Refresh</button>
+      </div>
+
+      <div class="overflow-auto border border-white/10 rounded-lg">
+        <table class="min-w-full text-xs">
+          <thead class="bg-black/60">
+            <tr class="text-left">
+              <th class="p-2">Tracking</th>
+              <th class="p-2">Company</th>
+              <th class="p-2">Project</th>
+              <th class="p-2">Plan</th>
+              <th class="p-2">Amount</th>
+              <th class="p-2">Status</th>
+              <th class="p-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="rows" class="divide-y divide-white/10"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+<script>
+  const STATUS_OPTIONS = [
+    "PAID_PENDING_BUILD",
+    "PACKET_GENERATED",
+    "SENT_TO_CUSTOMER",
+    "SENT_TO_CPA",
+    "CPA_APPROVED"
+  ];
+
+  function getToken() {
+    return localStorage.getItem("azfc_admin_token") || "";
+  }
+
+  function setMsg(t) { document.getElementById("msg").textContent = t; }
+
+  document.getElementById("save").onclick = () => {
+    const t = document.getElementById("token").value.trim();
+    localStorage.setItem("azfc_admin_token", t);
+    setMsg("Token saved.");
+  };
+
+  async function api(path, opts={}) {
+    const token = getToken();
+    const headers = Object.assign({}, opts.headers || {}, {
+      "Authorization": "Bearer " + token
+    });
+    const res = await fetch(path, { ...opts, headers });
+    return { res, data: await res.json().catch(()=> ({})) };
+  }
+
+  function rowHtml(o) {
+    const planLabel = o.plan === "prep_cpa" ? "Prep + CPA" : "Prep";
+    const statusOptions = STATUS_OPTIONS.map(s =>
+      `<option value="${s}" ${o.status===s?"selected":""}>${s}</option>`
+    ).join("");
+
+    return `
+      <tr>
+        <td class="p-2 font-semibold text-desertGold">${o.tracking}</td>
+        <td class="p-2">${o.customer?.company_name || ""}</td>
+        <td class="p-2">${o.project?.project_title || ""}</td>
+        <td class="p-2">${planLabel}</td>
+        <td class="p-2">$${Number(o.amount||0).toFixed(2)}</td>
+        <td class="p-2">
+          <select data-track="${o.tracking}" class="bg-black/60 border border-white/15 rounded px-2 py-1">
+            ${statusOptions}
+          </select>
+        </td>
+        <td class="p-2">
+          <button data-update="${o.tracking}" class="px-3 py-1 rounded bg-sunsetRed hover:bg-orange-500 font-semibold">
+            Update + Notify
+          </button>
+        </td>
+      </tr>
+    `;
+  }
+
+  async function loadOrders() {
+    setMsg("Loading…");
+    const { res, data } = await api("/api/admin/orders");
+    if (!res.ok) { setMsg(data.message || "Failed"); return; }
+
+    const rows = document.getElementById("rows");
+    rows.innerHTML = (data.orders || []).map(rowHtml).join("");
+
+    // wire update buttons
+    rows.querySelectorAll("[data-update]").forEach(btn => {
+      btn.onclick = async () => {
+        const tracking = btn.getAttribute("data-update");
+        const sel = rows.querySelector(`select[data-track="${tracking}"]`);
+        const status = sel.value;
+
+        const { res, data } = await api("/api/admin/update-status", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tracking, status })
+        });
+
+        if (!res.ok) { setMsg(data.message || "Update failed"); return; }
+        setMsg(`Updated ${tracking} → ${status} (customer notified).`);
+      };
+    });
+
+    setMsg(`Loaded ${(data.orders || []).length} orders.`);
+  }
+
+  document.getElementById("load").onclick = loadOrders;
+  document.getElementById("refresh").onclick = loadOrders;
+
+  // preload token
+  document.getElementById("token").value = getToken();
+</script>
+
+</body>
+</html>
