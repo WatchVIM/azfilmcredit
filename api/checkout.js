@@ -1,101 +1,104 @@
-// /api/checkout.js
+import { saveOrder } from "./_lib/kv.js";
+import { sendEmail } from "./_lib/mail.js";
 
-import crypto from "crypto";
-import { putJSON } from "./_lib/store.js";
-import { paypalAccessToken, paypalCreateOrder, getBaseUrl } from "./_lib/paypal.js";
-
-function send(res, code, obj) {
-  res.statusCode = code;
-  res.setHeader("Content-Type", "application/json");
-  res.end(JSON.stringify(obj));
-}
-
-function makeTrackingNumber() {
+function makeTracking() {
+  // ex: AZFC-250102-839217
   const d = new Date();
-  const y = d.getFullYear();
+  const y = String(d.getFullYear()).slice(2);
   const m = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
-  const rand = crypto.randomBytes(3).toString("hex").toUpperCase(); // 6 chars
+  const rand = Math.floor(100000 + Math.random() * 900000);
   return `AZFC-${y}${m}${day}-${rand}`;
 }
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return send(res, 405, { success: false, message: "Method not allowed" });
+  if (req.method !== "POST") return res.status(405).json({ success: false, message: "Method not allowed" });
 
   try {
-    const payload = req.body || {};
+    const body = req.body || {};
+    const plan = body.service_plan === "prep_cpa" ? "prep_cpa" : "prep";
 
-    // Required fields
-    const required = ["service_plan", "amount", "company_name", "contact_name", "contact_email", "project_title"];
-    for (const k of required) {
-      if (!payload[k]) return send(res, 400, { success: false, message: `Missing required field: ${k}` });
+    // Pricing locked server-side
+    const PRICES = { prep: 79.0, prep_cpa: 478.0 };
+    const amount = PRICES[plan];
+
+    // Basic validation
+    if (!body.company_name || !body.contact_name || !body.contact_email || !body.project_title) {
+      return res.status(400).json({ success: false, message: "Missing required fields." });
     }
 
-    const trackingNumber = makeTrackingNumber();
-    const baseUrl = getBaseUrl(req);
+    // MVP: assume payment succeeded (you’ll replace this with PayPal capture later)
+    const tracking = makeTracking();
 
-    // PayPal redirect returns token=PAYPAL_ORDER_ID
-    const returnUrl = `${baseUrl}/thank-you.html?tracking=${encodeURIComponent(trackingNumber)}`;
-    const cancelUrl = `${baseUrl}/cpa-processing.html?cancel=1&tracking=${encodeURIComponent(trackingNumber)}`;
-
-    const plan = payload.service_plan;
-    const amount = Number(payload.amount);
-
-    const description =
-      plan === "prep"
-        ? "AZ Film Credit - Document Prep Only"
-        : "AZ Film Credit - Document Prep + Certified AZ CPA Sign-Off";
-
-    const token = await paypalAccessToken();
-    const { paypalOrderId, approveUrl } = await paypalCreateOrder({
-      token,
-      amount,
-      trackingNumber,
-      returnUrl,
-      cancelUrl,
-      description,
-    });
-
-    // Store order record (MVP)
     const order = {
-      id: crypto.randomUUID(),
-      trackingNumber,
-      paypalOrderId,
-      status: "AWAITING_PAYMENT_APPROVAL",
+      tracking,
+      status: "PAID_PENDING_BUILD", // next step: generate packet
       plan,
       amount,
-      currency: "USD",
       customer: {
-        company_name: payload.company_name,
-        contact_name: payload.contact_name,
-        contact_email: payload.contact_email,
-        contact_phone: payload.contact_phone || "",
+        company_name: body.company_name,
+        contact_name: body.contact_name,
+        contact_email: body.contact_email,
+        contact_phone: body.contact_phone || "",
       },
       project: {
-        project_title: payload.project_title,
-        project_type: payload.project_type || "",
-        aca_id: payload.aca_id || "",
-        est_qualified_costs: payload.est_qualified_costs || "",
-        prod_start: payload.prod_start || "",
-        prod_end: payload.prod_end || "",
-        notes: payload.notes || "",
+        project_title: body.project_title,
+        project_type: body.project_type || "",
+        aca_id: body.aca_id || "",
+        est_qualified_costs: body.est_qualified_costs || "",
+        prod_start: body.prod_start || "",
+        prod_end: body.prod_end || "",
+        notes: body.notes || "",
       },
-      exports: null,
-      timeline: [{ at: new Date().toISOString(), status: "AWAITING_PAYMENT_APPROVAL", note: "PayPal order created" }],
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      uploads: {
+        has_ledger_file: !!body.has_ledger_file,
+        payroll_files_count: Number(body.payroll_files_count || 0),
+        supporting_docs_count: Number(body.supporting_docs_count || 0),
+      },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
-    await putJSON(`order:${trackingNumber}`, order);
+    await saveOrder(order);
 
-    return send(res, 200, {
-      success: true,
-      trackingNumber,
-      paypalOrderId,
-      approveUrl,
+    // Customer email
+    await sendEmail({
+      to: order.customer.contact_email,
+      subject: `AZ Film Credit — Order Received (${tracking})`,
+      html: `
+        <div style="font-family:Arial,sans-serif">
+          <h2>Order received</h2>
+          <p>Thanks, ${order.customer.contact_name}. We received your submission.</p>
+          <p><b>Tracking #:</b> ${tracking}</p>
+          <p><b>Plan:</b> ${plan === "prep_cpa" ? "Prep + Certified AZ CPA" : "Prep only"}</p>
+          <p>You can check status anytime here: <a href="/thank-you.html?tracking=${encodeURIComponent(tracking)}">View status</a></p>
+          <hr/>
+          <p style="color:#666;font-size:12px">Demo MVP email — your production email template can be upgraded next.</p>
+        </div>
+      `,
     });
+
+    // Admin alert
+    if (process.env.MAIL_ADMIN) {
+      await sendEmail({
+        to: process.env.MAIL_ADMIN,
+        subject: `New AZFC Order: ${tracking}`,
+        html: `
+          <div style="font-family:Arial,sans-serif">
+            <h3>New Order</h3>
+            <p><b>Tracking:</b> ${tracking}</p>
+            <p><b>Company:</b> ${order.customer.company_name}</p>
+            <p><b>Project:</b> ${order.project.project_title} (${order.project.project_type})</p>
+            <p><b>Plan:</b> ${order.plan}</p>
+            <p>Open Admin Portal → review / update status.</p>
+          </div>
+        `,
+      });
+    }
+
+    return res.status(200).json({ success: true, trackingNumber: tracking });
   } catch (e) {
     console.error(e);
-    return send(res, 500, { success: false, message: e.message || "Server error" });
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 }
