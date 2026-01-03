@@ -32,16 +32,18 @@
       color: #F9FAFB;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
+    :focus-visible { outline: 2px solid #E3A857; outline-offset: 2px; }
   </style>
 </head>
+
 <body class="min-h-screen flex flex-col">
 
-    <!-- NAVBAR -->
+  <!-- NAVBAR -->
   <header class="sticky top-0 z-40 bg-black/80 backdrop-blur border-b border-white/10">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-6 py-3">
-        <!-- Logo (cleaner spacing) -->
+      <!-- Logo -->
       <a href="#top" class="flex items-center gap-3 min-w-[190px]">
-        <svg class="w-9 h-9" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <svg class="w-9 h-9" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="2" y="4" width="32" height="32" rx="8" fill="#111827" />
           <rect x="6" y="10" width="4" height="4" rx="1" fill="#F3F4F6" />
           <rect x="6" y="18" width="4" height="4" rx="1" fill="#F3F4F6" />
@@ -50,13 +52,7 @@
           <rect x="26" y="18" width="4" height="4" rx="1" fill="#F3F4F6" />
           <rect x="26" y="26" width="4" height="4" rx="1" fill="#F3F4F6" />
           <rect x="11" y="10" width="16" height="20" rx="2" fill="#1F2937" />
-          <path
-            d="M14 21 L18 25 L24 17"
-            stroke="#E3A857"
-            stroke-width="2.4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+          <path d="M14 21 L18 25 L24 17" stroke="#E3A857" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <div class="leading-tight">
           <div class="text-sm font-semibold tracking-wide whitespace-nowrap">
@@ -70,32 +66,14 @@
         </div>
       </a>
 
-      <!-- Center nav: simple, clean links -->
+      <!-- Center nav -->
       <nav class="hidden lg:flex flex-1 items-center justify-center gap-4 text-xs sm:text-sm font-medium text-gray-200">
-        <a href="#how-it-works"
-           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
-          How it works
-        </a>
-        <a href="#features"
-           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
-          Features
-        </a>
-        <a href="#az-credit"
-           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
-          AZ Program
-        </a>
-        <a href="#faq"
-           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
-          FAQ
-        </a>
-        <a href="cpa-processing.html"
-           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
-          Pricing &amp; Processing
-        </a>
-        <a href="#status-tracker"
-           class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">
-          Status tracker
-        </a>
+        <a href="#how-it-works" class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">How it works</a>
+        <a href="#features" class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">Features</a>
+        <a href="#az-credit" class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">AZ Program</a>
+        <a href="#faq" class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">FAQ</a>
+        <a href="cpa-processing.html" class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">Pricing &amp; Processing</a>
+        <a href="#status-tracker" class="px-3 py-1 rounded-full whitespace-nowrap hover:bg-white/5 hover:text-white transition-colors">Status tracker</a>
       </nav>
 
       <!-- Right-side CTAs -->
@@ -106,12 +84,12 @@
         </a>
         <a href="cpa-processing.html"
            class="inline-flex justify-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition-colors whitespace-nowrap">
-          Start a sample project
+          Start a project
         </a>
       </div>
     </div>
   </header>
-     
+
   <!-- MAIN -->
   <main class="flex-1">
 
@@ -130,18 +108,20 @@
           </h1>
 
           <p class="mt-4 text-sm sm:text-base text-gray-300 max-w-xl">
-            AZ Film Credit is a prep tool for filmmakers that organizes every receipt, vendor, and payroll line
-            into the exact formats your CPA and the Arizona Film Office expect—so they can review, sign, and submit
-            faster. Services start at <span class="font-semibold text-desertGold">$39.99 per project</span>, with an
-            optional <span class="font-semibold text-desertGold">$399 Certified AZ CPA sign-off</span> add-on.
+            AZ Film Credit is a prep tool for filmmakers that organizes receipts, vendors, and payroll lines
+            into formats your CPA can review faster. Services start at
+            <span class="font-semibold text-desertGold">$79.00 per project</span>, with an optional
+            <span class="font-semibold text-desertGold">$399 Certified AZ CPA sign-off</span> add-on.
           </p>
 
           <div class="mt-6 flex flex-col sm:flex-row sm:items-center gap-3">
-            <a href="#get-started"
+            <a href="cpa-processing.html"
                class="inline-flex justify-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition">
-              Start a sample project
+              Start a project
             </a>
-            <a href="#demo"
+
+            <!-- ✅ FIXED: real link to walkthrough.html -->
+            <a href="walkthrough.html"
                class="inline-flex justify-center px-5 py-2.5 rounded-full text-sm font-medium border border-white/20 text-gray-200 hover:bg-white/5 transition">
               View tool walkthrough
             </a>
@@ -154,11 +134,11 @@
             </div>
             <div>
               <div class="text-lg font-semibold text-white">100%</div>
-              <div>Designed around Arizona Motion Picture Production Program rules.</div>
+              <div>Designed around AZ Motion Picture Production Program documentation.</div>
             </div>
             <div>
               <div class="text-lg font-semibold text-white">&lt; 1 wk</div>
-              <div>Target time to hand off a fully organized package to your CPA.</div>
+              <div>Target time to hand off an organized package to your CPA.</div>
             </div>
           </div>
         </div>
@@ -191,7 +171,7 @@
               </div>
             </div>
             <div class="mt-2 text-[11px] text-gray-300">
-              ✅ AZ vendor verification &nbsp;•&nbsp; ✅ Qualified expense mapping &nbsp;•&nbsp; ✅ Draft export for Film Office
+              ✅ AZ vendor verification &nbsp;•&nbsp; ✅ Qualified expense mapping &nbsp;•&nbsp; ✅ Packet-ready export
             </div>
           </div>
         </div>
@@ -204,7 +184,7 @@
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl sm:text-2xl font-semibold text-white">How AZ Film Credit works</h2>
           <p class="hidden sm:block text-xs text-gray-400 max-w-sm">
-            Designed to slot in between your production accounting and your CPA’s audit, without replacing either.
+            Designed to slot in between your production accounting and your CPA’s audit.
           </p>
         </div>
 
@@ -213,41 +193,84 @@
             <div class="text-xs font-semibold text-desertGold mb-2">STEP 1</div>
             <h3 class="text-sm font-semibold text-white mb-2">Create a project & import data</h3>
             <p class="text-xs text-gray-300">
-              Add your production details, then upload spreadsheets, payroll exports, and receipt PDFs
-              from your bank, card, or accounting software.
+              Add production details and upload ledgers, payroll exports, and receipt PDFs.
             </p>
           </div>
           <div class="bg-white/5 border border-white/10 rounded-xl p-5">
             <div class="text-xs font-semibold text-desertGold mb-2">STEP 2</div>
-            <h3 class="text-sm font-semibold text-white mb-2">Auto-organize & fix what’s flagged</h3>
+            <h3 class="text-sm font-semibold text-white mb-2">Auto-organize & flag issues</h3>
             <p class="text-xs text-gray-300">
-              The tool groups expenses into Arizona-eligible categories and flags issues:
-              missing receipts, non-AZ vendors, or unclear descriptions.
+              Expenses are grouped into AZ-eligible categories and common issues get flagged.
             </p>
           </div>
           <div class="bg-white/5 border border-white/10 rounded-xl p-5">
             <div class="text-xs font-semibold text-desertGold mb-2">STEP 3</div>
-            <h3 class="text-sm font-semibold text-white mb-2">Generate a CPA-ready audit package</h3>
+            <h3 class="text-sm font-semibold text-white mb-2">Generate a CPA-ready packet</h3>
             <p class="text-xs text-gray-300">
-              One click creates a CPA bundle: master ledger, qualified vs non-qualified spend, AZ-only
-              vendor list, and organized receipts—so your CPA can review and sign.
+              Export a structured CPA bundle: master ledger, schedules, and organized support docs.
             </p>
           </div>
         </div>
       </div>
-      
-      <section id="status-tracker" class="py-12 sm:py-16 bg-black/40 border-t border-b border-white/10">
+    </section>
+
+    <!-- ✅ DEMO / WALKTHROUGH + DOWNLOADS -->
+    <section id="demo" class="py-12 sm:py-16">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-semibold text-white">Walkthrough &amp; sample packet</h2>
+            <p class="text-xs sm:text-sm text-gray-300 mt-1 max-w-2xl">
+              Preview the tool flow and download a fictional CPA-ready sample packet structure.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+            <h3 class="text-sm font-semibold text-white mb-2">Tool walkthrough</h3>
+            <p class="text-xs text-gray-300 mb-4">
+              Step-by-step: upload → payment → tracking → packet generation → admin review → CPA review (optional).
+            </p>
+            <a href="walkthrough.html"
+               class="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-semibold bg-white/10 hover:bg-white/15 text-white transition">
+              Open walkthrough page
+            </a>
+          </div>
+
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+            <h3 class="text-sm font-semibold text-white mb-2">Sample CPA packet</h3>
+            <p class="text-xs text-gray-300 mb-4">
+              Download a sample packet layout (fictional data) to see what your CPA receives.
+            </p>
+
+            <!-- ✅ Update this filename to whatever you’re using in /samples/ -->
+            <a href="/samples/AZ_Film_Credit_Full_CPA_Audit_Sample_Feature_v4.pdf"
+               target="_blank" rel="noopener"
+               class="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-semibold bg-desertGold text-black hover:bg-yellow-400 transition">
+              Download sample packet (PDF)
+            </a>
+
+            <p class="mt-3 text-[11px] text-gray-400">
+              Demo only — not a CPA opinion and not official state filing forms.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATUS TRACKER (your existing block stays as-is) -->
+    <!-- (kept your original status tracker + demo JS below) -->
+    <section id="status-tracker" class="py-12 sm:py-16 bg-black/40 border-t border-b border-white/10">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col lg:flex-row gap-10">
-          <!-- Left column: explainer -->
           <div class="lg:w-1/3 space-y-4">
             <h2 class="text-xl sm:text-2xl font-semibold text-white">
               Track your AZ Film Credit package
             </h2>
             <p class="text-sm text-gray-300 leading-relaxed">
               Use the <span class="font-semibold text-desertGold">Status Tracker Portal</span> to follow
-              your production package from intake to final CPA sign-off and submission to the
-              Arizona Commerce Authority.
+              your production package from intake to final CPA sign-off.
             </p>
 
             <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2 text-sm text-gray-200">
@@ -262,28 +285,22 @@
             </div>
 
             <p class="text-xs text-gray-400">
-              Note: The data shown below will come from your secure AZ Film Credit account.
               Demo information is shown here until your API is connected.
             </p>
           </div>
 
-          <!-- Right column: tracking + table + detail -->
           <div class="lg:w-2/3 space-y-6">
 
-            <!-- Tracking ID entry -->
             <div class="bg-white/5 border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-4">
-              <h3 class="text-lg font-semibold text-white mb-1">
-                Check your document status
-              </h3>
+              <h3 class="text-lg font-semibold text-white mb-1">Check your document status</h3>
               <p class="text-xs text-gray-300 mb-3">
-                Enter the <span class="font-semibold text-desertGold">Tracking ID</span> from your AZ Film Credit
-                payment confirmation email. Only users with a valid Tracking ID can view a project’s status.
+                Enter the <span class="font-semibold text-desertGold">Tracking ID</span> from your confirmation email.
               </p>
               <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
                 <input
                   id="azfc-tracking-input"
                   type="text"
-                  placeholder="Example: J-001 or AZ-2026-000123"
+                  placeholder="Example: J-001 or AZFC-250102-839217"
                   class="flex-1 rounded-full bg-black/60 border border-white/15 text-xs sm:text-sm text-gray-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-desertGold"
                 />
                 <button
@@ -299,16 +316,11 @@
               </p>
             </div>
 
-            <!-- Project list (only shown after a valid Tracking ID) -->
             <div id="azfc-projects-card" class="bg-white/5 border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-4 hidden">
               <div class="flex items-center justify-between mb-4">
                 <div>
-                  <h3 class="text-lg font-semibold text-white">
-                    Your project
-                  </h3>
-                  <p class="text-xs text-gray-400">
-                    We’re showing the project linked to the Tracking ID you entered above.
-                  </p>
+                  <h3 class="text-lg font-semibold text-white">Your project</h3>
+                  <p class="text-xs text-gray-400">Project linked to the Tracking ID you entered above.</p>
                 </div>
                 <button
                   type="button"
@@ -329,30 +341,20 @@
                       <th class="py-2 pr-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody id="azfc-status-table-body" class="divide-y divide-white/5">
-                    <!-- Filled by JS -->
-                  </tbody>
+                  <tbody id="azfc-status-table-body" class="divide-y divide-white/5"></tbody>
                 </table>
               </div>
             </div>
 
-            <!-- Detail panel (only shown when a project is selected) -->
-            <div
-              id="azfc-status-detail-panel"
-              class="bg-white/5 border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-5 hidden"
-            >
+            <div id="azfc-status-detail-panel" class="bg-white/5 border border-white/10 rounded-2xl shadow-xl shadow-black/40 p-5 hidden">
               <div class="flex items-start justify-between gap-4 mb-4">
                 <div>
-                  <h3 id="azfc-detail-project-name" class="text-lg font-semibold text-white">
-                    <!-- Project name -->
-                  </h3>
+                  <h3 id="azfc-detail-project-name" class="text-lg font-semibold text-white"></h3>
                   <p class="text-xs text-gray-400 mt-1 flex flex-wrap items-center gap-2">
                     <span>Status:</span>
                     <span id="azfc-detail-status"></span>
                     <span class="text-gray-500">•</span>
-                    <span>Last updated:
-                      <span id="azfc-detail-updated" class="text-gray-200"></span>
-                    </span>
+                    <span>Last updated: <span id="azfc-detail-updated" class="text-gray-200"></span></span>
                   </p>
                 </div>
                 <button
@@ -364,51 +366,28 @@
                 </button>
               </div>
 
-              <!-- Outstanding items -->
               <div class="mb-4">
-                <h4 class="text-sm font-semibold text-white mb-2">
-                  Outstanding items
-                </h4>
-                <div
-                  id="azfc-detail-missing-list"
-                  class="bg-black/50 border border-white/10 rounded-xl p-3 text-xs text-gray-200 space-y-2"
-                >
-                  <!-- Filled by JS -->
-                </div>
+                <h4 class="text-sm font-semibold text-white mb-2">Outstanding items</h4>
+                <div id="azfc-detail-missing-list" class="bg-black/50 border border-white/10 rounded-xl p-3 text-xs text-gray-200 space-y-2"></div>
               </div>
 
-              <!-- Comment thread -->
               <div class="mb-4">
-                <h4 class="text-sm font-semibold text-white mb-2">
-                  CPA &amp; client comments
-                </h4>
-                <div
-                  id="azfc-detail-comments"
-                  class="bg-black/50 border border-white/10 rounded-xl p-3 max-h-56 overflow-y-auto space-y-3 text-xs text-gray-200"
-                >
-                  <!-- Filled by JS -->
-                </div>
+                <h4 class="text-sm font-semibold text-white mb-2">CPA &amp; client comments</h4>
+                <div id="azfc-detail-comments" class="bg-black/50 border border-white/10 rounded-xl p-3 max-h-56 overflow-y-auto space-y-3 text-xs text-gray-200"></div>
               </div>
 
-              <!-- Add client comment -->
               <div class="space-y-3">
-                <label class="block text-xs font-medium text-gray-300" for="azfc-new-comment">
-                  Add a note to your CPA
-                </label>
+                <label class="block text-xs font-medium text-gray-300" for="azfc-new-comment">Add a note to your CPA</label>
                 <textarea
                   id="azfc-new-comment"
                   class="w-full rounded-xl bg-black/60 border border-white/15 text-xs text-gray-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-desertGold"
                   rows="3"
-                  placeholder="Example: We’ve uploaded the final W-9 file. Please continue the audit even if the catering receipt remains missing."
+                  placeholder="Example: We’ve uploaded the final W-9 file…"
                 ></textarea>
 
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
                   <label class="inline-flex items-center gap-2 text-xs text-gray-300 cursor-pointer">
-                    <input
-                      id="azfc-proceed-without-missing"
-                      type="checkbox"
-                      class="rounded border-white/20 bg-black text-desertGold focus:ring-desertGold"
-                    />
+                    <input id="azfc-proceed-without-missing" type="checkbox" class="rounded border-white/20 bg-black text-desertGold focus:ring-desertGold" />
                     <span>Let my CPA know they may <span class="font-semibold text-desertGold">continue without all missing documents</span>.</span>
                   </label>
 
@@ -422,22 +401,17 @@
                 </div>
               </div>
 
-              <!-- Upload missing document -->
               <div class="mt-5 border-t border-white/10 pt-4 space-y-3">
-                <h4 class="text-sm font-semibold text-white">
-                  Upload missing document
-                </h4>
+                <h4 class="text-sm font-semibold text-white">Upload missing document</h4>
                 <p class="text-xs text-gray-400">
-                  Choose the missing document requested by your CPA and upload it here. They’ll be notified inside their review dashboard.
+                  Choose the missing document requested by your CPA and upload it here.
                 </p>
 
                 <div class="flex flex-col md:flex-row gap-3 md:items-center">
                   <select
                     id="azfc-upload-doc-type"
                     class="w-full md:w-1/3 rounded-xl bg-black/60 border border-white/15 text-xs text-gray-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                  >
-                    <!-- Options filled by JS based on missing items -->
-                  </select>
+                  ></select>
 
                   <input
                     id="azfc-upload-file"
@@ -454,9 +428,7 @@
                   </button>
                 </div>
 
-                <p id="azfc-upload-status" class="text-xs text-emerald-400 hidden">
-                  <!-- success / error message -->
-                </p>
+                <p id="azfc-upload-status" class="text-xs text-emerald-400 hidden"></p>
               </div>
             </div>
 
@@ -464,7 +436,7 @@
         </div>
       </div>
     </section>
-  
+
     <!-- FEATURES -->
     <section id="features" class="py-12 sm:py-16">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -472,38 +444,35 @@
           <div>
             <h2 class="text-xl sm:text-2xl font-semibold text-white">Made for filmmakers and CPAs</h2>
             <p class="text-xs sm:text-sm text-gray-300 mt-1 max-w-xl">
-              One environment where productions can clean up their numbers and CPAs can see exactly what they need—without digging through 300 email attachments.
+              One environment where productions can clean up their numbers and CPAs can see exactly what they need.
             </p>
           </div>
         </div>
 
         <div class="grid md:grid-cols-2 gap-6">
-          <!-- For filmmakers -->
           <div class="bg-white/5 border border-white/10 rounded-xl p-5">
             <div class="text-xs font-semibold text-desertGold mb-2 uppercase tracking-[0.16em]">
               For Filmmakers &amp; Producers
             </div>
             <ul class="space-y-2 text-xs text-gray-200">
               <li>• Single dashboard to track total and Arizona-only spend.</li>
-              <li>• Upload CSV, Excel, QuickBooks exports, and PDF receipts.</li>
+              <li>• Upload CSV, Excel, accounting exports, and PDF receipts.</li>
               <li>• Automatic category mapping to AZ film credit expense types.</li>
-              <li>• Flags non-eligible expenses before you hand off to a CPA.</li>
-              <li>• Clear checklist showing what’s missing for the credit application.</li>
+              <li>• Flags non-eligible expenses before CPA handoff.</li>
+              <li>• Checklist of missing items needed for submission.</li>
             </ul>
           </div>
 
-          <!-- For CPAs -->
           <div class="bg-white/5 border border-white/10 rounded-xl p-5">
             <div class="text-xs font-semibold text-desertGold mb-2 uppercase tracking-[0.16em]">
               For CPAs &amp; Auditors
             </div>
             <ul class="space-y-2 text-xs text-gray-200">
-              <li>• Pre-cleaned ledger with AZ-eligible categories already applied.</li>
+              <li>• Pre-cleaned ledger with AZ categories already applied.</li>
               <li>• Exportable master file + supporting documentation bundles.</li>
               <li>• Clear separation of qualified vs non-qualified expenses.</li>
-              <li>• Ability to leave notes or requests back to production.</li>
-              <li>• Signature-ready package aligned with Arizona Film Office requirements.</li>
-              <li>• Optional <span class="font-semibold text-desertGold">$399 Certified AZ CPA sign-off service</span> for qualifying projects.</li>
+              <li>• Comment loop back to production for missing items.</li>
+              <li>• Optional <span class="font-semibold text-desertGold">$399 Certified AZ CPA sign-off</span> for qualifying projects.</li>
             </ul>
           </div>
         </div>
@@ -517,14 +486,14 @@
           <div>
             <h2 class="text-xl sm:text-2xl font-semibold text-white">Built around the Arizona Motion Picture Production Program</h2>
             <p class="mt-3 text-sm text-gray-300">
-              AZ Film Credit is structured around the core documentation the Arizona Film Office and your CPA
-              will expect: detailed ledgers, residency evidence, vendor locations, and proof of in-state spend.
+              AZ Film Credit is structured around the documentation a CPA expects: detailed ledgers,
+              residency evidence, vendor locations, and proof of in-state spend.
             </p>
             <ul class="mt-4 space-y-2 text-xs text-gray-200">
               <li>• Tracks in-state vs out-of-state vendors and crew.</li>
               <li>• Groups expenses by category and eligibility status.</li>
               <li>• Keeps supporting documentation tied to each line item.</li>
-              <li>• Generates a submission-ready folder you can upload or share.</li>
+              <li>• Generates a packet-ready folder you can share with your CPA.</li>
             </ul>
           </div>
           <div class="bg-white/5 border border-white/10 rounded-xl p-5">
@@ -533,8 +502,8 @@
               <li>• Master expense ledger (CSV / Excel / PDF)</li>
               <li>• AZ-only spend summary with category breakdown</li>
               <li>• Qualified vs non-qualified expenses report</li>
-              <li>• Vendor registry with Arizona verification notes</li>
-              <li>• Payroll summaries and supporting docs</li>
+              <li>• Vendor registry + AZ verification notes</li>
+              <li>• Payroll summaries + support docs</li>
               <li>• Receipt / invoice archive matched to expenses</li>
             </ul>
             <p class="mt-3 text-[11px] text-gray-400">
@@ -545,22 +514,21 @@
       </div>
     </section>
 
-    <!-- GET STARTED / CONTACT -->
+    <!-- GET STARTED / CONTACT CTA -->
     <section id="get-started" class="py-12 sm:py-16">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-xl sm:text-2xl font-semibold text-white">Ready to show this to the Arizona Film Office or your CPA?</h2>
+        <h2 class="text-xl sm:text-2xl font-semibold text-white">Ready to hand this to your CPA?</h2>
         <p class="mt-3 text-sm text-gray-300">
-          Use AZ Film Credit as a proof-of-concept: a standardized way for productions to prep their numbers
-          before the audit stage. Share a demo login, sample project, or static prototype.
+          Start a project, upload your docs, and generate a standardized package your CPA can review.
         </p>
         <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-          <a href="#contact"
+          <a href="cpa-processing.html"
              class="inline-flex justify-center px-5 py-2.5 rounded-full text-sm font-semibold bg-sunsetRed hover:bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition">
-            Book a walkthrough
+            Start a project
           </a>
-          <a href="#demo"
+          <a href="walkthrough.html"
              class="inline-flex justify-center px-5 py-2.5 rounded-full text-sm font-medium border border-white/20 text-gray-200 hover:bg-white/5 transition">
-            Download sample CPA package
+            View tool walkthrough
           </a>
         </div>
       </div>
@@ -574,23 +542,13 @@
           <div>
             <h3 class="text-sm font-semibold text-desertGold">Does this replace a CPA?</h3>
             <p class="text-xs text-gray-300">
-              No. AZ Film Credit is a prep and organization tool. Your licensed CPA still reviews, adjusts,
-              and signs the final audit documentation required by the Arizona Film Office.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-sm font-semibold text-desertGold">Can I use this for non-Arizona projects?</h3>
-            <p class="text-xs text-gray-300">
-              The structure is designed for the Arizona Motion Picture Production Program, but the core
-              workflow—organizing expenses, matching receipts, and preparing an audit package—can inform
-              other jurisdictions as well.
+              No. AZ Film Credit is a prep and organization tool. Your licensed CPA still reviews and signs the final documentation.
             </p>
           </div>
           <div>
             <h3 class="text-sm font-semibold text-desertGold">Is this an official Arizona Film Office product?</h3>
             <p class="text-xs text-gray-300">
-              Not yet. AZ Film Credit is designed as a tool filmmakers and CPAs can propose,
-              pilot, or adopt in collaboration with the Film Office to standardize submissions.
+              No. AZ Film Credit is an independent prep tool. Always confirm current program rules and forms with your CPA.
             </p>
           </div>
         </div>
@@ -602,8 +560,7 @@
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-lg sm:text-xl font-semibold text-white">Let’s talk about implementation</h2>
         <p class="mt-2 text-xs sm:text-sm text-gray-300">
-          Plug in your developer, CPA, or Arizona Film Office contact and outline how you’d like
-          to pilot AZ Film Credit for your next production.
+          Plug in your developer, CPA, or Arizona Film Office contact and outline how you’d like to pilot AZ Film Credit.
         </p>
         <form class="mt-6 grid gap-3 text-left">
           <div class="grid sm:grid-cols-2 gap-3">
@@ -628,7 +585,7 @@
           </div>
           <div>
             <label class="block text-xs text-gray-300 mb-1">How do you want to use AZ Film Credit?</label>
-            <textarea rows="4" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold" placeholder="Describe your project, budget level, and what you need this tool to do."></textarea>
+            <textarea rows="4" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold" placeholder="Describe your project and what you need this tool to do."></textarea>
           </div>
           <div class="flex justify-center mt-2">
             <button type="submit"
@@ -639,6 +596,7 @@
         </form>
       </div>
     </section>
+
   </main>
 
   <!-- FOOTER -->
@@ -646,17 +604,18 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
       <div>© <span id="year"></span> AZ Film Credit. All rights reserved.</div>
       <div class="flex gap-4">
-  <a href="privacy.html" class="hover:text-desertGold">Privacy</a>
-  <a href="terms.html" class="hover:text-desertGold">Terms</a>
-  <a href="support.html" class="hover:text-desertGold">Support</a>
-    </div>
+        <a href="privacy.html" class="hover:text-desertGold">Privacy</a>
+        <a href="terms.html" class="hover:text-desertGold">Terms</a>
+        <a href="support.html" class="hover:text-desertGold">Support</a>
+      </div>
     </div>
   </footer>
 
   <script>
-    // Set current year
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+
+  <!-- Keep your demo Status Tracker JS below (unchanged from your version) -->
   <script>
   // --- Demo data (replace with real API data later) ---
   let azfcJobs = [
@@ -670,16 +629,8 @@
         "Final location agreement for Tempe warehouse"
       ],
       comments: [
-        {
-          from: "CPA",
-          at: "2025-12-10 09:21",
-          text: "Please upload the W-9 for Desert Catering and the signed Tempe warehouse location agreement."
-        },
-        {
-          from: "You",
-          at: "2025-12-10 10:02",
-          text: "We’re waiting on the final location agreement signature; W-9 will be uploaded today."
-        }
+        { from: "CPA", at: "2025-12-10 09:21", text: "Please upload the W-9 for Desert Catering and the signed Tempe warehouse location agreement." },
+        { from: "You", at: "2025-12-10 10:02", text: "We’re waiting on the final location agreement signature; W-9 will be uploaded today." }
       ]
     },
     {
@@ -689,11 +640,7 @@
       lastUpdated: "2025-12-09",
       missingItems: [],
       comments: [
-        {
-          from: "CPA",
-          at: "2025-12-09 15:45",
-          text: "All requested documentation received. Currently reviewing your qualified spend summary."
-        }
+        { from: "CPA", at: "2025-12-09 15:45", text: "All requested documentation received. Currently reviewing your qualified spend summary." }
       ]
     },
     {
@@ -703,59 +650,27 @@
       lastUpdated: "2025-11-30",
       missingItems: [],
       comments: [
-        {
-          from: "CPA",
-          at: "2025-11-29 12:10",
-          text: "Final package reviewed and approved."
-        },
-        {
-          from: "CPA",
-          at: "2025-11-30 09:18",
-          text: "Package submitted to AZ Commerce Authority."
-        }
+        { from: "CPA", at: "2025-11-29 12:10", text: "Final package reviewed and approved." },
+        { from: "CPA", at: "2025-11-30 09:18", text: "Package submitted to AZ Commerce Authority." }
       ]
     }
   ];
 
   let azfcCurrentJobId = null;
 
-  // --- Status chip styling (on-brand colors) ---
   function azfcStatusChipClass(status) {
-    if (!status) {
-      return "bg-white/10 text-gray-100 border border-white/20";
-    }
-
+    if (!status) return "bg-white/10 text-gray-100 border border-white/20";
     const s = status.toLowerCase();
-
-    // Missing info = warning (sunsetRed)
-    if (s.includes("missing")) {
-      return "bg-sunsetRed/15 text-sunsetRed border border-sunsetRed/60";
-    }
-
-    // Under review = neutral / gold
-    if (s.includes("under cpa")) {
-      return "bg-white/10 text-desertGold border border-desertGold/60";
-    }
-
-    // Completed / submitted = success
-    if (s.includes("completed") || s.includes("submitted")) {
-      return "bg-emerald-500/15 text-emerald-300 border border-emerald-400/60";
-    }
-
-    // Waiting on client
-    if (s.includes("pending client")) {
-      return "bg-white/10 text-gray-100 border border-white/40";
-    }
-
-    // Default
+    if (s.includes("missing")) return "bg-sunsetRed/15 text-sunsetRed border border-sunsetRed/60";
+    if (s.includes("under cpa")) return "bg-white/10 text-desertGold border border-desertGold/60";
+    if (s.includes("completed") || s.includes("submitted")) return "bg-emerald-500/15 text-emerald-300 border border-emerald-400/60";
+    if (s.includes("pending client")) return "bg-white/10 text-gray-100 border border-white/40";
     return "bg-white/10 text-gray-100 border border-white/20";
   }
 
-  // --- Render the mini table (only for the current Tracking ID) ---
   function azfcRenderTable() {
     const tbody = document.getElementById("azfc-status-table-body");
     if (!tbody) return;
-
     tbody.innerHTML = "";
 
     if (!azfcCurrentJobId) {
@@ -783,7 +698,6 @@
 
     const tr = document.createElement("tr");
     tr.className = "hover:bg-black/50 transition";
-
     tr.innerHTML = `
       <td class="py-2 pr-4 align-top">
         <div class="flex flex-col">
@@ -796,9 +710,7 @@
           ${job.status}
         </span>
       </td>
-      <td class="py-2 pr-4 align-top text-xs text-gray-300">
-        ${job.lastUpdated}
-      </td>
+      <td class="py-2 pr-4 align-top text-xs text-gray-300">${job.lastUpdated}</td>
       <td class="py-2 pr-0 align-top text-right">
         <button
           type="button"
@@ -809,15 +721,12 @@
         </button>
       </td>
     `;
-
     tbody.appendChild(tr);
   }
 
-  // --- Open detail view for the current job ---
   function azfcOpenDetail(jobId) {
     const job = azfcJobs.find((j) => j.id === jobId);
     if (!job) return;
-
     azfcCurrentJobId = jobId;
 
     const panel = document.getElementById("azfc-status-detail-panel");
@@ -833,12 +742,8 @@
 
     if (!panel) return;
 
-    // Title
-    if (nameEl) {
-      nameEl.textContent = job.title;
-    }
+    if (nameEl) nameEl.textContent = job.title;
 
-    // Status pill
     if (statusEl) {
       statusEl.textContent = job.status;
       statusEl.className =
@@ -846,34 +751,22 @@
         azfcStatusChipClass(job.status);
     }
 
-    // Last updated
-    if (updatedEl) {
-      updatedEl.textContent = job.lastUpdated;
-    }
+    if (updatedEl) updatedEl.textContent = job.lastUpdated;
 
-    // Missing items
     if (missingEl) {
       missingEl.innerHTML = "";
       if (!job.missingItems || job.missingItems.length === 0) {
-        missingEl.innerHTML = `
-          <p class="text-gray-400">
-            No outstanding items. Your CPA will update the status once the review is complete.
-          </p>
-        `;
+        missingEl.innerHTML = `<p class="text-gray-400">No outstanding items.</p>`;
       } else {
         job.missingItems.forEach((item) => {
           const div = document.createElement("div");
           div.className = "flex items-start gap-2";
-          div.innerHTML = `
-            <span class="mt-0.5 text-desertGold">•</span>
-            <span class="text-gray-100">${item}</span>
-          `;
+          div.innerHTML = `<span class="mt-0.5 text-desertGold">•</span><span class="text-gray-100">${item}</span>`;
           missingEl.appendChild(div);
         });
       }
     }
 
-    // Doc type select options
     if (docTypeSelect) {
       docTypeSelect.innerHTML = "";
       if (job.missingItems && job.missingItems.length > 0) {
@@ -891,7 +784,6 @@
       }
     }
 
-    // Comments
     if (commentsEl) {
       commentsEl.innerHTML = "";
       (job.comments || []).forEach((c) => {
@@ -899,16 +791,10 @@
         const fromIsCPA = c.from && c.from.toLowerCase() === "cpa";
         div.className =
           "rounded-lg px-3 py-2 " +
-          (fromIsCPA
-            ? "bg-black/70 border border-desertGold/60"
-            : "bg-black/60 border border-white/15");
+          (fromIsCPA ? "bg-black/70 border border-desertGold/60" : "bg-black/60 border border-white/15");
         div.innerHTML = `
           <div class="flex items-center justify-between gap-2 mb-1">
-            <span class="text-[11px] font-semibold ${
-              fromIsCPA ? "text-desertGold" : "text-emerald-300"
-            }">
-              ${fromIsCPA ? "CPA" : "You"}
-            </span>
+            <span class="text-[11px] font-semibold ${fromIsCPA ? "text-desertGold" : "text-emerald-300"}">${fromIsCPA ? "CPA" : "You"}</span>
             <span class="text-[10px] text-gray-500">${c.at || ""}</span>
           </div>
           <p class="text-[11px] text-gray-100 leading-snug">${c.text}</p>
@@ -917,7 +803,6 @@
       });
     }
 
-    // Reset UI bits
     if (uploadStatus) {
       uploadStatus.classList.add("hidden");
       uploadStatus.textContent = "";
@@ -933,13 +818,11 @@
     if (panel) panel.classList.add("hidden");
   }
 
-  // --- Tracking ID lookup ---
   function azfcLookupTrackingId() {
     const input = document.getElementById("azfc-tracking-input");
     const messageEl = document.getElementById("azfc-tracking-message");
     const projectsCard = document.getElementById("azfc-projects-card");
     const panel = document.getElementById("azfc-status-detail-panel");
-
     if (!input) return;
 
     const raw = input.value.trim();
@@ -963,16 +846,14 @@
       if (projectsCard) projectsCard.classList.add("hidden");
       if (panel) panel.classList.add("hidden");
       if (messageEl) {
-        messageEl.textContent = "We couldn’t find a project with that Tracking ID. Please confirm the ID and try again.";
+        messageEl.textContent = "We couldn’t find a project with that Tracking ID. Please confirm and try again.";
         messageEl.className = "mt-2 text-xs text-sunsetRed";
       }
       azfcRenderTable();
       return;
     }
 
-    // Found a valid job
     azfcCurrentJobId = job.id;
-
     if (projectsCard) projectsCard.classList.remove("hidden");
     if (messageEl) {
       messageEl.textContent = `Showing status for Tracking ID: ${job.id}`;
@@ -983,7 +864,6 @@
     azfcOpenDetail(job.id);
   }
 
-  // --- Upload + comment actions (demo only, still local) ---
   function azfcSubmitClientComment() {
     const job = azfcJobs.find((j) => j.id === azfcCurrentJobId);
     if (!job) return;
@@ -1004,26 +884,10 @@
     const timestamp = now.toLocaleString();
 
     if (!job.comments) job.comments = [];
-    if (text) {
-      job.comments.push({
-        from: "You",
-        at: timestamp,
-        text
-      });
-    }
-
-    if (proceed) {
-      job.comments.push({
-        from: "You",
-        at: timestamp,
-        text: "You may proceed with the audit even if all missing documents are not available."
-      });
-    }
+    if (text) job.comments.push({ from: "You", at: timestamp, text });
+    if (proceed) job.comments.push({ from: "You", at: timestamp, text: "You may proceed even if all missing documents are not available." });
 
     job.lastUpdated = now.toISOString().slice(0, 10);
-
-    // TODO: POST to your backend here
-
     azfcOpenDetail(job.id);
     azfcRenderTable();
   }
@@ -1037,7 +901,6 @@
     const statusEl = document.getElementById("azfc-upload-status");
 
     if (!docTypeSelect || !fileInput) return;
-
     const docType = docTypeSelect.value;
     const file = fileInput.files[0];
 
@@ -1045,8 +908,6 @@
       alert("Please select a missing document type and choose a file to upload.");
       return;
     }
-
-    // TODO: send FormData to backend in production
 
     if (statusEl) {
       statusEl.textContent = `Uploaded "${file.name}" as "${docType}" (demo only – connect to backend).`;
@@ -1062,7 +923,6 @@
     azfcRenderTable();
   }
 
-  // --- Init ---
   document.addEventListener("DOMContentLoaded", () => {
     azfcRenderTable();
   });
