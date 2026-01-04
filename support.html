@@ -1,343 +1,49 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Support | AZ Film Credit</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="description"
-    content="Contact AZ Film Credit support for technical issues, billing questions, or help preparing your CPA-ready Arizona film credit package."
-  />
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            desertGold: "#E3A857",
-            sunsetRed: "#E4572E",
-            deepSlate: "#111827",
-            sand: "#F3F4F6"
-          }
-        }
-      }
-    }
-  </script>
+  const form = document.getElementById("support-form");
+  const msg = document.getElementById("support-message");
 
-  <style>
-    body {
-      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000000 100%);
-      color: #F9FAFB;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    :focus-visible { outline: 2px solid #E3A857; outline-offset: 2px; }
-  </style>
-</head>
+  function setMsg(text, ok = true) {
+    msg.textContent = text;
+    msg.className = ok ? "text-[11px] text-emerald-300" : "text-[11px] text-rose-300";
+  }
 
-<body class="min-h-screen flex flex-col">
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  <!-- HEADER -->
-  <header class="border-b border-white/10 bg-black/70 backdrop-blur">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center space-x-3">
-        <div class="flex items-center">
-          <svg class="w-8 h-8 mr-2" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="2" y="4" width="32" height="32" rx="8" fill="#111827"/>
-            <rect x="6" y="10" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="6" y="18" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="6" y="26" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="26" y="10" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="26" y="18" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="26" y="26" width="4" height="4" rx="1" fill="#F3F4F6"/>
-            <rect x="11" y="10" width="16" height="20" rx="2" fill="#1F2937"/>
-            <path d="M14 21 L18 25 L24 17"
-                  stroke="#E3A857"
-                  stroke-width="2.4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round" />
-          </svg>
-          <div class="leading-tight">
-            <div class="text-xs font-semibold tracking-wide">
-              <span class="text-desertGold">AZ</span>
-              <span class="text-white ml-1">Film</span>
-              <span class="text-sunsetRed ml-1">Credit</span>
-            </div>
-            <div class="text-[10px] uppercase tracking-[0.16em] text-gray-400">
-              Support
-            </div>
-          </div>
-        </div>
-      </a>
+    const fd = new FormData(form);
+    const payload = Object.fromEntries(fd.entries());
 
-      <div class="flex items-center gap-4 text-xs text-gray-300">
-        <a href="cpa-processing.html" class="hover:text-desertGold">Processing</a>
-        <a href="admin.html" class="hover:text-desertGold">Admin</a>
-      </div>
-    </div>
-  </header>
+    // basic UX
+    setMsg("Sending…", true);
 
-  <!-- MAIN -->
-  <main class="flex-1 py-10">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1.3fr,1fr] gap-8">
-
-      <!-- LEFT: FORM -->
-      <section>
-        <h1 class="text-2xl sm:text-3xl font-semibold text-white mb-2">How can we help?</h1>
-        <p class="text-sm text-gray-300 mb-6">
-          Send a message to support@azfilmcredit.org. We typically respond within 1–2 business days.
-        </p>
-
-        <form class="space-y-4" id="support-form" novalidate>
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs text-gray-300 mb-1" for="name">Name</label>
-              <input
-                id="name"
-                type="text"
-                name="name"
-                required
-                autocomplete="name"
-                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                placeholder="Your full name"
-              />
-            </div>
-            <div>
-              <label class="block text-xs text-gray-300 mb-1" for="email">Email</label>
-              <input
-                id="email"
-                type="email"
-                name="email"
-                required
-                autocomplete="email"
-                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                placeholder="you@example.com"
-              />
-            </div>
-          </div>
-
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs text-gray-300 mb-1" for="project">Project title (optional)</label>
-              <input
-                id="project"
-                type="text"
-                name="project"
-                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-                placeholder="e.g., Almost Us"
-              />
-            </div>
-            <div>
-              <label class="block text-xs text-gray-300 mb-1" for="topic">Support topic</label>
-              <select
-                id="topic"
-                name="topic"
-                class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-              >
-                <option>Technical issue</option>
-                <option>Billing / payment</option>
-                <option>Question about documents</option>
-                <option>CPA / audit question</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs text-gray-300 mb-1" for="message">How can we help?</label>
-            <textarea
-              id="message"
-              name="message"
-              rows="6"
-              required
-              class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-desertGold"
-              placeholder="Describe your issue with as much detail as possible (browser, device, what you clicked, error message)."
-            ></textarea>
-          </div>
-
-          <div class="flex items-center justify-between text-[11px] text-gray-400">
-            <span>For urgent tax/legal questions, please contact your CPA or attorney directly.</span>
-          </div>
-
-          <div class="flex items-center justify-end gap-3 pt-2">
-            <button
-              type="button"
-              id="clearBtn"
-              class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 text-xs text-gray-200"
-            >
-              Clear
-            </button>
-
-            <button
-              type="submit"
-              id="support-submit"
-              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-desertGold text-black hover:bg-yellow-400 transition shadow-lg shadow-yellow-500/20 disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              <span id="support-submit-text">Submit support request</span>
-              <span id="support-spinner" class="hidden" aria-hidden="true">
-                <svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-opacity="0.25" stroke-width="4"></circle>
-                  <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" stroke-width="4"></path>
-                </svg>
-              </span>
-            </button>
-          </div>
-
-          <div class="mt-2">
-            <p id="support-message" class="text-[12px] text-gray-300"></p>
-          </div>
-
-          <div class="mt-3 text-[11px] text-gray-500">
-            This form sends via <code>/api/contact</code> and delivers to <b>support@azfilmcredit.org</b>.
-          </div>
-        </form>
-      </section>
-
-      <!-- RIGHT: INFO -->
-      <aside class="space-y-4">
-        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <h2 class="text-sm font-semibold text-white mb-2">Contact details</h2>
-          <p class="text-xs text-gray-200">
-            Email: <span class="font-semibold text-desertGold">support@azfilmcredit.org</span><br />
-            Hours: Monday – Friday, 10:00 AM – 5:00 PM (Arizona time)
-          </p>
-        </div>
-
-        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <h3 class="text-sm font-semibold text-white mb-1">What to include</h3>
-          <ul class="text-[11px] text-gray-200 space-y-1.5">
-            <li>• Your Tracking ID (if you have one)</li>
-            <li>• Which page you were on (Processing, Admin, Tracker)</li>
-            <li>• The exact error message or screenshot</li>
-            <li>• Your browser/device (Chrome, Safari, iPhone, etc.)</li>
-          </ul>
-        </div>
-
-        <div class="bg-black/60 border border-desertGold/40 rounded-xl p-4">
-          <h3 class="text-sm font-semibold text-desertGold mb-1">Important reminder</h3>
-          <p class="text-[11px] text-gray-200">
-            AZ Film Credit organizes your data into a CPA-ready format. We do not provide legal or tax advice,
-            and we do not file documentation on your behalf. Always work with a licensed CPA for audit and filing.
-          </p>
-        </div>
-      </aside>
-
-    </div>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="border-t border-white/10 py-4 text-[11px] text-gray-400">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div>© <span id="year"></span> AZ Film Credit. All rights reserved.</div>
-      <div class="flex gap-4">
-        <a href="privacy.html" class="hover:text-desertGold">Privacy</a>
-        <a href="terms.html" class="hover:text-desertGold">Terms</a>
-        <a href="support.html" class="hover:text-desertGold">Support</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    const form = document.getElementById("support-form");
-    const msg = document.getElementById("support-message");
-    const btn = document.getElementById("support-submit");
-    const btnText = document.getElementById("support-submit-text");
-    const spinner = document.getElementById("support-spinner");
-    const clearBtn = document.getElementById("clearBtn");
-
-    function setMessage(text, kind = "info") {
-      msg.textContent = text || "";
-      msg.className =
-        "text-[12px] " +
-        (kind === "ok"
-          ? "text-emerald-400"
-          : kind === "err"
-          ? "text-rose-300"
-          : "text-gray-300");
-    }
-
-    function validateEmail(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || "").trim());
-    }
-
-    function validate() {
-      const name = form.elements["name"]?.value?.trim();
-      const email = form.elements["email"]?.value?.trim();
-      const message = form.elements["message"]?.value?.trim();
-
-      if (!name) return "Please enter your name.";
-      if (!email) return "Please enter your email.";
-      if (!validateEmail(email)) return "Please enter a valid email address.";
-      if (!message) return "Please enter a message.";
-      if (message.length < 10) return "Please add a little more detail so we can help (10+ characters).";
-      return "";
-    }
-
-    async function postJSON(url, payload) {
-      const res = await fetch(url, {
+    try {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
-      let data = {};
-      try { data = await res.json(); } catch {}
-
-      if (!res.ok || !data.success) {
-        throw new Error(data.message || `Request failed (HTTP ${res.status}).`);
-      }
-      return data;
-    }
-
-    function setLoading(isLoading) {
-      btn.disabled = isLoading;
-      spinner.classList.toggle("hidden", !isLoading);
-      btnText.textContent = isLoading ? "Sending…" : "Submit support request";
-    }
-
-    clearBtn.addEventListener("click", () => {
-      form.reset();
-      setMessage("");
-    });
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const v = validate();
-      if (v) {
-        setMessage("❌ " + v, "err");
-        return;
-      }
-
-      const payload = {
-        name: form.elements["name"].value.trim(),
-        email: form.elements["email"].value.trim(),
-        project: (form.elements["project"].value || "").trim(),
-        topic: (form.elements["topic"].value || "").trim(),
-        message: form.elements["message"].value.trim(),
-        page: "support.html",
-        submittedAt: new Date().toISOString(),
-        userAgent: navigator.userAgent
-      };
-
+      let data = null;
       try {
-        setLoading(true);
-        setMessage("Sending your request to support@azfilmcredit.org…", "info");
-
-        await postJSON("/api/contact", payload);
-
-        setMessage("✅ Sent! Your message was delivered to support@azfilmcredit.org. Check your inbox for a confirmation email.", "ok");
-        form.reset();
-      } catch (err) {
-        console.error(err);
-        setMessage("❌ " + (err.message || "Failed to send. Please try again."), "err");
-      } finally {
-        setLoading(false);
+        data = await res.json();
+      } catch {
+        // non-json response (function crashed before returning json)
+        const text = await res.text().catch(() => "");
+        throw new Error(`Non-JSON response from /api/contact (HTTP ${res.status}). ${text ? "Body: " + text.slice(0, 180) : ""}`);
       }
-    });
-  </script>
-</body>
-</html>
+
+      if (!res.ok || !data?.success) {
+        const detail = data?.detail ? ` — ${data.detail}` : "";
+        throw new Error((data?.message || `Request failed (HTTP ${res.status})`) + detail);
+      }
+
+      setMsg("✅ Support request sent successfully.", true);
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      setMsg(`❌ Support request failed. ${err.message || ""}`, false);
+    }
+  });
+</script>
