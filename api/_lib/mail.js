@@ -1,14 +1,31 @@
+// /api/_lib/mail.js
 import { Resend } from "resend";
 
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+function requiredEnv(name) {
+  const v = process.env[name];
+  if (!v) throw new Error(`Missing ${name} env var`);
+  return v;
+}
 
-export async function sendEmail({ to, subject, html }) {
-  if (!resend) {
-    console.warn("RESEND_API_KEY not set — email disabled (dev mode).");
-    return { ok: true, dev: true };
-  }
+export async function sendEmail({ to, subject, html, replyTo }) {
+  const apiKey = requiredEnv("RESEND_API_KEY");
 
-  const from = process.env.MAIL_FROM || "AZ Film Credit <no-reply@example.com>";
-  const resp = await resend.emails.send({ from, to, subject, html });
-  return resp;
+  // You can use either:
+  // - A domain you've verified in Resend, like "support@azfilmcredit.org"
+  // - Or Resend's onboarding sender while testing
+  const from = process.env.MAIL_FROM || "AZ Film Credit <onboarding@resend.dev>";
+
+  const resend = new Resend(apiKey);
+
+  const payload = {
+    from,
+    to,
+    subject,
+    html,
+  };
+
+  if (replyTo) payload.reply_to = replyTo;
+
+  const { error } = await resend.emails.send(payload);
+  if (error) throw new Error(error.message || "Resend send failed");
 }
