@@ -1,4 +1,9 @@
+// /api/contact.js
 import { sendEmail } from "./_lib/mail.js";
+
+function clean(s, max = 4000) {
+  return String(s || "").trim().slice(0, max);
+}
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -7,70 +12,86 @@ export default async function handler(req, res) {
 
   try {
     const body = req.body || {};
-    const name = String(body.name || "").trim();
-    const email = String(body.email || "").trim();
-    const role = String(body.role || "").trim();
-    const message = String(body.message || "").trim();
+
+    const name = clean(body.name, 120);
+    const email = clean(body.email, 200);
+    const project = clean(body.project, 200);
+    const topic = clean(body.topic, 120);
+    const message = clean(body.message, 6000);
 
     if (!name || !email || !message) {
       return res.status(400).json({ success: false, message: "Missing required fields." });
     }
 
-    // Basic anti-spam / safety limits
-    if (message.length > 5000) {
-      return res.status(400).json({ success: false, message: "Message too long." });
+    // Simple email sanity check
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ success: false, message: "Invalid email address." });
     }
 
-    const SUPPORT_TO = "support@azfilmcredit.org";
+    const to = process.env.SUPPORT_EMAIL || "support@azfilmcredit.org";
 
-    // Email to support
+    // Send to support inbox
     await sendEmail({
-      to: SUPPORT_TO,
-      subject: `AZ Film Credit — Contact Form (${name})`,
-      // If your mail provider supports it, your sendEmail helper may accept "replyTo".
-      // If it doesn't, we include reply instructions in the body.
+      to,
+      subject: `AZFC Support — ${topic || "Request"}${project ? ` (${project})` : ""}`,
       replyTo: email,
       html: `
         <div style="font-family:Arial,sans-serif;line-height:1.45">
-          <h2>New Contact Form Submission</h2>
-          <p><b>Name:</b> ${escapeHtml(name)}</p>
-          <p><b>Email:</b> ${escapeHtml(email)}</p>
-          <p><b>Role:</b> ${escapeHtml(role || "—")}</p>
-          <hr/>
-          <p><b>Message:</b></p>
-          <pre style="white-space:pre-wrap;background:#f6f6f6;padding:12px;border-radius:8px;border:1px solid #ddd">${escapeHtml(message)}</pre>
-          <p style="color:#666;font-size:12px">Reply directly to: ${escapeHtml(email)}</p>
-        </div>
-      `,
-    });
+          <h2 style="margin:0 0 10px 0">New Support Request</h2>
 
-    // Optional: confirmation email to the user (nice UX)
-    await sendEmail({
-      to: email,
-      subject: "AZ Film Credit — We received your message",
-      html: `
-        <div style="font-family:Arial,sans-serif;line-height:1.45">
-          <h2>Thanks for reaching out</h2>
-          <p>Hi ${escapeHtml(name)},</p>
-          <p>We received your message and our team will reply as soon as possible.</p>
-          <hr/>
-          <p style="color:#666;font-size:12px">
-            This mailbox is not monitored for replies. If you need to add details, submit the form again.
+          <p style="margin:0 0 10px 0">
+            <b>Name:</b> ${escapeHtml(name)}<br/>
+            <b>Email:</b> ${escapeHtml(email)}<br/>
+            <b>Topic:</b> ${escapeHtml(topic || "—")}<br/>
+            <b>Project:</b> ${escapeHtml(project || "—")}
+          </p>
+
+          <hr style="border:none;border-top:1px solid #ddd;margin:12px 0"/>
+
+          <p style="white-space:pre-wrap;margin:0">${escapeHtml(message)}</p>
+
+          <hr style="border:none;border-top:1px solid #eee;margin:12px 0"/>
+
+          <p style="color:#666;font-size:12px;margin:0">
+            Sent from support.html • ${escapeHtml(clean(body.userAgent, 500)) || ""}
           </p>
         </div>
       `,
     });
 
+    // Optional: confirmation email back to customer
+    if (process.env.SUPPORT_SEND_CONFIRMATION === "true") {
+      await sendEmail({
+        to: email,
+        subject: "AZ Film Credit — Support request received",
+        html: `
+          <div style="font-family:Arial,sans-serif;line-height:1.45">
+            <p>Hi ${escapeHtml(name)},</p>
+            <p>We received your support request and will reply as soon as possible.</p>
+            <p style="color:#666;font-size:12px">
+              Topic: ${escapeHtml(topic || "—")}<br/>
+              Project: ${escapeHtml(project || "—")}
+            </p>
+            <hr style="border:none;border-top:1px solid #eee;margin:12px 0"/>
+            <p style="white-space:pre-wrap;margin:0">${escapeHtml(message)}</p>
+            <p style="color:#666;font-size:12px;margin-top:12px">
+              — AZ Film Credit Support
+            </p>
+          </div>
+        `,
+      });
+    }
+
     return res.status(200).json({ success: true });
   } catch (e) {
     console.error(e);
-    return res.status(500).json({ success: false, message: "Server error" });
+    return res.status(500).json({ success: false, message: "Failed to send support email." });
   }
 }
 
-// Minimal HTML escaping to prevent injection in email body
+// Minimal escaping to avoid HTML injection in email
 function escapeHtml(str) {
-  return String(str)
+  return String(str || "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
