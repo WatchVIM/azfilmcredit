@@ -1,6 +1,4 @@
 // /api/_lib/mail.js
-import { Resend } from "resend";
-
 function requiredEnv(name) {
   const v = process.env[name];
   if (!v) throw new Error(`Missing ${name} env var`);
@@ -10,12 +8,9 @@ function requiredEnv(name) {
 export async function sendEmail({ to, subject, html, replyTo }) {
   const apiKey = requiredEnv("RESEND_API_KEY");
 
-  // You can use either:
-  // - A domain you've verified in Resend, like "support@azfilmcredit.org"
-  // - Or Resend's onboarding sender while testing
+  // Use a verified sender on Resend if possible.
+  // While testing, you can keep onboarding@resend.dev
   const from = process.env.MAIL_FROM || "AZ Film Credit <onboarding@resend.dev>";
-
-  const resend = new Resend(apiKey);
 
   const payload = {
     from,
@@ -24,8 +19,28 @@ export async function sendEmail({ to, subject, html, replyTo }) {
     html,
   };
 
+  // Resend supports reply_to
   if (replyTo) payload.reply_to = replyTo;
 
-  const { error } = await resend.emails.send(payload);
-  if (error) throw new Error(error.message || "Resend send failed");
+  const resp = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await resp.json().catch(() => ({}));
+
+  if (!resp.ok) {
+    // Bubble up useful error text into Vercel logs + API response
+    const msg =
+      data?.message ||
+      data?.error?.message ||
+      `Resend API error (HTTP ${resp.status})`;
+    throw new Error(msg);
+  }
+
+  return data;
 }
